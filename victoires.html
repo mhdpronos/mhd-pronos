@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Victoires du jour</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a1a1a;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #ff4d4d;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .victories {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .victory {
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 350px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+
+    .victory:hover {
+      transform: scale(1.05);
+    }
+
+    .victory img {
+      width: 100%;
+      display: block;
+    }
+
+    .victory h2 {
+      margin: 10px;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .victory p {
+      margin: 10px;
+      font-size: 1rem;
+      text-align: center;
+      color: #ccc;
+    }
+
+    footer {
+      background-color: #ff4d4d;
+      text-align: center;
+      padding: 15px;
+      margin-top: 50px;
+      font-size: 0.9rem;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>VICTOIRES DU JOUR</h1>
+    <a href="home.html">← Retour à l'accueil</a>
+  </header>
+
+  <div class="container">
+    <div class="victories">
+      <div class="victory">
+        <img src="capture1.png" alt="Victoire 1">
+        <h2>Victoire 1</h2>
+        <p>Description ou score ici</p>
+      </div>
+
+      <div class="victory">
+        <img src="capture2.png" alt="Victoire 2">
+        <h2>Victoire 2</h2>
+        <p>Description ou score ici</p>
+      </div>
+
+      <div class="victory">
+        <img src="capture3.png" alt="Victoire 3">
+        <h2>Victoire 3</h2>
+        <p>Description ou score ici</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © mhd pronos | Meilleur pronostiqueur ivoirien
+  </footer>
+
+</body>
+</html>
