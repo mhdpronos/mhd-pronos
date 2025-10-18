@@ -96,6 +96,55 @@
   /* Progress bar */
   .progress { height:.5rem; width:100%; background:rgba(255,255,255,.1); border-radius:9999px; }
   .progress-fill { height:.5rem; background:#10B981; border-radius:9999px; }
+  /* --- RESPONSIVE DESIGN --- */
+
+/* Petits écrans (téléphones) */
+@media (max-width: 768px) {
+  .md\:grid-cols-2,
+  .md\:grid-cols-3 {
+    grid-template-columns: 1fr; /* une seule colonne */
+  }
+
+  .text-5xl { font-size: 2rem; }
+  .text-4xl { font-size: 1.5rem; }
+  .text-2xl { font-size: 1.25rem; }
+
+  .py-24, .py-16, .py-14 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .justify-between {
+    justify-content: center;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .max-w-6xl {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  button, .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
 </style>
 </head>
 <body>
