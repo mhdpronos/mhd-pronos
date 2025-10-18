@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zone VIP - MHD Pronos</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0b132b;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px;
+      background-color: #1c2541;
+      text-align: center;
+      font-size: 1.5em;
+      color: #4ea8de;
+      font-weight: bold;
+      border-bottom: 2px solid #4ea8de;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #f8f9fa;
+    }
+
+    .coupon-container {
+      width: 90%;
+      max-width: 800px;
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .coupon {
+      background: #1c2541;
+      border: 2px solid #4ea8de;
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .coupon:hover {
+      transform: scale(1.02);
+    }
+
+    .coupon h3 {
+      margin: 0;
+      color: #4ea8de;
+      font-size: 1.2em;
+    }
+
+    .coupon p {
+      color: #ccc;
+      font-size: 0.95em;
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 15px;
+      color: #777;
+      text-align: center;
+      font-size: 0.9em;
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      background-color: #e63946;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .logout-btn:hover {
+      background-color: #ff4d5a;
+    }
+  </style>
+</head>
+<body>
+  <header>💎 Espace VIP - MHD PRONOS</header>
+
+  <h2>Coupons VIP du jour 🔥</h2>
+
+  <div class="coupon-container">
+    <div class="coupon">
+      <h3>1️⃣ PSG vs Marseille</h3>
+      <p>👉 Pronostic : PSG gagne & +2.5 buts</p>
+      <p>💰 Cote : 2.10</p>
+    </div>
+
+    <div class="coupon">
+      <h3>2️⃣ Real Madrid vs Girona</h3>
+      <p>👉 Pronostic : Real Madrid gagne sans encaisser</p>
+      <p>💰 Cote : 1.85</p>
+    </div>
+
+    <div class="coupon">
+      <h3>3️⃣ Manchester City vs Chelsea</h3>
+      <p>👉 Pronostic : Plus de 2.5 buts</p>
+      <p>💰 Cote : 1.70</p>
+    </div>
+
+    <div class="coupon">
+      <h3>4️⃣ Bayern Munich vs Dortmund</h3>
+      <p>👉 Pronostic : Les deux équipes marquent</p>
+      <p>💰 Cote : 1.60</p>
+    </div>
+
+    <div class="coupon">
+      <h3>5️⃣ Juventus vs Inter Milan</h3>
+      <p>👉 Pronostic : Moins de 2.5 buts</p>
+      <p>💰 Cote : 1.75</p>
+    </div>
+
+    <div class="coupon">
+      <h3>6️⃣ Arsenal vs Liverpool</h3>
+      <p>👉 Pronostic : Liverpool gagne ou nul</p>
+      <p>💰 Cote : 1.90</p>
+    </div>
+
+    <div class="coupon">
+      <h3>7️⃣ Barcelone vs Real Sociedad</h3>
+      <p>👉 Pronostic : Barcelone gagne & +1.5 buts</p>
+      <p>💰 Cote : 2.05</p>
+    </div>
+
+    <div class="coupon">
+      <h3>8️⃣ Monaco vs Nice</h3>
+      <p>👉 Pronostic : Moins de 3.5 buts</p>
+      <p>💰 Cote : 1.65</p>
+    </div>
+
+    <div class="coupon">
+      <h3>9️⃣ Tottenham vs Aston Villa</h3>
+      <p>👉 Pronostic : Plus de 2.5 buts</p>
+      <p>💰 Cote : 1.80</p>
+    </div>
+
+    <div class="coupon">
+      <h3>🔟 Napoli vs AC Milan</h3>
+      <p>👉 Pronostic : Les deux équipes marquent</p>
+      <p>💰 Cote : 1.75</p>
+    </div>
+  </div>
+
+  <button class="logout-btn" onclick="logout()">🚪 Se déconnecter</button>
+
+  <footer>
+    © 2025 MHD PRONOS - Tous droits réservés
+  </footer>
+
+  <script>
+    // Vérifie si l’utilisateur est abonné VIP
+    const isVIP = localStorage.getItem("isVIP");
+
+    if (!isVIP) {
+      alert("❌ Accès refusé. Veuillez d’abord vous abonner à la zone VIP.");
+      window.location.href = "payment.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("isVIP");
+      alert("Déconnexion réussie !");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

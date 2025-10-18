@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - mhd pronos</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen text-white">
+  <div class="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-6">Connexion</h1>
+
+    <form id="formConnexion" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm mb-1">Adresse e-mail</label>
+        <input type="email" id="email" required class="w-full px-3 py-2 rounded-lg bg-gray-700 focus:outline-none">
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm mb-1">Mot de passe</label>
+        <input type="password" id="password" required class="w-full px-3 py-2 rounded-lg bg-gray-700 focus:outline-none">
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">Se connecter</button>
+    </form>
+
+    <p class="text-center text-sm mt-4">
+      Pas encore de compte ? <a href="inscription.html" class="text-blue-400 hover:underline">S'inscrire</a>
+    </p>
+  </div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } 
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+    storageBucket: "mhd-pronos.firebasestorage.app",
+    messagingSenderId: "366441954219",
+    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const form = document.querySelector("form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Connexion réussie !");
+        window.location.href = "home.html"; // redirige vers la page d'accueil
+      })
+      .catch((error) => {
+        alert("Erreur : " + error.message);
+      });
+  });
+</script>
