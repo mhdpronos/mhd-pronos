@@ -1,64 +1,219 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion - mhd pronos</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Connexion - MHD Pronos</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+    }
+    .card {
+      background-color: #111827;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    .input {
+      transition: all 0.3s ease;
+    }
+    .input:focus {
+      outline: none;
+      border: 1px solid #3b82f6;
+      box-shadow: 0 0 6px #3b82f6;
+    }
+    .btn {
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.02);
+    }
+  </style>
 </head>
-<body class="bg-gray-900 flex items-center justify-center min-h-screen text-white">
-  <div class="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
-    <h1 class="text-2xl font-bold text-center mb-6">Connexion</h1>
+<body class="min-h-screen flex items-center justify-center text-white">
+  <div class="card w-full max-w-md p-8 rounded-2xl">
+    <h1 class="text-center text-3xl font-extrabold mb-6 text-blue-400">MHD Pronos</h1>
+    <h2 class="text-center text-lg text-gray-300 mb-6">Connexion à votre compte</h2>
 
-    <form id="formConnexion" class="space-y-4">
+    <div id="notice" class="mb-4 text-center text-sm text-yellow-300"></div>
+
+    <form id="emailForm" class="space-y-4">
       <div>
-        <label for="email" class="block text-sm mb-1">Adresse e-mail</label>
-        <input type="email" id="email" required class="w-full px-3 py-2 rounded-lg bg-gray-700 focus:outline-none">
+        <label for="email" class="block text-sm mb-1 text-gray-400">Adresse e-mail</label>
+        <input id="email" type="email" required class="w-full input px-3 py-2 rounded-lg bg-gray-800 border border-gray-700" placeholder="exemple@email.com">
       </div>
 
       <div>
-        <label for="password" class="block text-sm mb-1">Mot de passe</label>
-        <input type="password" id="password" required class="w-full px-3 py-2 rounded-lg bg-gray-700 focus:outline-none">
+        <label for="password" class="block text-sm mb-1 text-gray-400">Mot de passe</label>
+        <input id="password" type="password" required minlength="8" class="w-full input px-3 py-2 rounded-lg bg-gray-800 border border-gray-700" placeholder="••••••••">
+        <p class="text-xs text-gray-500 mt-1">Doit contenir au moins 8 caractères, dont lettres, chiffres et symboles.</p>
       </div>
 
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">Se connecter</button>
+      <button id="emailBtn" type="submit" class="btn w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold">Se connecter</button>
     </form>
 
-    <p class="text-center text-sm mt-4">
+    <div class="flex justify-end mt-2">
+      <button id="forgotPassword" class="text-sm text-blue-400 hover:underline">Mot de passe oublié ?</button>
+    </div>
+
+    <div class="my-6 text-center text-sm text-gray-400">— ou continuer avec —</div>
+
+    <div class="grid grid-cols-1 gap-3">
+      <button id="googleBtn" class="btn w-full flex items-center justify-center gap-2 bg-white text-black py-2 rounded-lg">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="w-5 h-5"> Google
+      </button>
+
+      <button id="facebookBtn" class="btn w-full flex items-center justify-center gap-2 bg-blue-800 text-white py-2 rounded-lg">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg" alt="Facebook" class="w-5 h-5"> Facebook
+      </button>
+
+      <button id="appleBtn" class="btn w-full flex items-center justify-center gap-2 bg-black text-white py-2 rounded-lg">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="w-5 h-5"> Apple
+      </button>
+
+      <button id="microsoftBtn" class="btn w-full flex items-center justify-center gap-2 bg-white text-black py-2 rounded-lg">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Windows_logo_-_2012.svg" alt="Microsoft" class="w-5 h-5"> Microsoft
+      </button>
+    </div>
+
+    <p class="text-center text-sm mt-6 text-gray-400">
       Pas encore de compte ? <a href="inscription.html" class="text-blue-400 hover:underline">S'inscrire</a>
     </p>
   </div>
 
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } 
-    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signInWithPopup,
+      sendPasswordResetEmail,
+      GoogleAuthProvider,
+      FacebookAuthProvider,
+      OAuthProvider,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-    authDomain: "mhd-pronos.firebaseapp.com",
-    projectId: "mhd-pronos",
-    storageBucket: "mhd-pronos.firebasestorage.app",
-    messagingSenderId: "366441954219",
-    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+      authDomain: "mhd-pronos.firebaseapp.com",
+      projectId: "mhd-pronos",
+      storageBucket: "mhd-pronos.firebasestorage.app",
+      messagingSenderId: "366441954219",
+      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  const form = document.querySelector("form");
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const noticeEl = document.getElementById('notice');
+    const emailForm = document.getElementById('emailForm');
+    const forgotPasswordBtn = document.getElementById('forgotPassword');
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        alert("Connexion réussie !");
-        window.location.href = "home.html"; // redirige vers la page d'accueil
-      })
-      .catch((error) => {
-        alert("Erreur : " + error.message);
-      });
-  });
-</script>
+    const googleBtn = document.getElementById('googleBtn');
+    const facebookBtn = document.getElementById('facebookBtn');
+    const appleBtn = document.getElementById('appleBtn');
+    const microsoftBtn = document.getElementById('microsoftBtn');
+
+    function showNotice(msg, type = 'info') {
+      noticeEl.textContent = msg;
+      noticeEl.className = 'mb-4 text-center text-sm ' + 
+        (type === 'error' ? 'text-red-400' : 'text-green-400');
+    }
+
+    // ✅ Redirection automatique si déjà connecté
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        localStorage.setItem('loggedIn', 'true');
+        window.location.href = 'home.html';
+      }
+    });
+
+    // ✅ Vérification stricte du mot de passe avant connexion
+    function isPasswordStrong(password) {
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.#^_-])[A-Za-z\d@$!%*?&.#^_-]{8,}$/;
+      return regex.test(password);
+    }
+
+    // ✅ Connexion par e-mail et mot de passe
+    emailForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!isPasswordStrong(password)) {
+        showNotice("Le mot de passe doit contenir au moins 8 caractères, avec lettres, chiffres et symboles.", "error");
+        return;
+      }
+
+      showNotice("Connexion en cours…");
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        localStorage.setItem('loggedIn', 'true');
+        showNotice("Connexion réussie !");
+        window.location.href = 'home.html';
+      } catch (err) {
+        showNotice("Erreur : " + err.message, "error");
+      }
+    });
+
+    // ✅ Mot de passe oublié
+    forgotPasswordBtn.addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+      if (!email) {
+        showNotice("Veuillez entrer votre e-mail pour recevoir le lien de réinitialisation.", "error");
+        return;
+      }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showNotice("Lien de réinitialisation envoyé à " + email);
+      } catch (err) {
+        showNotice("Erreur : " + err.message, "error");
+      }
+    });
+
+    // ✅ Google
+    googleBtn.addEventListener('click', async () => {
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = 'home.html';
+      } catch (err) {
+        showNotice("Erreur Google : " + err.message, "error");
+      }
+    });
+
+    // ✅ Facebook
+    facebookBtn.addEventListener('click', async () => {
+      const provider = new FacebookAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = 'home.html';
+      } catch (err) {
+        showNotice("Erreur Facebook : " + err.message, "error");
+      }
+    });
+
+    // ✅ Apple
+    appleBtn.addEventListener('click', async () => {
+      const provider = new OAuthProvider('apple.com');
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = 'home.html';
+      } catch (err) {
+        showNotice("Erreur Apple : " + err.message, "error");
+      }
+    });
+
+    // ✅ Microsoft
+    microsoftBtn.addEventListener('click', async () => {
+      const provider = new OAuthProvider('microsoft.com');
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = 'home.html';
+      } catch (err) {
+        showNotice("Erreur Microsoft : " + err.message, "error");
+      }
+    });
+  </script>
+</body>
+</html>
