@@ -13,7 +13,7 @@
       },
       {
         "source": "/accueil",
-        "destination": "/home.html"
+        "destination": "/home"
       },
       {
         "source": "/vip",
@@ -25,7 +25,7 @@
       },
       {
         "source": "/connexion",
-        "destination": "/index.html"
+        "destination": "/index"
       }
     ]
   }
