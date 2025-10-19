@@ -5,6 +5,28 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/mode de paiement",
+        "destination": "/page payment.html"
+      },
+      {
+        "source": "/accueil",
+        "destination": "/home.html"
+      },
+      {
+        "source": "/vip",
+        "destination": "/vip.html"
+      },
+      {
+        "source": "/abonnement",
+        "destination": "/abonnement.html"
+      },
+      {
+        "source": "/connexion",
+        "destination": "/index.html"
+      }
     ]
   }
 }
