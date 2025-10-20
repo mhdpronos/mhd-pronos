@@ -1,182 +1,331 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zone VIP - MHD Pronos</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MHD PRONOS VIP</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #0b132b;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    header {
-      width: 100%;
-      padding: 20px;
-      background-color: #1c2541;
-      text-align: center;
-      font-size: 1.5em;
-      color: #4ea8de;
-      font-weight: bold;
-      border-bottom: 2px solid #4ea8de;
-    }
-
-    h2 {
-      margin-top: 20px;
-      color: #f8f9fa;
-    }
-
-    .coupon-container {
-      width: 90%;
-      max-width: 800px;
-      margin-top: 30px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .coupon {
-      background: #1c2541;
-      border: 2px solid #4ea8de;
-      border-radius: 12px;
-      padding: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .coupon:hover {
-      transform: scale(1.02);
-    }
-
-    .coupon h3 {
-      margin: 0;
-      color: #4ea8de;
-      font-size: 1.2em;
-    }
-
-    .coupon p {
-      color: #ccc;
-      font-size: 0.95em;
-      margin-top: 8px;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 15px;
-      color: #777;
-      text-align: center;
-      font-size: 0.9em;
-    }
-
-    .logout-btn {
-      margin-top: 20px;
-      background-color: #e63946;
+      background: linear-gradient(to bottom, #0b0b12, #111827);
       color: white;
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(11, 11, 18, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: bold;
       transition: 0.3s;
     }
-
-    .logout-btn:hover {
-      background-color: #ff4d5a;
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 5px 20px rgba(139, 92, 246, 0.3);
+    }
+    .partner-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #1414e4, #9a02ff);
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
+      transition: 0.3s ease;
+    }
+    .partner-btn:hover {
+      background: linear-gradient(135deg, #ffaa00, #4223df);
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(255, 204, 0, 0.4);
     }
   </style>
 </head>
 <body>
-  <header>💎 Espace VIP - MHD PRONOS</header>
 
-  <h2>Coupons VIP du jour 🔥</h2>
+<header class="flex items-center justify-between px-6 py-4">
+  <div class="flex items-center gap-3">
+    <img src="logo.JPG" alt="Logo MHD Pronos" class="w-12 h-12 rounded-full">
+    <h1 class="text-2xl font-extrabold">MHD PRONOS VIP</h1>
+  </div>
+  <nav class="hidden md:flex gap-6 text-sm">
+    <a href="home.html" class="hover:text-purple-400">Accueil</a>
+    <a href="astuce.html" class="hover:text-purple-400">Astuces</a>
+    <a href="plan abonnement.html" class="hover:text-purple-400">Abonnements</a>
+    <a href="profil.html" class="hover:text-purple-400">Mon Profil</a>
+  </nav>
+</header>
 
-  <div class="coupon-container">
-    <div class="coupon">
-      <h3>1️⃣ PSG vs Marseille</h3>
-      <p>👉 Pronostic : PSG gagne & +2.5 buts</p>
-      <p>💰 Cote : 2.10</p>
-    </div>
+<!-- Section principale -->
+<section class="text-center py-12">
+  <h1 class="text-4xl font-extrabold mb-4 animate-pulse">Coupons VIP du <span id="date-du-jour"></span></h1>
+  <p class="text-white text-opacity-70 max-w-2xl mx-auto">Découvrez nos 3 combinés exclusifs préparés par notre équipe d’experts. Gagnez plus intelligemment.</p>
+</section>
 
-    <div class="coupon">
-      <h3>2️⃣ Real Madrid vs Girona</h3>
-      <p>👉 Pronostic : Real Madrid gagne sans encaisser</p>
-      <p>💰 Cote : 1.85</p>
-    </div>
-
-    <div class="coupon">
-      <h3>3️⃣ Manchester City vs Chelsea</h3>
-      <p>👉 Pronostic : Plus de 2.5 buts</p>
-      <p>💰 Cote : 1.70</p>
-    </div>
-
-    <div class="coupon">
-      <h3>4️⃣ Bayern Munich vs Dortmund</h3>
-      <p>👉 Pronostic : Les deux équipes marquent</p>
-      <p>💰 Cote : 1.60</p>
-    </div>
-
-    <div class="coupon">
-      <h3>5️⃣ Juventus vs Inter Milan</h3>
-      <p>👉 Pronostic : Moins de 2.5 buts</p>
-      <p>💰 Cote : 1.75</p>
-    </div>
-
-    <div class="coupon">
-      <h3>6️⃣ Arsenal vs Liverpool</h3>
-      <p>👉 Pronostic : Liverpool gagne ou nul</p>
-      <p>💰 Cote : 1.90</p>
-    </div>
-
-    <div class="coupon">
-      <h3>7️⃣ Barcelone vs Real Sociedad</h3>
-      <p>👉 Pronostic : Barcelone gagne & +1.5 buts</p>
-      <p>💰 Cote : 2.05</p>
-    </div>
-
-    <div class="coupon">
-      <h3>8️⃣ Monaco vs Nice</h3>
-      <p>👉 Pronostic : Moins de 3.5 buts</p>
-      <p>💰 Cote : 1.65</p>
-    </div>
-
-    <div class="coupon">
-      <h3>9️⃣ Tottenham vs Aston Villa</h3>
-      <p>👉 Pronostic : Plus de 2.5 buts</p>
-      <p>💰 Cote : 1.80</p>
-    </div>
-
-    <div class="coupon">
-      <h3>🔟 Napoli vs AC Milan</h3>
-      <p>👉 Pronostic : Les deux équipes marquent</p>
-      <p>💰 Cote : 1.75</p>
-    </div>
+<!-- COMBINÉ 1 : Ultra Safe -->
+<section class="max-w-6xl mx-auto px-4 mb-16">
+  <h2 class="text-3xl font-bold mb-6 text-green-400">🔥 Ultra Safe - Confiance maximale</h2>
+  <div class="glass rounded-2xl overflow-x-auto">
+    <table class="min-w-full text-sm" style="min-width: 900px;">
+      <thead class="bg-white bg-opacity-5 text-left">
+        <tr>
+          <th class="px-4 py-3">Date</th>
+          <th class="px-4 py-3">Compétition</th>
+          <th class="px-4 py-3">Match</th>
+          <th class="px-4 py-3">Sélection</th>
+          <th class="px-4 py-3">Cote</th>
+          <th class="px-4 py-3">Confiance</th>
+          <th class="px-4 py-3">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Ligue 1</td>
+          <td>PSG vs Lyon</td>
+          <td>PSG gagne</td>
+          <td>1.35</td>
+          <td>5/5</td>
+          <td>Ultra Safe</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Serie A</td>
+          <td>Inter vs Lecce</td>
+          <td>Inter gagne</td>
+          <td>1.40</td>
+          <td>5/5</td>
+          <td>Ultra Safe</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Premier League</td>
+          <td>Arsenal vs Fulham</td>
+          <td>+1.5 buts</td>
+          <td>1.30</td>
+          <td>5/5</td>
+          <td>Ultra Safe</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>La Liga</td>
+          <td>Real Madrid vs Betis</td>
+          <td>Real gagne</td>
+          <td>1.45</td>
+          <td>5/5</td>
+          <td>Ultra Safe</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Bundesliga</td>
+          <td>Bayern vs Mainz</td>
+          <td>Bayern gagne</td>
+          <td>1.32</td>
+          <td>5/5</td>
+          <td>Ultra Safe</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <button class="logout-btn" onclick="logout()">🚪 Se déconnecter</button>
+  <div class="mt-6 bg-gray-800 p-4 rounded-xl text-center">
+    <h3 class="text-lg font-semibold mb-2">📥 Code combiné</h3>
+    <p class="bg-gray-900 p-2 rounded text-green-400 select-all">VIP-ULTRA-1021</p>
+  </div>
+</section>
+<!-- COMBINÉ 2 : Classique -->
+<section class="max-w-6xl mx-auto px-4 mb-16">
+  <h2 class="text-3xl font-bold mb-6 text-yellow-400">⚽ Classique - Équilibre entre risque et gain</h2>
+  <div class="glass rounded-2xl overflow-x-auto">
+    <table class="min-w-full text-sm" style="min-width: 900px;">
+      <thead class="bg-white bg-opacity-5 text-left">
+        <tr>
+          <th class="px-4 py-3">Date</th>
+          <th class="px-4 py-3">Compétition</th>
+          <th class="px-4 py-3">Match</th>
+          <th class="px-4 py-3">Sélection</th>
+          <th class="px-4 py-3">Cote</th>
+          <th class="px-4 py-3">Confiance</th>
+          <th class="px-4 py-3">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Premier League</td>
+          <td>Man City vs West Ham</td>
+          <td>City gagne +2.5 buts</td>
+          <td>1.80</td>
+          <td>4/5</td>
+          <td>Classique</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Ligue 1</td>
+          <td>Marseille vs Nice</td>
+          <td>BTTS - Oui</td>
+          <td>1.90</td>
+          <td>4/5</td>
+          <td>Classique</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Serie A</td>
+          <td>Naples vs Atalanta</td>
+          <td>Naples gagne</td>
+          <td>2.00</td>
+          <td>4/5</td>
+          <td>Classique</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>La Liga</td>
+          <td>Atletico vs Sevilla</td>
+          <td>Moins de 2.5 buts</td>
+          <td>1.85</td>
+          <td>4/5</td>
+          <td>Classique</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Bundesliga</td>
+          <td>Dortmund vs Stuttgart</td>
+          <td>Dortmund gagne</td>
+          <td>1.95</td>
+          <td>4/5</td>
+          <td>Classique</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <footer>
-    © 2025 MHD PRONOS - Tous droits réservés
-  </footer>
+  <div class="mt-6 bg-gray-800 p-4 rounded-xl text-center">
+    <h3 class="text-lg font-semibold mb-2">📥 Code combiné</h3>
+    <p class="bg-gray-900 p-2 rounded text-yellow-400 select-all">VIP-CLASSIQUE-1021</p>
+  </div>
+</section>
 
-  <script>
-    // Vérifie si l’utilisateur est abonné VIP
-    const isVIP = localStorage.getItem("isVIP");
+<!-- COMBINÉ 3 : Risqué -->
+<section class="max-w-6xl mx-auto px-4 mb-16">
+  <h2 class="text-3xl font-bold mb-6 text-red-400">💥 Risqué - Cote élevée pour gros gains</h2>
+  <div class="glass rounded-2xl overflow-x-auto">
+    <table class="min-w-full text-sm" style="min-width: 900px;">
+      <thead class="bg-white bg-opacity-5 text-left">
+        <tr>
+          <th class="px-4 py-3">Date</th>
+          <th class="px-4 py-3">Compétition</th>
+          <th class="px-4 py-3">Match</th>
+          <th class="px-4 py-3">Sélection</th>
+          <th class="px-4 py-3">Cote</th>
+          <th class="px-4 py-3">Confiance</th>
+          <th class="px-4 py-3">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Premier League</td>
+          <td>Newcastle vs Tottenham</td>
+          <td>Tottenham gagne</td>
+          <td>3.20</td>
+          <td>3/5</td>
+          <td>Risqué</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Serie A</td>
+          <td>Torino vs Milan</td>
+          <td>Torino gagne</td>
+          <td>3.60</td>
+          <td>3/5</td>
+          <td>Risqué</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>La Liga</td>
+          <td>Villarreal vs Real Sociedad</td>
+          <td>+3.5 buts</td>
+          <td>3.10</td>
+          <td>3/5</td>
+          <td>Risqué</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Ligue 1</td>
+          <td>Lens vs Rennes</td>
+          <td>Rennes gagne</td>
+          <td>3.40</td>
+          <td>3/5</td>
+          <td>Risqué</td>
+        </tr>
+        <tr class="border-t border-white/10 hover:bg-white hover:bg-opacity-5">
+          <td class="px-4 py-3">2025-10-21</td>
+          <td>Bundesliga</td>
+          <td>Leipzig vs Wolfsburg</td>
+          <td>Wolfsburg ou nul</td>
+          <td>2.90</td>
+          <td>3/5</td>
+          <td>Risqué</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    if (!isVIP) {
-      alert("❌ Accès refusé. Veuillez d’abord vous abonner à la zone VIP.");
-      window.location.href = "payment.html";
-    }
+  <div class="mt-6 bg-gray-800 p-4 rounded-xl text-center">
+    <h3 class="text-lg font-semibold mb-2">📥 Code combiné</h3>
+    <p class="bg-gray-900 p-2 rounded text-red-400 select-all">VIP-RISQUE-1021</p>
+  </div>
+</section>
 
-    function logout() {
-      localStorage.removeItem("isVIP");
-      alert("Déconnexion réussie !");
-      window.location.href = "index.html";
-    }
-  </script>
+<!-- Partenaires -->
+<section class="py-16 bg-gray-900 text-center">
+  <h2 class="text-3xl font-bold mb-6">🤝 Nos partenaires officiels</h2>
+  <div class="flex flex-wrap justify-center gap-4">
+    <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" class="partner-btn">1XBET</a>
+    <a href="https://bwredir.com/1Xxd?p=%2Fregistration%2F" target="_blank" class="partner-btn">BETWINNER</a>
+    <a href="https://1wyvrz.life/?p=vteh" target="_blank" class="partner-btn">1WIN</a>
+    <a href="https://refpa3665.com/L?tag=d_2526373m_45415c_&site=2526373&ad=45415" target="_blank" class="partner-btn">MELBET</a>
+    <a href="https://top100bonus.com/L?tag=d_2625843m_37513c_&site=2625843&ad=37513" target="_blank" class="partner-btn">888STARZ</a>
+    <a href="https://combodef.com/L?tag=d_3703799m_60651c_&site=3703799&ad=60651" target="_blank" class="partner-btn">PARIPESA</a>
+    <a href="https://gpaff.top/L?tag=d_3453290m_69627c_&site=3453290&ad=69627" target="_blank" class="partner-btn">GOLDPARI</a>
+    <a href="https://refpazitag.top/L?tag=d_2561833m_25437c_&site=2561833&ad=25437" target="_blank" class="partner-btn">MEGAPARI</a>
+    <a href="https://lb-aff.com/L?tag=d_2378251m_22611c_&site=2378251&ad=22611" target="_blank" class="partner-btn">LINEBET</a>
+  </div>
+</section>
+
+<footer class="py-10 text-center text-white text-opacity-70 text-sm border-t border-white/10">
+  <p>&copy; 2025 MHD PRONOS - Tous droits réservés.</p>
+  <p>Les paris comportent des risques. Jouez de façon responsable.</p>
+</footer>
+
+<script>
+  // Date automatique
+  document.getElementById("date-du-jour").textContent = new Date().toLocaleDateString("fr-FR", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric"
+  });
+</script>
+
 </body>
 </html>
