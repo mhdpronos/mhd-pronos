@@ -1,121 +1,286 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paiement VIP</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Paiement — MHD Pronos</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
+    :root { color-scheme: dark; }
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #0d0d0d;
-      color: white;
-      text-align: center;
-      padding: 40px;
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
+        #0b0b12;
+      color: #fff;
     }
-
-    h1 {
-      color: #FFD700;
-      margin-bottom: 30px;
-    }
-
-    .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .method {
-      background-color: #1a1a1a;
-      border: 2px solid #FFD700;
-      border-radius: 12px;
-      padding: 20px;
-      width: 160px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .method:hover {
-      transform: scale(1.05);
-      background-color: #FFD700;
-      color: #000;
-    }
-
-    .method img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-    }
-
-    button {
-      background-color: #FFD700;
-      color: black;
-      border: none;
-      padding: 15px 25px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 40px;
-    }
-
-    button:hover {
-      background-color: #c9a300;
-    }
+    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn-outline { border:1px solid rgba(255,255,255,.12); }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+    .pm-card { transition: transform .25s ease, box-shadow .25s ease; }
+    .pm-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .logo-box { width: 80px; height: 80px; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius: 16px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
   </style>
 </head>
-<body>
-  <h1>Choisissez votre moyen de paiement</h1>
-  <p>Désolé, la version VIP n'est pas encore disponible. Inscrivez-vous avec le code promo AXEX pour bénéficier du VIP gratuitement.</p>
+<body class="text-white">
 
-  <div class="payment-methods">
-    <div class="method" onclick="selectPayment('wave')">
-      <img src="wave.png" alt="Wave">
-      <p>Wave</p>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
+      <a href="home.html" class="flex items-center space-x-3">
+        <img src="logo.JPG" alt="Logo" class="w-10 h-10 rounded-md object-cover">
+        <span class="text-lg font-extrabold lowercase">mhd pronos</span>
+      </a>
+      <div class="ml-auto flex items-center space-x-2 md:hidden">
+        <a href="about.html" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5">Qui est mhd pronos</a>
+        <button id="menuBtn" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5" aria-label="menu">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
+        <a class="text-white/80 hover:text-white" href="home.html">Accueil</a>
+        <a class="text-white/80 hover:text-white" href="plan-abonnement.html">Abonnements</a>
+        <a class="text-white/80 hover:text-white" href="profil.html">Mon profil</a>
+        <a class="text-white/80 hover:text-white" href="about.html">Qui est mhd pronos</a>
+      </nav>
+    </div>
+    <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
+        <a class="text-white/90" href="home.html">Accueil</a>
+        <a class="text-white/90" href="plan-abonnement.html">Abonnements</a>
+        <a class="text-white/90" href="profil.html">Mon profil</a>
+        <a class="text-white/90" href="about.html">Qui est mhd pronos</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Summary -->
+  <section class="max-w-6xl mx-auto px-4 py-10 reveal">
+    <div class="glass rounded-2xl p-6">
+      <h1 class="text-2xl md:text-3xl font-black">Paiement</h1>
+      <p class="text-white/80 mt-1">Vérifiez votre formule et choisissez un moyen de paiement.</p>
+      <div class="mt-4 grid md:grid-cols-3 gap-5">
+        <div class="glass rounded-xl p-5">
+          <div class="text-sm text-white/60">Formule</div>
+          <div id="summaryLabel" class="text-lg font-semibold mt-1">—</div>
+        </div>
+        <div class="glass rounded-xl p-5">
+          <div class="text-sm text-white/60">Tarif</div>
+          <div id="summaryPrice" class="text-lg font-semibold mt-1">—</div>
+        </div>
+        <div class="glass rounded-xl p-5">
+          <div class="text-sm text-white/60">Durée</div>
+          <div id="summaryDays" class="text-lg font-semibold mt-1">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment methods -->
+  <section class="max-w-6xl mx-auto px-4 pb-10 reveal">
+    <h2 class="text-xl md:text-2xl font-black mb-4">Sélectionnez un moyen de paiement</h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- MTN Money -->
+      <div class="glass rounded-2xl p-5 pm-card">
+        <div class="flex items-center gap-4">
+          <div class="logo-box">
+            <img src="" alt="Logo MTN" title="MTN Money (à renseigner)">
+          </div>
+          <div>
+            <div class="font-semibold">MTN Money</div>
+            <div class="text-xs text-white/60">Mobile Money</div>
+          </div>
+        </div>
+        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="mtn">Payer avec MTN</button>
+      </div>
+
+      <!-- Orange Money -->
+      <div class="glass rounded-2xl p-5 pm-card">
+        <div class="flex items-center gap-4">
+          <div class="logo-box">
+            <img src="" alt="Logo Orange" title="Orange Money (à renseigner)">
+          </div>
+          <div>
+            <div class="font-semibold">Orange Money</div>
+            <div class="text-xs text-white/60">Mobile Money</div>
+          </div>
+        </div>
+        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="orange">Payer avec Orange</button>
+      </div>
+
+      <!-- Moov Money -->
+      <div class="glass rounded-2xl p-5 pm-card">
+        <div class="flex items-center gap-4">
+          <div class="logo-box">
+            <img src="" alt="Logo Moov" title="Moov Money (à renseigner)">
+          </div>
+          <div>
+            <div class="font-semibold">Moov Money</div>
+            <div class="text-xs text-white/60">Mobile Money</div>
+          </div>
+        </div>
+        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="moov">Payer avec Moov</button>
+      </div>
+
+      <!-- Wave -->
+      <div class="glass rounded-2xl p-5 pm-card">
+        <div class="flex items-center gap-4">
+          <div class="logo-box">
+            <img src="" alt="Logo Wave" title="Wave (à renseigner)">
+          </div>
+          <div>
+            <div class="font-semibold">Wave</div>
+            <div class="text-xs text-white/60">Mobile Money</div>
+          </div>
+        </div>
+        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="wave">Payer avec Wave</button>
+      </div>
+
+      <!-- Visa -->
+      <div class="glass rounded-2xl p-5 pm-card">
+        <div class="flex items-center gap-4">
+          <div class="logo-box">
+            <img src="" alt="Logo Visa" title="Visa (à renseigner)">
+          </div>
+          <div>
+            <div class="font-semibold">Carte Visa</div>
+            <div class="text-xs text-white/60">Carte bancaire</div>
+          </div>
+        </div>
+        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="visa">Payer avec Visa</button>
+      </div>
+
+      <!-- PayPal -->
+      <div class="glass rounded-2xl p-5 pm-card">
+        <div class="flex items-center gap-4">
+          <div class="logo-box">
+            <img src="" alt="Logo PayPal" title="PayPal (à renseigner)">
+          </div>
+          <div>
+            <div class="font-semibold">PayPal</div>
+            <div class="text-xs text-white/60">Portefeuille</div>
+          </div>
+        </div>
+        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="paypal">Payer avec PayPal</button>
+      </div>
     </div>
 
-    <div class="method" onclick="selectPayment('orange')">
-      <img src="orange.png" alt="Orange Money">
-      <p>Orange Money</p>
+    <!-- confirmation -->
+    <div class="glass rounded-2xl p-5 mt-6">
+      <div class="text-white/80 text-sm">Après votre paiement, cliquez sur le bouton ci-dessous pour valider l’abonnement.</div>
+      <button id="confirmPaid" class="btn-primary mt-3 px-6 py-3 rounded-xl font-semibold inline-flex items-center">J’ai payé / Valider l’abonnement</button>
+      <div id="status" class="text-sm mt-3 text-white/70"></div>
     </div>
+  </section>
 
-    <div class="method" onclick="selectPayment('mtn')">
-      <img src="mtn.png" alt="MTN Money">
-      <p>MTN Money</p>
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-10">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-6 justify-between">
+      <div>
+        <div class="text-lg font-extrabold lowercase">mhd pronos</div>
+        <div class="text-sm text-white/60">Meilleur pronostiqueur ivoirien.</div>
+      </div>
+      <div class="text-xs text-white/50 max-w-xl">Avertissement : Les jeux d’argent comportent des risques.</div>
     </div>
+  </footer>
 
-    <div class="method" onclick="selectPayment('moov')">
-      <img src="moov.png" alt="Moov Money">
-      <p>Moov Money</p>
-    </div>
+  <!-- Firebase + logique paiement -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <div class="method" onclick="selectPayment('visa')">
-      <img src="visa.png" alt="Carte Visa">
-      <p>Carte Visa</p>
-    </div>
-  </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+      authDomain: "mhd-pronos.firebaseapp.com",
+      projectId: "mhd-pronos",
+      storageBucket: "mhd-pronos.firebasestorage.app",
+      messagingSenderId: "366441954219",
+      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+    };
 
-  <script>
-    function selectPayment(method) {
-      alert("Redirection vers la page de paiement " + method + "...");
-      // Ici tu rediriges vers la vraie page de paiement du service choisi
-      // Exemple :
-      if (method === 'wave') {
-        window.location.href = "https://wave.com/pay";
-      } else if (method === 'orange') {
-        window.location.href = "https://orangemoney.com/pay";
-      } else if (method === 'mtn') {
-        window.location.href = "https://mtnmoney.com/pay";
-      } else if (method === 'moov') {
-        window.location.href = "https://moovmoney.ci/pay";
-      } else if (method === 'visa') {
-        window.location.href = "https://visa.com/pay";
-      }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-      // Ensuite, après paiement, ton service de paiement redirigera vers ta page VIP :
-      // window.location.href = "vip.html";
+    const summaryLabel = document.getElementById('summaryLabel');
+    const summaryPrice = document.getElementById('summaryPrice');
+    const summaryDays  = document.getElementById('summaryDays');
+    const statusEl     = document.getElementById('status');
+
+    // Récupérer le plan choisi
+    const plan = JSON.parse(localStorage.getItem('selectedPlan') || 'null');
+    if (!plan) {
+      alert("Aucun plan sélectionné. Retour aux abonnements.");
+      window.location.href = "plan-abonnement.html";
+    } else {
+      summaryLabel.textContent = plan.label;
+      summaryPrice.textContent = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "XOF" }).format(plan.price);
+      summaryDays.textContent  = `${plan.days} jours`;
     }
+
+    // Sélection d'un moyen de paiement (facultatif : mémoriser)
+    let selectedMethod = null;
+    document.querySelectorAll('[data-method]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        selectedMethod = btn.getAttribute('data-method');
+        statusEl.textContent = `Moyen sélectionné : ${selectedMethod.toUpperCase()}. Effectuez le paiement selon vos instructions, puis validez.`;
+      });
+    });
+
+    // Validation: créer/activer l'abonnement dans Firestore
+    document.getElementById('confirmPaid').addEventListener('click', async ()=>{
+      onAuthStateChanged(auth, async (user)=>{
+        if (!user) {
+          alert("Veuillez vous connecter pour valider.");
+          window.location.href = "index.html";
+          return;
+        }
+        try {
+          // Calcule la date d'expiration
+          const start = new Date();
+          const expires = new Date(start);
+          expires.setDate(expires.getDate() + (plan.days || 0));
+
+          // Doc: subscriptions/{uid}
+          const subRef = doc(db, "subscriptions", user.uid);
+          await setDoc(subRef, {
+            uid: user.uid,
+            planId: plan.id,
+            planLabel: plan.label,
+            priceXOF: plan.price,
+            days: plan.days,
+            method: selectedMethod || null,
+            status: "active",
+            startAt: serverTimestamp(),
+            startAtLocal: start.toISOString(),
+            expiresAtLocal: expires.toISOString()
+          }, { merge: true });
+
+          statusEl.textContent = "Abonnement activé ! Redirection vers l’espace VIP...";
+          setTimeout(()=> window.location.href = "vip.html", 900);
+        } catch (e) {
+          console.error(e);
+          statusEl.textContent = "Erreur lors de l'activation de l'abonnement.";
+          alert("Erreur : " + e.message);
+        }
+      });
+    });
+
+    // Animations & menu
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
   </script>
 </body>
 </html>
