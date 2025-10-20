@@ -1,157 +1,220 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MHD Pronos - VIP</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Abonnements VIP — MHD Pronos</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
+        #0b0b12;
+      color: #fff;
+    }
+    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn-outline { border:1px solid rgba(255,255,255,.12); }
+    .pill { display:inline-block; padding:.25rem .75rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:#E5E7EB; }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+    .card { transition: transform .25s ease, box-shadow .25s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="text-white">
 
-  <!-- HEADER -->
-  <header class="bg-blue shadown p-4 flex items-center justify-between">
-    <div class="flex items-center space-x-2">
-      <img src="logo.JPG" alt="Logo MHD Pronos" class="w-8 h-8 rounded-full">
-      <span class="text-xl font-bold"><STROng>MHD PRONOS VIP</STROng></span>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
+      <a href="home.html" class="flex items-center space-x-3">
+        <img src="logo.JPG" alt="Logo" class="w-10 h-10 rounded-md object-cover">
+        <span class="text-lg font-extrabold lowercase">mhd pronos</span>
+      </a>
+      <div class="ml-auto flex items-center space-x-2 md:hidden">
+        <a href="about.html" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5">Qui est mhd pronos</a>
+        <button id="menuBtn" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5" aria-label="menu">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
+        <a class="text-white/80 hover:text-white" href="home.html">Accueil</a>
+        <a class="text-white/80 hover:text-white" href="home.html#tips">Pronostics</a>
+        <a class="text-white/80 hover:text-white" href="victoires.html">Victoires du jour</a>
+        <a class="text-white/80 hover:text-white" href="astuce.html">Devenir pro</a>
+        <a class="text-white/80 hover:text-white" href="about.html">Qui est mhd pronos</a>
+        <a class="text-white/80 hover:text-white" href="profil.html">Mon profil</a>
+      </nav>
     </div>
-    <nav>
-      <a href="home.html" class="text-blue-600 hover:underline"><strong>Accueil</strong></a>
+    <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
+        <a class="text-white/90" href="home.html">Accueil</a>
+        <a class="text-white/90" href="home.html#tips">Pronostics</a>
+        <a class="text-white/90" href="victoires.html">Victoires du jour</a>
+        <a class="text-white/90" href="astuce.html">Devenir pro</a>
+        <a class="text-white/90" href="about.html">Qui est mhd pronos</a>
+        <a class="text-white/90" href="profil.html">Mon profil</a>
+      </div>
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section class="bg-blue-800 text-white text-center py-12">
-    <h1 class="text-4xl font-bold mb-4"><strong>DEVENEZ MEMBRE VIP</strong></h1>
-    <p class="text-lg max-w-2xl mx-auto">
-      Accédez à des pronostics exclusifs, un suivi personnalisé et des gains boostés grâce à nos conseils d’expert. Cliquez sur les boutons ci-dessous pour vous inscrire sur le bookmaker de votre choix
-    </p>
-    <a href="page payment.html" class="mt-6 inline-block bg-white text-green-600 font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100">
-      Rejoindre le VIP maintenant
-    </a>
-  </section>
-
-  <!-- AVANTAGES -->
-  <section class="p-8 grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    <div class="bg-white rounded-2xl shadow p-6 text-center">
-      <h2 class="text-xl font-bold mb-2">🎯 Pronostics Premium</h2>
-      <p>Recevez chaque jour des pronostics hautement fiables avec un taux de réussite supérieur.</p>
-    </div>
-    <div class="bg-white rounded-2xl shadow p-6 text-center">
-      <h2 class="text-xl font-bold mb-2">📊 Analyses détaillées</h2>
-      <p>Accédez à des analyses complètes sur les matchs, les statistiques et les tendances.</p>
-    </div>
-    <div class="bg-white rounded-2xl shadow p-6 text-center">
-      <h2 class="text-xl font-bold mb-2">🤝 Support privé</h2>
-      <p>Contact direct avec notre équipe via Telegram pour des conseils personnalisés.</p>
-    </div>
-  </section>
-
-  <!-- FORMULES VIP -->
-  <section id="abonnement" class="bg-gray-50 py-12">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-8">Choisissez votre formule VIP</h2>
-
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Offre 1 -->
-        <div class="bg-white rounded-2xl shadow p-6 text-center border-t-4 border-green-600">
-          <h3 class="text-2xl font-semibold mb-2">1 Semaine</h3>
-          <p class="text-gray-600 mb-4">Idéal pour tester</p>
-          <p class="text-3xl font-bold mb-6">3 000 CFA</p>
-          <a href="page payment.html" class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 inline-block">
-            S’abonner
-          </a>
+  <!-- Hero -->
+  <section class="relative overflow-hidden py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <span class="pill">Accès Premium</span>
+        <h1 class="mt-3 text-4xl md:text-5xl font-black tracking-tight">DEVENEZ MEMBRE VIP</h1>
+        <p class="mt-4 text-white/80 text-base md:text-lg">Accédez aux pronostics exclusifs, analyses détaillées et support prioritaire. Choisissez la durée qui vous convient — l’accès sera automatiquement géré et protégé.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="about.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Qui est mhd pronos</a>
+          <a href="home.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Retour Accueil</a>
         </div>
-
-        <!-- Offre 2 -->
-        <div class="bg-white rounded-2xl shadow p-6 text-center border-t-4 border-yellow-500">
-          <h3 class="text-2xl font-semibold mb-2">1 Mois</h3>
-          <p class="text-gray-600 mb-4">Le plus populaire</p>
-          <p class="text-3xl font-bold mb-6">10 000 CFA</p>
-          <a href="page payment.html" class="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow hover:bg-yellow-600 inline-block">
-            S’abonner
-          </a>
-        </div>
-
-        <!-- Offre 3 -->
-        <div class="bg-white rounded-2xl shadow p-6 text-center border-t-4 border-purple-600">
-          <h3 class="text-2xl font-semibold mb-2">3 Mois</h3>
-          <p class="text-gray-600 mb-4">Économisez plus</p>
-          <p class="text-3xl font-bold mb-6">25 000 CFA</p>
-          <a href="page payment.html" class="bg-purple-600 text-white px-6 py-3 rounded-lg shadow hover:bg-purple-700 inline-block">
-            S’abonner
-          </a>
+      </div>
+      <div class="reveal">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold text-lg">Avantages VIP</h3>
+          <ul class="mt-3 text-sm text-white/80 space-y-2 list-disc list-inside">
+            <li>Pronostics premium quotidiens</li>
+            <li>Analyses data & discipline bankroll</li>
+            <li>Priorité support Telegram</li>
+            <li>Accès sécurisé selon la durée choisie</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <div><section class="partenaires">
-  <h2><strong>Nos Partenaires Officiels</strong></h2>
-  <div class="partenaires-container">
-    <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" class="btn-partenaire">1XBET</a>
-    <a href="https://bwredir.com/1Xxd?p=%2Fregistration%2F" target="_blank" class="btn-partenaire">BETWINNER</a>
-    <a href="https://1wyvrz.life/?p=vteh" target="_blank" class="btn-partenaire">1WIN</a>
-    <a href="https://refpa3665.com/L?tag=d_2526373m_45415c_&site=2526373&ad=45415" target="_blank" class="btn-partenaire">MELBET</a>
-    <a href="https://top100bonus.com/L?tag=d_2625843m_37513c_&site=2625843&ad=37513" target="_blank" class="btn-partenaire">888STARZ</a>
-    <a href="https://combodef.com/L?tag=d_3703799m_60651c_&site=3703799&ad=60651" target="_blank" class="btn-partenaire">PARIPESA</a>
-    <a href="https://gpaff.top/L?tag=d_3453290m_69627c_&site=3453290&ad=69627" target="_blank" class="btn-partenaire">GOLDPARI</a>
-    <a href="https://refpazitag.top/L?tag=d_2561833m_25437c_&site=2561833&ad=25437" target="_blank" class="btn-partenaire">MEGAPARI</a>
-    <a href="https://lb-aff.com/L?tag=d_2378251m_22611c_&site=2378251&ad=22611" target="_blank" class="btn-partenaire">LINEBET</a><h2>Clique pour ganez jusqu'à 169.000F</h2>
-  </div>
-</section>
+  <!-- Plans -->
+  <section class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Choisissez votre formule</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <!-- 1 semaine -->
+      <div class="glass rounded-2xl p-6 card flex flex-col">
+        <div class="flex items-center justify-between">
+          <div class="text-xl font-extrabold">1 Semaine</div>
+        </div>
+        <div class="mt-2 text-3xl font-black">3 000 XOF</div>
+        <ul class="mt-4 space-y-2 text-sm text-white/80 list-disc list-inside">
+          <li>Accès aux VIP 7 jours</li>
+          <li>Support Telegram</li>
+          <li>Suivi personnalisé</li>
+        </ul>
+        <button
+          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold"
+          data-plan='{"id":"week","label":"1 Semaine","price":3000,"days":7}'
+        >S’abonner</button>
+      </div>
 
-<style>
-.partenaires {
-  text-align: center;
-  margin-top: 50px;
-  color: #3c00ff;
-}
+      <!-- 1 mois -->
+      <div class="glass rounded-2xl p-6 card flex flex-col border border-indigo-400">
+        <div class="flex items-center justify-between">
+          <div class="text-xl font-extrabold">1 Mois</div>
+          <span class="pill">Populaire</span>
+        </div>
+        <div class="mt-2 text-3xl font-black">10 000 XOF</div>
+        <ul class="mt-4 space-y-2 text-sm text-white/80 list-disc list-inside">
+          <li>Accès VIP 30 jours</li>
+          <li>Alertes rapides</li>
+          <li>Bankroll guide</li>
+        </ul>
+        <button
+          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold"
+          data-plan='{"id":"month","label":"1 Mois","price":10000,"days":30}'
+        >S’abonner</button>
+      </div>
 
-.partenaires h2 {
-  font-size: 1.8rem;
-  margin-bottom: 25px;
-  color: #0d00fd;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+      <!-- 3 mois -->
+      <div class="glass rounded-2xl p-6 card flex flex-col">
+        <div class="flex items-center justify-between">
+          <div class="text-xl font-extrabold">3 Mois</div>
+        </div>
+        <div class="mt-2 text-3xl font-black">25 000 XOF</div>
+        <ul class="mt-4 space-y-2 text-sm text-white/80 list-disc list-inside">
+          <li>Accès VIP 90 jours</li>
+          <li>Statistiques détaillées</li>
+          <li>Priorité support</li>
+        </ul>
+        <button
+          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold"
+          data-plan='{"id":"quarter","label":"3 Mois","price":25000,"days":90}'
+        >S’abonner</button>
+      </div>
+    </div>
+  </section>
 
-.partenaires-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
+  <!-- Partenaires (optionnel) -->
+  <section class="max-w-6xl mx-auto px-4 py-10 reveal">
+    <h3 class="text-lg font-semibold mb-4">Nos partenaires</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-xl p-4 text-center">1XBET</div>
+      <div class="glass rounded-xl p-4 text-center">BETWINNER</div>
+      <div class="glass rounded-xl p-4 text-center">WAVE</div>
+      <div class="glass rounded-xl p-4 text-center">VISA</div>
+    </div>
+  </section>
 
-.btn-partenaire {
-  display: inline-block;
-  padding: 12px 28px;
-  background: linear-gradient(135deg, #1414e4, #9a02ff);
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 30px;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
-  transition: 0.3s ease;
-}
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-10">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-6 justify-between">
+      <div>
+        <div class="text-lg font-extrabold lowercase">mhd pronos</div>
+        <div class="text-sm text-white/60">Meilleur pronostiqueur ivoirien.</div>
+      </div>
+      <div class="text-xs text-white/50 max-w-xl">
+        Avertissement : Les jeux d’argent comportent des risques. Ne pariez que ce que vous pouvez vous permettre de perdre.
+      </div>
+    </div>
+  </footer>
 
-.btn-partenaire:hover {
-  background: linear-gradient(135deg, #ffaa00, #4223df);
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(255, 204, 0, 0.4);
-}
-</style>
+  <!-- Firebase + logique sélection plan -->
+  <script type="module">
+    // Firebase v10 (modules)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  <!-- CONTACT -->
-  <footer class="bg-white text-center py-6 mt-12 shadow-inner">
-    <p class="mb-2">Besoin d’aide ?</p>
-    <a href="https://t.me/mhd_pronos" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 inline-block">
-      Contacter le support Telegram
-    </a>
-    <p class="text-gray-500 mt-4 text-sm">Meilleur pronostiqueur ivoirien.</p>
-  </f
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+      authDomain: "mhd-pronos.firebaseapp.com",
+      projectId: "mhd-pronos",
+      storageBucket: "mhd-pronos.firebasestorage.app",
+      messagingSenderId: "366441954219",
+      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+    };
 
-ooter>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
+    // Sélection du plan → sauvegarde locale + redirection vers paiement
+    const buttons = document.querySelectorAll('[data-plan]');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const plan = JSON.parse(btn.getAttribute('data-plan'));
+        localStorage.setItem('selectedPlan', JSON.stringify(plan));
+        // Si non connecté → redirige vers index.html (connexion)
+        onAuthStateChanged(auth, (user) => {
+          if (!user) {
+            alert("Connectez-vous pour continuer votre abonnement.");
+            window.location.href = "index.html";
+          } else {
+            window.location.href = "paiement.html";
+          }
+        });
+      });
+    });
+
+    // Animations reveal
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Menu mobile
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+  </script>
 </body>
 </html>
