@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Paiement — MHD Pronos</title>
+  <title>Paiement VIP — MHD Pronos</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     :root { color-scheme: dark; }
@@ -11,19 +11,20 @@
       background:
         radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
         radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
-        #0b0b12;
-      color: #fff;
+        #0b0b12; color:#fff;
     }
-    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
-    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
+    .glass { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); transition: .2s; }
     .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
-    .btn-outline { border:1px solid rgba(255,255,255,.12); }
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.show { opacity: 1; transform: none; }
-    .pm-card { transition: transform .25s ease, box-shadow .25s ease; }
-    .pm-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-    .logo-box { width: 80px; height: 80px; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius: 16px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .btn-outline { border:1px solid rgba(255,255,255,.16); }
+    .reveal { opacity:0; transform: translateY(14px); transition:opacity .6s, transform .6s; }
+    .reveal.show { opacity:1; transform:none; }
+    .card { transition: transform .2s, box-shadow .2s; cursor: pointer; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .card.selected { outline: 2px solid #8B5CF6; }
+    .logo { width:60px; height:60px; border-radius:12px; object-fit:cover; background:#111827; }
+    .pill { display:inline-block; padding:.25rem .7rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.06); }
+    a.inline-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .9rem; border-radius:.75rem; }
   </style>
 </head>
 <body class="text-white">
@@ -32,149 +33,161 @@
   <header class="sticky top-0 z-50 glass">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
       <a href="home.html" class="flex items-center space-x-3">
-        <img src="logo.JPG" alt="Logo" class="w-10 h-10 rounded-md object-cover">
+        <img src="./logo.JPG" alt="Logo" class="w-10 h-10 rounded-md object-cover">
         <span class="text-lg font-extrabold lowercase">mhd pronos</span>
       </a>
+
       <div class="ml-auto flex items-center space-x-2 md:hidden">
-        <a href="about.html" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5">Qui est mhd pronos</a>
-        <button id="menuBtn" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5" aria-label="menu">
+        <a href="home.html" class="inline-btn btn-outline hover:bg-white hover:bg-opacity-5 text-sm">Accueil</a>
+        <button id="menuBtn" class="inline-btn btn-outline hover:bg-white hover:bg-opacity-5" aria-label="menu">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
+
       <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
         <a class="text-white/80 hover:text-white" href="home.html">Accueil</a>
-        <a class="text-white/80 hover:text-white" href="plan-abonnement.html">Abonnements</a>
+        <a class="text-white/80 hover:text-white" href="plan abonnement.html">Plans</a>
+        <a class="text-white/80 hover:text-white" href="astuce.html">Devenir pro</a>
+        <a class="text-white/80 hover:text-white" href="victoires.html">Victoires</a>
         <a class="text-white/80 hover:text-white" href="profil.html">Mon profil</a>
-        <a class="text-white/80 hover:text-white" href="about.html">Qui est mhd pronos</a>
       </nav>
     </div>
     <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
       <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
         <a class="text-white/90" href="home.html">Accueil</a>
-        <a class="text-white/90" href="plan-abonnement.html">Abonnements</a>
+        <a class="text-white/90" href="plan abonnement.html">Plans</a>
+        <a class="text-white/90" href="astuce.html">Devenir pro</a>
+        <a class="text-white/90" href="victoires.html">Victoires</a>
         <a class="text-white/90" href="profil.html">Mon profil</a>
-        <a class="text-white/90" href="about.html">Qui est mhd pronos</a>
       </div>
     </nav>
   </header>
 
-  <!-- Summary -->
-  <section class="max-w-6xl mx-auto px-4 py-10 reveal">
-    <div class="glass rounded-2xl p-6">
-      <h1 class="text-2xl md:text-3xl font-black">Paiement</h1>
-      <p class="text-white/80 mt-1">Vérifiez votre formule et choisissez un moyen de paiement.</p>
-      <div class="mt-4 grid md:grid-cols-3 gap-5">
-        <div class="glass rounded-xl p-5">
-          <div class="text-sm text-white/60">Formule</div>
-          <div id="summaryLabel" class="text-lg font-semibold mt-1">—</div>
+  <!-- Hero -->
+  <section class="py-10 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-start">
+      <!-- Récap Plan -->
+      <div class="glass rounded-2xl p-6 reveal" id="recapBox">
+        <h1 class="text-2xl md:text-3xl font-black mb-2">Sélection du paiement</h1>
+        <p class="text-white/80">Vérifiez votre formule, choisissez un moyen, puis validez.</p>
+
+        <div class="mt-5 grid grid-cols-2 gap-4 text-sm">
+          <div class="glass rounded-xl p-4">
+            <div class="text-white/60">Formule</div>
+            <div class="font-semibold" id="planLabel">—</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-white/60">Prix</div>
+            <div class="font-semibold" id="planPrice">—</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-white/60">Durée</div>
+            <div class="font-semibold" id="planDays">—</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-white/60">Moyen choisi</div>
+            <div class="font-semibold" id="methodLabel">—</div>
+          </div>
         </div>
-        <div class="glass rounded-xl p-5">
-          <div class="text-sm text-white/60">Tarif</div>
-          <div id="summaryPrice" class="text-lg font-semibold mt-1">—</div>
+
+        <div id="alreadyActive" class="hidden mt-5 p-4 rounded-xl bg-green-500 bg-opacity-15 border border-green-400 text-sm">
+          ✅ Un abonnement **actif** est déjà détecté sur ce navigateur.<br/>
+          <a href="vip.html" class="inline-btn btn-primary mt-3">Aller sur VIP</a>
         </div>
-        <div class="glass rounded-xl p-5">
-          <div class="text-sm text-white/60">Durée</div>
-          <div id="summaryDays" class="text-lg font-semibold mt-1">—</div>
+
+        <div id="recapWarning" class="hidden mt-5 p-4 rounded-xl bg-yellow-500 bg-opacity-15 border border-yellow-400 text-sm">
+          ⚠️ Aucun plan détecté. Merci de revenir choisir une formule :
+          <a href="plan abonnement.html" class="inline-btn btn-primary mt-2">Choisir un plan</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Payment methods -->
-  <section class="max-w-6xl mx-auto px-4 pb-10 reveal">
-    <h2 class="text-xl md:text-2xl font-black mb-4">Sélectionnez un moyen de paiement</h2>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- MTN Money -->
-      <div class="glass rounded-2xl p-5 pm-card">
-        <div class="flex items-center gap-4">
-          <div class="logo-box">
-            <img src="" alt="mtn.png" title="MTN Money (à renseigner)">
+      <!-- Moyens de paiement -->
+      <div class="reveal">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <!-- MTN -->
+          <div class="glass rounded-2xl p-4 card payment-card" data-method="MTN Money">
+            <div class="flex items-center gap-4">
+              <img src="./mtn.png" alt="MTN Money" class="logo" onerror="this.style.display='none'">
+              <div>
+                <div class="font-semibold">MTN Money</div>
+                <div class="text-xs text-white/60">Mobile Money</div>
+              </div>
+            </div>
+            <button class="mt-4 w-full btn-outline py-2 rounded-xl select-btn">Payer avec MTN</button>
           </div>
-          <div>
-            <div class="font-semibold">MTN Money</div>
-            <div class="text-xs text-white/60">Mobile Money</div>
+
+          <!-- Orange -->
+          <div class="glass rounded-2xl p-4 card payment-card" data-method="Orange Money">
+            <div class="flex items-center gap-4">
+              <img src="./orange.png" alt="Orange Money" class="logo" onerror="this.style.display='none'">
+              <div>
+                <div class="font-semibold">Orange Money</div>
+                <div class="text-xs text-white/60">Mobile Money</div>
+              </div>
+            </div>
+            <button class="mt-4 w-full btn-outline py-2 rounded-xl select-btn">Payer avec Orange</button>
+          </div>
+
+          <!-- Moov -->
+          <div class="glass rounded-2xl p-4 card payment-card" data-method="Moov Money">
+            <div class="flex items-center gap-4">
+              <img src="./moov.png" alt="Moov Money" class="logo" onerror="this.style.display='none'">
+              <div>
+                <div class="font-semibold">Moov Money</div>
+                <div class="text-xs text-white/60">Mobile Money</div>
+              </div>
+            </div>
+            <button class="mt-4 w-full btn-outline py-2 rounded-xl select-btn">Payer avec Moov</button>
+          </div>
+
+          <!-- Wave -->
+          <div class="glass rounded-2xl p-4 card payment-card" data-method="Wave">
+            <div class="flex items-center gap-4">
+              <img src="./wave.png" alt="Wave" class="logo" onerror="this.style.display='none'">
+              <div>
+                <div class="font-semibold">Wave</div>
+                <div class="text-xs text-white/60">Mobile Money</div>
+              </div>
+            </div>
+            <button class="mt-4 w-full btn-outline py-2 rounded-xl select-btn">Payer avec Wave</button>
+          </div>
+
+          <!-- Visa -->
+          <div class="glass rounded-2xl p-4 card payment-card" data-method="Visa">
+            <div class="flex items-center gap-4">
+              <img src="./visa.png" alt="Visa" class="logo" onerror="this.style.display='none'">
+              <div>
+                <div class="font-semibold">Carte Visa</div>
+                <div class="text-xs text-white/60">Carte bancaire</div>
+              </div>
+            </div>
+            <button class="mt-4 w-full btn-outline py-2 rounded-xl select-btn">Payer avec Visa</button>
+          </div>
+
+          <!-- PayPal -->
+          <div class="glass rounded-2xl p-4 card payment-card" data-method="PayPal">
+            <div class="flex items-center gap-4">
+              <img src="./PayPal.webp" alt="PayPal" class="logo" onerror="this.style.display='none'">
+              <div>
+                <div class="font-semibold">PayPal</div>
+                <div class="text-xs text-white/60">Paiement en ligne</div>
+              </div>
+            </div>
+            <button class="mt-4 w-full btn-outline py-2 rounded-xl select-btn">Payer avec PayPal</button>
           </div>
         </div>
-        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="mtn">Payer avec MTN</button>
-      </div>
 
-      <!-- Orange Money -->
-      <div class="glass rounded-2xl p-5 pm-card">
-        <div class="flex items-center gap-4">
-          <div class="logo-box">
-            <img src="" alt="orange.png" title="Orange Money (à renseigner)">
+        <!-- CTA validation -->
+        <div class="glass rounded-2xl p-5 mt-5">
+          <div class="text-sm text-white/70">
+            Une fois votre paiement effectué, cliquez ci-dessous pour activer votre abonnement.
           </div>
-          <div>
-            <div class="font-semibold">Orange Money</div>
-            <div class="text-xs text-white/60">Mobile Money</div>
-          </div>
+          <button id="validateBtn" class="mt-3 w-full btn-primary py-3 rounded-xl font-semibold">
+            J’ai payé / Valider l’abonnement
+          </button>
+          <div id="feedback" class="hidden mt-3 p-3 rounded-xl text-sm"></div>
         </div>
-        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="orange">Payer avec Orange</button>
       </div>
-
-      <!-- Moov Money -->
-      <div class="glass rounded-2xl p-5 pm-card">
-        <div class="flex items-center gap-4">
-          <div class="logo-box">
-            <img src="" alt="moov.png" title="Moov Money (à renseigner)">
-          </div>
-          <div>
-            <div class="font-semibold">Moov Money</div>
-            <div class="text-xs text-white/60">Mobile Money</div>
-          </div>
-        </div>
-        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="moov">Payer avec Moov</button>
-      </div>
-
-      <!-- Wave -->
-      <div class="glass rounded-2xl p-5 pm-card">
-        <div class="flex items-center gap-4">
-          <div class="logo-box">
-            <img src="" alt="wave.png" title="Wave (à renseigner)">
-          </div>
-          <div>
-            <div class="font-semibold">Wave</div>
-            <div class="text-xs text-white/60">Mobile Money</div>
-          </div>
-        </div>
-        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="wave">Payer avec Wave</button>
-      </div>
-
-      <!-- Visa -->
-      <div class="glass rounded-2xl p-5 pm-card">
-        <div class="flex items-center gap-4">
-          <div class="logo-box">
-            <img src="" alt="visa.png" title="Visa (à renseigner)">
-          </div>
-          <div>
-            <div class="font-semibold">Carte Visa</div>
-            <div class="text-xs text-white/60">Carte bancaire</div>
-          </div>
-        </div>
-        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="visa">Payer avec Visa</button>
-      </div>
-
-      <!-- PayPal -->
-      <div class="glass rounded-2xl p-5 pm-card">
-        <div class="flex items-center gap-4">
-          <div class="logo-box">
-            <img src="" alt="paypal.webp" title="PayPal (à renseigner)">
-          </div>
-          <div>
-            <div class="font-semibold">PayPal</div>
-            <div class="text-xs text-white/60">Portefeuille</div>
-          </div>
-        </div>
-        <button class="mt-4 w-full px-4 py-2 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5" data-method="paypal">Payer avec PayPal</button>
-      </div>
-    </div>
-
-    <!-- confirmation -->
-    <div class="glass rounded-2xl p-5 mt-6">
-      <div class="text-white/80 text-sm">Après votre paiement, cliquez sur le bouton ci-dessous pour valider l’abonnement.</div>
-      <button id="confirmPaid" class="btn-primary mt-3 px-6 py-3 rounded-xl font-semibold inline-flex items-center">J’ai payé / Valider l’abonnement</button>
-      <div id="status" class="text-sm mt-3 text-white/70"></div>
     </div>
   </section>
 
@@ -183,104 +196,131 @@
     <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-6 justify-between">
       <div>
         <div class="text-lg font-extrabold lowercase">mhd pronos</div>
-        <div class="text-sm text-white/60">Meilleur pronostiqueur ivoirien.</div>
+        <div class="text-sm text-white/60">Aide : <a class="text-indigo-300 underline" target="_blank" href="https://t.me/mhd_pronos">support Telegram</a></div>
       </div>
-      <div class="text-xs text-white/50 max-w-xl">Avertissement : Les jeux d’argent comportent des risques.</div>
+      <div class="text-xs text-white/50 max-w-xl">
+        Avertissement : Les jeux d’argent comportent des risques. Ne pariez que ce que vous pouvez vous permettre de perdre.
+      </div>
     </div>
   </footer>
 
-  <!-- Firebase + logique paiement -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  <script>
+    // ---- Helpers
+    const fmtCurrency = (n) => new Intl.NumberFormat('fr-FR', { style:'currency', currency:'XOF' }).format(n);
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-      authDomain: "mhd-pronos.firebaseapp.com",
-      projectId: "mhd-pronos",
-      storageBucket: "mhd-pronos.firebasestorage.app",
-      messagingSenderId: "366441954219",
-      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const summaryLabel = document.getElementById('summaryLabel');
-    const summaryPrice = document.getElementById('summaryPrice');
-    const summaryDays  = document.getElementById('summaryDays');
-    const statusEl     = document.getElementById('status');
-
-    // Récupérer le plan choisi
+    // ---- Chargement du plan sélectionné (depuis plan abonnement.html)
     const plan = JSON.parse(localStorage.getItem('selectedPlan') || 'null');
-    if (!plan) {
-      alert("Aucun plan sélectionné. Retour aux abonnements.");
-      window.location.href = "plan-abonnement.html";
-    } else {
-      summaryLabel.textContent = plan.label;
-      summaryPrice.textContent = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "XOF" }).format(plan.price);
-      summaryDays.textContent  = `${plan.days} jours`;
+    const planLabelEl = $('#planLabel');
+    const planPriceEl = $('#planPrice');
+    const planDaysEl  = $('#planDays');
+    const methodLabelEl = $('#methodLabel');
+    const recapWarningEl = $('#recapWarning');
+    const alreadyActiveEl = $('#alreadyActive');
+    const feedbackEl = $('#feedback');
+
+    function renderPlan() {
+      if (!plan) {
+        recapWarningEl.classList.remove('hidden');
+        return;
+      }
+      planLabelEl.textContent = plan.label;
+      planPriceEl.textContent = fmtCurrency(plan.price);
+      planDaysEl.textContent  = plan.days + ' jours';
     }
 
-    // Sélection d'un moyen de paiement (facultatif : mémoriser)
-    let selectedMethod = null;
-    document.querySelectorAll('[data-method]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        selectedMethod = btn.getAttribute('data-method');
-        statusEl.textContent = `Moyen sélectionné : ${selectedMethod.toUpperCase()}. Effectuez le paiement selon vos instructions, puis validez.`;
+    // ---- Abonnement existant ?
+    function getSubscription() {
+      try { return JSON.parse(localStorage.getItem('subscription') || 'null'); }
+      catch { return null; }
+    }
+    function isSubscriptionActive(sub) {
+      if (!sub) return false;
+      return new Date(sub.expiresISO).getTime() > Date.now();
+    }
+
+    // Si déjà actif → proposer d’aller sur VIP
+    const currentSub = getSubscription();
+    if (isSubscriptionActive(currentSub)) {
+      alreadyActiveEl.classList.remove('hidden');
+    }
+
+    // ---- Sélection d’un moyen de paiement (simulation)
+    let chosenMethod = localStorage.getItem('chosenPaymentMethod') || '';
+    if (chosenMethod) methodLabelEl.textContent = chosenMethod;
+
+    function selectMethod(method, cardEl) {
+      chosenMethod = method;
+      localStorage.setItem('chosenPaymentMethod', method);
+      methodLabelEl.textContent = method;
+
+      $$('.payment-card').forEach(c => c.classList.remove('selected'));
+      if (cardEl) cardEl.classList.add('selected');
+      showMsg('Moyen sélectionné : ' + method, 'info');
+    }
+
+    $$('.payment-card').forEach(card => {
+      const method = card.getAttribute('data-method');
+      const btn = card.querySelector('.select-btn');
+      btn.addEventListener('click', () => selectMethod(method, card));
+      card.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('select-btn')) selectMethod(method, card);
       });
+      // remettre l'état si déjà choisi
+      if (chosenMethod && chosenMethod === method) card.classList.add('selected');
     });
 
-    // Validation: créer/activer l'abonnement dans Firestore
-    document.getElementById('confirmPaid').addEventListener('click', async ()=>{
-      onAuthStateChanged(auth, async (user)=>{
-        if (!user) {
-          alert("Veuillez vous connecter pour valider.");
-          window.location.href = "index.html";
-          return;
-        }
-        try {
-          // Calcule la date d'expiration
-          const start = new Date();
-          const expires = new Date(start);
-          expires.setDate(expires.getDate() + (plan.days || 0));
+    // ---- Validation (simulation + expiration selon plan)
+    $('#validateBtn').addEventListener('click', () => {
+      if (!plan) {
+        showMsg('Aucun plan détecté. Merci de choisir une formule.', 'warn',
+          '<a href="plan abonnement.html" class="inline-btn btn-primary mt-2">Aller aux plans</a>');
+        return;
+      }
+      if (!chosenMethod) {
+        showMsg('Veuillez sélectionner un moyen de paiement avant de valider.', 'warn');
+        return;
+      }
+      // Simulation : réussite → on crée l’abonnement + expiry
+      const start = new Date();
+      const expires = new Date(start.getTime() + plan.days * 24*60*60*1000);
 
-          // Doc: subscriptions/{uid}
-          const subRef = doc(db, "subscriptions", user.uid);
-          await setDoc(subRef, {
-            uid: user.uid,
-            planId: plan.id,
-            planLabel: plan.label,
-            priceXOF: plan.price,
-            days: plan.days,
-            method: selectedMethod || null,
-            status: "active",
-            startAt: serverTimestamp(),
-            startAtLocal: start.toISOString(),
-            expiresAtLocal: expires.toISOString()
-          }, { merge: true });
+      const subscription = {
+        planId: plan.id, label: plan.label, price: plan.price, days: plan.days,
+        method: chosenMethod,
+        startISO: start.toISOString(),
+        expiresISO: expires.toISOString()
+      };
+      localStorage.setItem('subscription', JSON.stringify(subscription));
 
-          statusEl.textContent = "Abonnement activé ! Redirection vers l’espace VIP...";
-          setTimeout(()=> window.location.href = "vip.html", 900);
-        } catch (e) {
-          console.error(e);
-          statusEl.textContent = "Erreur lors de l'activation de l'abonnement.";
-          alert("Erreur : " + e.message);
-        }
-      });
+      showMsg('✅ Paiement validé ! Redirection vers l’espace VIP…', 'ok');
+      setTimeout(() => { window.location.href = 'vip.html'; }, 900);
     });
 
-    // Animations & menu
+    // ---- UI helpers
+    function showMsg(text, type='info', extraHTML='') {
+      feedbackEl.classList.remove('hidden');
+      feedbackEl.innerHTML = text + (extraHTML ? '<div class="mt-2">'+extraHTML+'</div>' : '');
+      feedbackEl.className = 'mt-3 p-3 rounded-xl text-sm';
+      if (type === 'ok') feedbackEl.classList.add('bg-green-500','bg-opacity-15','border','border-green-400');
+      else if (type === 'warn') feedbackEl.classList.add('bg-yellow-500','bg-opacity-15','border','border-yellow-400');
+      else feedbackEl.classList.add('glass');
+    }
+
+    // ---- Animations reveal
     const io = new IntersectionObserver((entries)=> {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+    // ---- Menu mobile
     const btn = document.getElementById('menuBtn');
     const menu = document.getElementById('mobileMenu');
     if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+    // Init
+    renderPlan();
   </script>
 </body>
 </html>
