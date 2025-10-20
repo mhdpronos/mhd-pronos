@@ -23,6 +23,17 @@
     .reveal.show { opacity: 1; transform: none; }
     .card { transition: transform .25s ease, box-shadow .25s ease; }
     .card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+
+    /* Boutons partenaires style "home" */
+    .btn-partenaire {
+      display: inline-block; text-align:center;
+      padding: 12px 28px; border-radius: 9999px;
+      background: linear-gradient(135deg, #1414e4, #9a02ff);
+      color:#fff; font-weight:700; text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(255,204,0,.3);
+      transition: .25s ease; border:1px solid rgba(255,255,255,.14);
+    }
+    .btn-partenaire:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.05); }
   </style>
 </head>
 <body class="text-white">
@@ -34,12 +45,16 @@
         <img src="logo.JPG" alt="Logo" class="w-10 h-10 rounded-md object-cover">
         <span class="text-lg font-extrabold lowercase">mhd pronos</span>
       </a>
+
+      <!-- Mobile quick links + menu -->
       <div class="ml-auto flex items-center space-x-2 md:hidden">
-        <a href="about.html" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5">Qui est mhd pronos</a>
+        <a href="about.html" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5 text-sm">Qui est mhd pronos</a>
         <button id="menuBtn" class="px-3 py-2 rounded-lg btn-outline hover:bg-white hover:bg-opacity-5" aria-label="menu">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
+
+      <!-- Desktop nav -->
       <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
         <a class="text-white/80 hover:text-white" href="home.html">Accueil</a>
         <a class="text-white/80 hover:text-white" href="home.html#tips">Pronostics</a>
@@ -49,6 +64,7 @@
         <a class="text-white/80 hover:text-white" href="profil.html">Mon profil</a>
       </nav>
     </div>
+    <!-- Mobile menu -->
     <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
       <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
         <a class="text-white/90" href="home.html">Accueil</a>
@@ -67,7 +83,10 @@
       <div class="reveal">
         <span class="pill">Accès Premium</span>
         <h1 class="mt-3 text-4xl md:text-5xl font-black tracking-tight">DEVENEZ MEMBRE VIP</h1>
-        <p class="mt-4 text-white/80 text-base md:text-lg">Accédez aux pronostics exclusifs, analyses détaillées et support prioritaire. Choisissez la durée qui vous convient — l’accès sera automatiquement géré et protégé.</p>
+        <p class="mt-4 text-white/80 text-base md:text-lg">
+          Accédez aux pronostics exclusifs, analyses détaillées et support prioritaire. L’accès est
+          sécurisé et géré automatiquement selon la durée choisie.
+        </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href="about.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Qui est mhd pronos</a>
           <a href="home.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Retour Accueil</a>
@@ -80,7 +99,7 @@
             <li>Pronostics premium quotidiens</li>
             <li>Analyses data & discipline bankroll</li>
             <li>Priorité support Telegram</li>
-            <li>Accès sécurisé selon la durée choisie</li>
+            <li>Accès contrôlé & expiration automatique</li>
           </ul>
         </div>
       </div>
@@ -102,10 +121,13 @@
           <li>Support Telegram</li>
           <li>Suivi personnalisé</li>
         </ul>
-        <button
-          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold"
+
+        <!-- IMPORTANT : href="paiement.html" + data-plan -->
+        <a
+          href="page payment.html"
+          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold text-center"
           data-plan='{"id":"week","label":"1 Semaine","price":3000,"days":7}'
-        >S’abonner</button>
+        >S’abonner</a>
       </div>
 
       <!-- 1 mois -->
@@ -120,10 +142,12 @@
           <li>Alertes rapides</li>
           <li>Bankroll guide</li>
         </ul>
-        <button
-          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold"
+
+        <a
+          href="page payment.html"
+          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold text-center"
           data-plan='{"id":"month","label":"1 Mois","price":10000,"days":30}'
-        >S’abonner</button>
+        >S’abonner</a>
       </div>
 
       <!-- 3 mois -->
@@ -137,22 +161,82 @@
           <li>Statistiques détaillées</li>
           <li>Priorité support</li>
         </ul>
-        <button
-          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold"
+
+        <a
+          href="page payment.html"
+          class="btn-primary mt-6 px-5 py-3 rounded-xl font-semibold text-center"
           data-plan='{"id":"quarter","label":"3 Mois","price":25000,"days":90}'
-        >S’abonner</button>
+        >S’abonner</a>
       </div>
     </div>
   </section>
 
-  <!-- Partenaires (optionnel) -->
-  <section class="max-w-6xl mx-auto px-4 py-10 reveal">
-    <h3 class="text-lg font-semibold mb-4">Nos partenaires</h3>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="glass rounded-xl p-4 text-center">1XBET</div>
-      <div class="glass rounded-xl p-4 text-center">BETWINNER</div>
-      <div class="glass rounded-xl p-4 text-center">WAVE</div>
-      <div class="glass rounded-xl p-4 text-center">VISA</div>
+  <!-- Comment ça marche -->
+  <section class="max-w-6xl mx-auto px-4 pb-10 reveal">
+    <h3 class="text-xl md:text-2xl font-black mb-4">Comment ça marche ?</h3>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">1) Choisissez un plan</div>
+        <p class="text-white/80 text-sm mt-2">Sélectionnez 1 semaine, 1 mois ou 3 mois.</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">2) Payez en 1 clic</div>
+        <p class="text-white/80 text-sm mt-2">Sur la page de paiement, choisissez MTN/Orange/Moov/Wave/Visa/PayPal.</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">3) Accédez au VIP</div>
+        <p class="text-white/80 text-sm mt-2">Accès immédiat et contrôlé jusqu’à la date d’expiration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partenaires (liens identiques à home) -->
+  <section class="max-w-6xl mx-auto px-4 pb-10 reveal">
+    <h3 class="text-xl md:text-2xl font-black mb-4">Nos partenaires officiels</h3>
+    <div class="flex flex-wrap gap-3">
+      <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" class="btn-partenaire">1XBET</a>
+      <a href="https://bwredir.com/1Xxd?p=%2Fregistration%2F" target="_blank" class="btn-partenaire">BETWINNER</a>
+      <a href="https://1wyvrz.life/?p=vteh" target="_blank" class="btn-partenaire">1WIN</a>
+      <a href="https://refpa3665.com/L?tag=d_2526373m_45415c_&site=2526373&ad=45415" target="_blank" class="btn-partenaire">MELBET</a>
+      <a href="https://top100bonus.com/L?tag=d_2625843m_37513c_&site=2625843&ad=37513" target="_blank" class="btn-partenaire">888STARZ</a>
+      <a href="https://combodef.com/L?tag=d_3703799m_60651c_&site=3703799&ad=60651" target="_blank" class="btn-partenaire">PARIPESA</a>
+      <a href="https://gpaff.top/L?tag=d_3453290m_69627c_&site=3453290&ad=69627" target="_blank" class="btn-partenaire">GOLDPARI</a>
+      <a href="https://refpazitag.top/L?tag=d_2561833m_25437c_&site=2561833&ad=25437" target="_blank" class="btn-partenaire">MEGAPARI</a>
+      <a href="https://lb-aff.com/L?tag=d_2378251m_22611c_&site=2378251&ad=22611" target="_blank" class="btn-partenaire">LINEBET</a>
+    </div>
+  </section>
+
+  <!-- FAQ Abonnement -->
+  <section class="max-w-6xl mx-auto px-4 pb-10 reveal">
+    <h3 class="text-xl md:text-2xl font-black mb-4">Questions fréquentes</h3>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">Quand commence l’abonnement ?</div>
+        <p class="text-white/80 text-sm mt-2">Dès la validation du paiement, la date de début est enregistrée, et l’expiration est calculée automatiquement (7/30/90 jours).</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">Puis-je changer de plan ?</div>
+        <p class="text-white/80 text-sm mt-2">Oui, vous pouvez vous réabonner à une autre durée à tout moment — la nouvelle période repart du jour de paiement.</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">Que se passe-t-il à l’expiration ?</div>
+        <p class="text-white/80 text-sm mt-2">L’accès VIP est automatiquement bloqué. Il suffit de renouveler depuis cette page.</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <div class="font-semibold">Quels moyens de paiement ?</div>
+        <p class="text-white/80 text-sm mt-2">MTN Money, Orange Money, Moov Money, Wave, Visa, PayPal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Support -->
+  <section class="max-w-6xl mx-auto px-4 pb-16 reveal">
+    <div class="glass rounded-2xl p-6 flex flex-col md:flex-row md:items-center gap-4">
+      <div class="flex-1">
+        <div class="text-lg font-semibold">Besoin d’aide pour finaliser ?</div>
+        <div class="text-white/70 text-sm">Notre support vous accompagne sur Telegram.</div>
+      </div>
+      <a href="https://t.me/mhd_pronos" target="_blank" class="btn-primary px-6 py-3 rounded-xl font-semibold">Contacter le support</a>
     </div>
   </section>
 
@@ -171,7 +255,6 @@
 
   <!-- Firebase + logique sélection plan -->
   <script type="module">
-    // Firebase v10 (modules)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -187,22 +270,24 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Sélection du plan → sauvegarde locale + redirection vers paiement
-    const buttons = document.querySelectorAll('[data-plan]');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const plan = JSON.parse(btn.getAttribute('data-plan'));
+    // Connaître l'état d'auth rapidement
+    let isAuthed = null;
+    onAuthStateChanged(auth, (user) => { isAuthed = !!user; });
+
+    // Boutons "S’abonner" => <a href="paiement.html" data-plan="...">
+    const planLinks = document.querySelectorAll('[data-plan]');
+    planLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const plan = JSON.parse(link.getAttribute('data-plan'));
         localStorage.setItem('selectedPlan', JSON.stringify(plan));
-        // Si non connecté → redirige vers index.html (connexion)
-        onAuthStateChanged(auth, (user) => {
-          if (!user) {
-            alert("Connectez-vous pour continuer votre abonnement.");
-            window.location.href = "index.html";
-          } else {
-            window.location.href = "paiement.html";
-          }
-        });
-      });
+        // Si pas connecté → on interrompt et on redirige vers login
+        if (!isAuthed) {
+          e.preventDefault();
+          alert("Connectez-vous pour continuer votre abonnement.");
+          window.location.href = "index.html"; // ta page de connexion
+        }
+        // Sinon on laisse suivre le href="paiement.html"
+      }, { passive: false });
     });
 
     // Animations reveal
