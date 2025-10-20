@@ -46,24 +46,51 @@
   </script>
 
   <!-- Header -->
-  <header class="sticky top-0 z-50 glass">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-4">
-      <a href="home.html" class="flex items-center space-x-3">
-        <img src="logo.JPG" alt="Logo MHD Pronos" class="w-10 h-10 rounded-md object-cover">
-        <span class="text-lg font-extrabold lowercase">mhd pronos</span>
-      </a>
+  <!-- Header -->
+<header class="sticky top-0 z-50 glass">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
+    <!-- Logo + marque -->
+    <a href="home.html" class="flex items-center space-x-3">
+      <img src="logo.JPG" alt="Logo MHD Pronos" class="w-10 h-10 rounded-md object-cover">
+      <span class="text-lg font-extrabold lowercase">mhd pronos</span>
+    </a>
 
-      <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
-        <a class="text-white/80 hover:text-white" href="#tips">Pronostics</a>
-        <a class="text-white/80 hover:text-white" href="#method">Méthode</a>
-        <a class="text-white/80 hover:text-white" href="#pricing">Abonnements</a>
-        <a class="text-white/80 hover:text-white" href="#faq">FAQ</a>
-        <a href="profil.html" class="inline-flex items-center space-x-2 px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition">
-          <span>Mon profil</span>
-        </a>
-      </nav>
+    <!-- Actions visibles sur mobile -->
+    <div class="ml-auto flex items-center space-x-2 md:hidden">
+      <a href="profil.html" class="btn-primary px-3 py-2 rounded-lg font-semibold shadow">
+        Mon profil
+      </a>
+      <button id="menuBtn" class="px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5" aria-label="Ouvrir le menu">
+        <!-- icône burger -->
+        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
     </div>
-  </header>
+
+    <!-- Menu desktop -->
+    <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
+      <a class="text-white/80 hover:text-white" href="#tips">Pronostics</a>
+      <a class="text-white/80 hover:text-white" href="#method">Méthode</a>
+      <a class="text-white/80 hover:text-white" href="#pricing">Abonnements</a>
+      <a class="text-white/80 hover:text-white" href="#faq">FAQ</a>
+      <a href="profil.html" class="inline-flex items-center px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">
+        Mon profil
+      </a>
+    </nav>
+  </div>
+
+  <!-- Menu mobile déroulant -->
+  <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
+      <a class="text-white/90" href="#tips">Pronostics</a>
+      <a class="text-white/90" href="#method">Méthode</a>
+      <a class="text-white/90" href="#pricing">Abonnements</a>
+      <a class="text-white/90" href="#faq">FAQ</a>
+      <a class="text-white/90" href="profil.html">Mon profil</a>
+    </div>
+  </nav>
+</header>
 
   <!-- Hero -->
   <section class="relative overflow-hidden py-16 md:py-24">
@@ -82,9 +109,19 @@
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">Activer le VIP</a>
-          <a href="https://t.me/+3qums05XWOw2ZWJk" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">Rejoindre le canal</a>
-        </div>
+  <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
+    Activer le VIP
+  </a>
+  <a href="https://t.me/+3qums05XWOw2ZWJk" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+    Rejoindre le canal
+  </a>
+  <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+    Devenir pro
+  </a>
+  <a href="victoires.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+    Victoires du jour
+  </a>
+</div>
 
         <!-- Avertissement jeu -->
         <div class="mt-6 glass rounded-xl p-5 text-sm leading-relaxed">
@@ -147,83 +184,111 @@
       </div>
     </div>
 
-    <div class="table-wrap glass">
-      <table class="min-w-full text-sm">
-        <thead class="bg-white bg-opacity-5">
-          <tr class="text-left">
-            <th class="px-4 py-3">Date</th>
-            <th class="px-4 py-3">Compétition</th>
-            <th class="px-4 py-3">Match</th>
-            <th class="px-4 py-3">Sélection</th>
-            <th class="px-4 py-3">Cote</th>
-            <th class="px-4 py-3">Confiance</th>
-            <th class="px-4 py-3">Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-t border-white/10">
-            <td class="px-4 py-3 whitespace-nowrap">2025-10-04</td>
-            <td class="px-4 py-3">La Liga</td>
-            <td class="px-4 py-3 font-medium">Real Madrid vs Barça</td>
-            <td class="px-4 py-3">Barça gagne 10-0</td>
-            <td class="px-4 py-3">1.51</td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-2">
-                <div class="h-2 w-24 rounded-full bg-white/10">
-                  <div class="h-2 rounded-full bg-green-500" style="width:100%"></div>
-                </div>
-                <span class="text-xs text-white/70">5/5</span>
-              </div>
-            </td>
-            <td class="px-4 py-3"><span class="pill">Gratuit</span></td>
-          </tr>
+    <div class="glass rounded-xl">
+  <div class="overflow-x-auto">
+    <table class="text-sm" style="min-width: 1100px;">
+      <thead class="bg-white bg-opacity-5">
+        <tr class="text-left">
+          <th class="px-4 py-3">Date</th>
+          <th class="px-4 py-3">Compétition</th>
+          <th class="px-4 py-3">Match</th>
+          <th class="px-4 py-3">Sélection</th>
+          <th class="px-4 py-3">Cote</th>
+          <th class="px-4 py-3">Confiance</th>
+          <th class="px-4 py-3">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2025-10-21</td>
+          <td>Premier League</td>
+          <td>Arsenal vs Chelsea</td>
+          <td>+2.5 buts</td>
+          <td>1.85</td>
+          <td>
+            <div class="flex items-center gap-2">
+              <div class="progress"><div class="progress-fill" style="width:90%"></div></div>
+              <span class="text-xs text-white/70">4.5/5</span>
+            </div>
+          </td>
+          <td><span class="pill" style="background:rgba(99,102,241,.3);border:1px solid rgba(99,102,241,.5);">Gratuit</span></td>
+        </tr>
 
-          <tr class="border-t border-white/10">
-            <td class="px-4 py-3 whitespace-nowrap">2025-10-04</td>
-            <td class="px-4 py-3">La Liga</td>
-            <td class="px-4 py-3 font-medium">Ath Bilbao vs Majorque</td>
-            <td class="px-4 py-3">Ath Bilbao</td>
-            <td class="px-4 py-3">1.68</td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-2">
-                <div class="h-2 w-24 rounded-full bg-white/10">
-                  <div class="h-2 rounded-full bg-green-500" style="width:80%"></div>
-                </div>
-                <span class="text-xs text-white/70">4/5</span>
-              </div>
-            </td>
-            <td class="px-4 py-3"><span class="pill">Gratuit</span></td>
-          </tr>
+        <tr>
+          <td>2025-10-21</td>
+          <td>Ligue 1</td>
+          <td>PSG vs Marseille</td>
+          <td>PSG gagne & -4.5 buts</td>
+          <td>1.72</td>
+          <td>
+            <div class="flex items-center gap-2">
+              <div class="progress"><div class="progress-fill" style="width:80%"></div></div>
+              <span class="text-xs text-white/70">4/5</span>
+            </div>
+          </td>
+          <td><span class="pill" style="background:rgba(16,185,129,.3);border:1px solid rgba(16,185,129,.5);">VIP</span></td>
+        </tr>
 
-          <tr class="border-t border-white/10">
-            <td class="px-4 py-3 whitespace-nowrap">2025-10-04</td>
-            <td class="px-4 py-3">Premier League</td>
-            <td class="px-4 py-3 font-medium">Chelsea vs Liverpool</td>
-            <td class="px-4 py-3">Pas de penalty</td>
-            <td class="px-4 py-3">1.50</td>
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-2">
-                <div class="h-2 w-24 rounded-full bg-white/10">
-                  <div class="h-2 rounded-full bg-green-500" style="width:80%"></div>
-                </div>
-                <span class="text-xs text-white/70">4/5</span>
-              </div>
-            </td>
-            <td class="px-4 py-3"><span class="pill">Gratuit</span></td>
-          </tr>
-        </tbody>
-      </table>
+        <tr>
+          <td>2025-10-21</td>
+          <td>Serie A</td>
+          <td>Inter vs AC Milan</td>
+          <td>Inter gagne</td>
+          <td>1.90</td>
+          <td>
+            <div class="flex items-center gap-2">
+              <div class="progress"><div class="progress-fill" style="width:100%"></div></div>
+              <span class="text-xs text-white/70">5/5</span>
+            </div>
+          </td>
+          <td><span class="pill" style="background:rgba(16,185,129,.3);border:1px solid rgba(16,185,129,.5);">VIP</span></td>
+        </tr>
 
-      <div class="p-5 border-t border-white/10">
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
-          <div class="flex-1">
-            <div class="text-sm text-white/70">Accès VIP requis</div>
-            <div class="text-base">Débloquez les pronostics premium et les analyses complètes.</div>
-          </div>
-          <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">Activer le VIP</a>
-        </div>
+        <tr>
+          <td>2025-10-21</td>
+          <td>LaLiga</td>
+          <td>Real Madrid vs Valencia</td>
+          <td>Real Madrid -1 AH</td>
+          <td>1.88</td>
+          <td>
+            <div class="flex items-center gap-2">
+              <div class="progress"><div class="progress-fill" style="width:70%"></div></div>
+              <span class="text-xs text-white/70">3.5/5</span>
+            </div>
+          </td>
+          <td><span class="pill" style="background:rgba(99,102,241,.3);border:1px solid rgba(99,102,241,.5);">Gratuit</span></td>
+        </tr>
+
+        <tr>
+          <td>2025-10-21</td>
+          <td>Bundesliga</td>
+          <td>Bayern Munich vs Dortmund</td>
+          <td>Bayern gagne & +2.5 buts</td>
+          <td>1.95</td>
+          <td>
+            <div class="flex items-center gap-2">
+              <div class="progress"><div class="progress-fill" style="width:85%"></div></div>
+              <span class="text-xs text-white/70">4.2/5</span>
+            </div>
+          </td>
+          <td><span class="pill" style="background:rgba(16,185,129,.3);border:1px solid rgba(16,185,129,.5);">VIP</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CTA VIP en bas -->
+  <div class="p-5 border-t border-white/10">
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
+      <div class="flex-1">
+        <div class="text-sm text-white/70">Accès VIP requis</div>
+        <div class="text-base">Débloquez les pronostics premium et les analyses complètes.</div>
       </div>
+      <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">Activer le VIP</a>
     </div>
+  </div>
+</div>
+
   </section>
 
   <!-- Partenaires -->
@@ -378,5 +443,16 @@
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
+  <script>
+  // Toggle menu mobile
+  const btn = document.getElementById('menuBtn');
+  const menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+</script>
+
 </body>
 </html>
