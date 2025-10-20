@@ -1,148 +1,347 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Devenir pro en paris sportif</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Devenir pro en paris sportif — MHD Pronos</title>
+  <!-- Tailwind CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
   <style>
+    :root { color-scheme: dark; }
     body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    header {
-      background-color: #1e3a8a;
-      color: #fff;
-      padding: 30px 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2em;
-    }
-    header p {
-      margin-top: 10px;
-      font-size: 1.2em;
-    }
-    nav {
-      background-color: #2563eb;
-      padding: 10px 20px;
-      text-align: center;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    main {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    section {
-      margin-bottom: 40px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #1e3a8a;
-    }
-    ul {
-      margin-left: 20px;
-    }
-    .cta {
-      display: inline-block;
-      padding: 12px 25px;
-      background-color: #1e3a8a;
-      color: #fff;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .cta:hover {
-      background-color: #2563eb;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #1e3a8a;
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
+        #0b0b12;
       color: #fff;
     }
+    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn-outline { border:1px solid rgba(255,255,255,.12); }
+    .pill { display:inline-block; padding:.25rem .75rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:#E5E7EB; }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+    .card:hover { transform: translateY(-2px); }
+    .card { transition: transform .25s ease; }
+    .grad-title {
+      background: linear-gradient(135deg,#fff 0%,#c7c9ff 60%,#9aa0ff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    /* Mobile table scroll helper */
+    .overflow-x-auto { -webkit-overflow-scrolling: touch; }
   </style>
 </head>
-<body>
+<body class="text-white">
 
-  <header>
-    <h1>DEVENIR PRO EN PARIS SPORTIF</h1>
-    <p>Apprenez à parier intelligemment et à gérer votre bankroll comme un pro</p> <h3><strong>C'est possible avec mhd pronos</strong></h3>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
+      <a href="home.html" class="flex items-center space-x-3">
+        <img src="logo.JPG" alt="Logo MHD Pronos" class="w-10 h-10 rounded-md object-cover">
+        <span class="text-lg font-extrabold lowercase">mhd pronos</span>
+      </a>
+
+      <!-- Actions mobile -->
+      <div class="ml-auto flex items-center space-x-2 md:hidden">
+        <a href="profil.html" class="btn-primary px-3 py-2 rounded-lg font-semibold shadow">Mon profil</a>
+        <button id="menuBtn" class="px-3 py-2 rounded-lg btn-outline hover:bg-white bg-opacity-0 hover:bg-opacity-5" aria-label="menu">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+
+      <!-- Menu desktop -->
+      <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
+        <a class="text-white/80 hover:text-white" href="home.html">Accueil</a>
+        <a class="text-white/80 hover:text-white" href="home.html#tips">Pronostics</a>
+        <a class="text-white/80 hover:text-white" href="victoires.html">Victoires du jour</a>
+        <a class="text-white/80 hover:text-white" href="plan abonnement.html">Abonnements VIP</a>
+        <a class="text-white/80 hover:text-white" href="profil.html">Mon profil</a>
+      </nav>
+    </div>
+
+    <!-- Menu mobile -->
+    <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
+        <a class="text-white/90" href="home.html">Accueil</a>
+        <a class="text-white/90" href="home.html#tips">Pronostics</a>
+        <a class="text-white/90" href="victoires.html">Victoires du jour</a>
+        <a class="text-white/90" href="plan abonnement.html">Abonnements VIP</a>
+        <a class="text-white/90" href="profil.html">Mon profil</a>
+      </div>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#bases">Les Bases</a>
-    <a href="#strategies">Stratégies</a>
-    <a href="#gestion">Gestion de Bankroll</a>
-    <a href="#ressources">Ressources</a>
-  </nav>
+  <!-- Hero -->
+  <section class="relative overflow-hidden py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <span class="pill">Guide Pro • MHD Pronos</span>
+        <h1 class="mt-3 text-4xl md:text-5xl font-black tracking-tight grad-title">DEVENIR PRO EN PARIS SPORTIF</h1>
+        <p class="mt-4 text-white/80 text-base md:text-lg">
+          Méthode concrète, discipline et outils d’analyse pour parier comme un professionnel. Suis ce guide : tu vas éviter 90% des erreurs des débutants.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg inline-flex items-center">Activer le VIP</a>
+          <a href="home.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Retour Accueil</a>
+          <a href="profil.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Mon profil</a>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="pill">Value betting</span>
+          <span class="pill">Gestion de bankroll</span>
+          <span class="pill">Discipline</span>
+          <span class="pill">Checklists</span>
+        </div>
+      </div>
 
-  <main>
+      <div class="reveal">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-semibold text-lg">Objectif : croissance régulière</h3>
+          <p class="text-white/70 text-sm mt-2">
+            Un pro vise un rendement stable, pas un “coup de chance”. On optimise les unités de mise, on cherche les valeurs (value) et on respecte des limites claires.
+          </p>
+          <div class="mt-4">
+            <div class="text-xs text-white/60 mb-2">Progression mensuelle</div>
+            <div class="h-2 w-full rounded-full bg-white bg-opacity-10">
+              <div class="h-2 rounded-full bg-green-500" style="width:72%"></div>
+            </div>
+            <div class="text-xs text-white/60 mt-1">Objectif atteint : 72%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section id="bases">
-      <h2>LES BASES DES PARIS SPORTIF</h2>
-      <p>Avant de devenir un parieur professionnel, il est essentiel de comprendre les fondamentaux :</p>
-      <ul>
-        <li><strong>Types de paris :</strong> simples, combinés, live, over/under, handicap.</li>
-        <li><strong>Les cotes :</strong> comprendre ce qu’elles représentent et comment elles influencent vos gains.</li>
-        <li><strong>Analyse des matchs :</strong> statistiques, forme actuelle, blessures et autres facteurs clés.</li>
-      </ul>
-    </section>
+  <!-- Les Bases -->
+  <section id="bases" class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Les bases à maîtriser</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <div class="text-sm text-white/60">Type de paris</div>
+        <div class="text-lg font-semibold mt-1">Simplicité d’abord</div>
+        <p class="text-sm text-white/70 mt-2">Privilégie les <strong>simples</strong> (1X2, over/under, BTTS, handicap asiatique). Les combinés explosent le risque et réduisent tes chances réelles.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <div class="text-sm text-white/60">Comprendre les cotes</div>
+        <div class="text-lg font-semibold mt-1">Cote ≠ probabilité réelle</div>
+        <p class="text-sm text-white/70 mt-2">Une cote 2.00 implique 50% de probabilité implicite. Le pro cherche quand sa probabilité estimée est <strong>supérieure</strong> à celle du bookmaker.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <div class="text-sm text-white/60">Analyse</div>
+        <div class="text-lg font-semibold mt-1">Contextes & détails</div>
+        <p class="text-sm text-white/70 mt-2">Forme, xG, blessures, suspensions, calendrier, météo, motivation. Vérifie 3 sources minimum pour éviter le biais.</p>
+      </div>
+    </div>
+  </section>
 
-    <section id="strategies">
-      <h2>STRATEGIES DES PARIEUR PRO</h2>
-      <p>Les parieurs professionnels utilisent des stratégies réfléchies :</p>
-      <ul>
-        <li><strong>Spécialisation :</strong> se concentrer sur un sport ou une ligue spécifique pour mieux analyser les matchs.</li>
-        <li><strong>Value Betting :</strong> identifier les paris où la cote offre un avantage réel par rapport à la probabilité.</li>
-        <li><strong>Arbitrage :</strong> profiter des différences de cotes entre différents bookmakers.</li>
-        <li><strong>Suivi des performances :</strong> tenir un journal pour analyser vos gains et pertes.</li>
-      </ul>
-    </section>
+  <!-- Stratégies Pro -->
+  <section id="strategies" class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Stratégies avancées (vraiment utilisées)</h2>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold text-lg">1) Value Betting</h3>
+        <ul class="list-disc list-inside text-sm text-white/80 mt-2 space-y-2">
+          <li>Estime ta probabilité (modèle, stats, historique) vs probabilité implicite de la cote.</li>
+          <li>Parie seulement si ta probabilité est <strong>nettement au-dessus</strong> (marge ≥ 5–10%).</li>
+          <li>Évite de suivre la foule : cherche les “marchés mal pricés”.</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold text-lg">2) Mouvements de ligne (closing line)</h3>
+        <ul class="list-disc list-inside text-sm text-white/80 mt-2 space-y-2">
+          <li>Observe comment la cote bouge avant le match (blessure tardive, info insider).</li>
+          <li>Si tu “bats la closing line” souvent, ton edge est réel.</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold text-lg">3) Hedging & Dutching</h3>
+        <ul class="list-disc list-inside text-sm text-white/80 mt-2 space-y-2">
+          <li><strong>Hedge</strong> = sécuriser un gain (ou une perte plus petite) avec un pari opposé, quand la cote a bougé.</li>
+          <li><strong>Dutching</strong> = répartir la mise sur plusieurs issues pour un gain quasi identique.</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold text-lg">4) Spécialisation & niches</h3>
+        <ul class="list-disc list-inside text-sm text-white/80 mt-2 space-y-2">
+          <li>Concentre-toi sur 1–2 ligues : meilleure compréhension = meilleures cotes trouvées.</li>
+          <li>Les marchés “mineurs” sont moins efficaces → plus d’opportunités.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <section id="gestion">
-      <h2>GESTION DE BANKROOL</h2>
-      <p>La gestion de votre capital est cruciale pour durer dans les paris sportifs :</p>
-      <ul>
-        <li>Définir une bankroll dédiée aux paris, séparée de vos finances personnelles.</li>
-        <li>Ne jamais parier plus de 1 à 5% de votre bankroll sur un seul pari.</li>
-        <li>Éviter les mises émotionnelles après une perte ou une série de gains.</li>
-      </ul>
-    </section>
+  <!-- Gestion de Bankroll -->
+  <section id="gestion" class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Gestion de bankroll (le nerf de la guerre)</h2>
+    <div class="grid lg:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold text-lg">Unités fixes</h3>
+        <p class="text-sm text-white/80 mt-2">Mise standard = 1 unité (1–3% de la bankroll). Augmente à 2–3u seulement si l’edge est solide et documenté.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold text-lg">Pourcentage de bankroll</h3>
+        <p class="text-sm text-white/80 mt-2">Ex : bankroll 100 000 F → mise 1% = 1 000 F. La mise s’ajuste automatiquement quand la bankroll bouge.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold text-lg">Kelly (version “Lite”)</h3>
+        <p class="text-sm text-white/80 mt-2">Kelly = (bp−q)/b. Utilise 25–50% de Kelly pour réduire la variance. Réservé aux joueurs disciplinés et modèles fiables.</p>
+      </div>
+    </div>
+    <div class="mt-5 glass rounded-xl p-5">
+      <div class="text-sm text-white/70"><strong>Exemple</strong> : cote 2.00 (b=1), probabilité estimée p=55%, q=45% → Kelly = (1×0.55−0.45)/1 = 0.10 → 10% de la BR. En Kelly “Lite” (×0.25) : 2.5%.</div>
+    </div>
+  </section>
 
-    <section id="ressources">
-      <h2>RESSOURCES POUR DEVENIR PRO</h2>
-      <p>Pour progresser rapidement, voici quelques ressources utiles :</p>
-      <ul>
-        <li>Sites d’analyses et statistiques sportives.</li>
-        <li>Forums et communautés de parieurs professionnels.</li>
-        <li>Outils de suivi et de calcul de cotes.</li>
-        <li>Livres et formations sur le paris sportifs et la gestion de bankroll.</li>
-      </ul>
-      <a href="https://bit.ly/1xbetins_mhd_axex" class="cta">COMMENCER DES MAINTENANT</a> <a href="home.html" class="cta">REVENIR A LA PAGE D'ACCUEIL</a>
-    </section>
+  <!-- Psychologie & Discipline -->
+  <section class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Psychologie & discipline</h2>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <ul class="list-disc list-inside text-sm text-white/80 space-y-2">
+          <li>Interdiction de “chasser” les pertes.</li>
+          <li>Plan de mise écrit, respecté à 100%.</li>
+          <li>Journal de suivi : date, pari, cote, mise, edge estimé, résultat, note.</li>
+          <li>Jours off obligatoires pour éviter le tilt.</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <ul class="list-disc list-inside text-sm text-white/80 space-y-2">
+          <li>Separate life/money : bankroll isolée du budget perso.</li>
+          <li>Règle 24h : jamais modifier un plan juste après une grosse perte/gain.</li>
+          <li>Contrôle de l’écran : pas de live impulsif sans stratégie.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  </main>
+  <!-- Checklist d’analyse -->
+  <section class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Checklist d’analyse avant de parier</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold">Données</h3>
+        <ul class="list-disc list-inside text-sm text-white/80 space-y-2">
+          <li>Forme 5–10 matchs</li>
+          <li>xG/xGA & qualité des occasions</li>
+          <li>Blessés/suspendus majeurs</li>
+          <li>Calendrier & rotation</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold">Marché</h3>
+        <ul class="list-disc list-inside text-sm text-white/80 space-y-2">
+          <li>Mouvements de cotes</li>
+          <li>Consensus public vs sharp money</li>
+          <li>Comparaison multi-book</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold">Gestion</h3>
+        <ul class="list-disc list-inside text-sm text-white/80 space-y-2">
+          <li>Edge chiffré (≥5–10%)</li>
+          <li>Mise selon plan (1–3u)</li>
+          <li>Plan B si scénario contraire</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    &copy; mhd pronos meilleur pronostiqueur ivoirien !  Les jeux d'argent sont strictement interdit au mineur
+  <!-- Erreurs à éviter -->
+  <section class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Erreurs à éviter absolument</h2>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <ul class="list-disc list-inside text-sm text-white/80 space-y-2">
+          <li>Parier sans edge mesuré (juste “intuition”).</li>
+          <li>Combinés lourds pour “faire x10”.</li>
+          <li>Changer la mise selon l’humeur.</li>
+          <li>Augmenter les mises après une série de pertes.</li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <ul class="list-disc list-inside text-sm text-white/80 space-y-2">
+          <li>Suivre aveuglément un tipster sans vérifier.</li>
+          <li>Ignorer les infos tardives (compos, météo).</li>
+          <li>Ne pas suivre ses résultats → impossible de progresser.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Glossaire -->
+  <section class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Glossaire rapide</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <p class="text-sm text-white/80"><strong>Value</strong> : cote meilleure que la probabilité réelle → +EV.</p>
+        <p class="text-sm text-white/80 mt-2"><strong>Edge</strong> : avantage mesuré sur le marché.</p>
+        <p class="text-sm text-white/80 mt-2"><strong>Closing line</strong> : dernière cote avant le match.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <p class="text-sm text-white/80"><strong>AH (handicap asiatique)</strong> : réduit le nul ; remboursements possibles.</p>
+        <p class="text-sm text-white/80 mt-2"><strong>BTTS</strong> : les deux équipes marquent.</p>
+        <p class="text-sm text-white/80 mt-2"><strong>Hedge</strong> : sécuriser en prenant un pari opposé.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <p class="text-sm text-white/80"><strong>Dutching</strong> : répartir la mise entre plusieurs issues.</p>
+        <p class="text-sm text-white/80 mt-2"><strong>Stake/Unit</strong> : taille standard d’une mise.</p>
+        <p class="text-sm text-white/80 mt-2"><strong>Kelly</strong> : formule d’optimisation de mise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ressources & CTA -->
+  <section id="ressources" class="max-w-6xl mx-auto px-4 py-14 reveal">
+    <h2 class="text-2xl md:text-3xl font-black mb-6">Ressources utiles</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold">Données & Stats</h3>
+        <p class="text-sm text-white/80 mt-2">Sites de statistiques (xG, calendriers, formes), comparateurs de cotes, historiques H2H, lineups probables.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold">Outils</h3>
+        <p class="text-sm text-white/80 mt-2">Calculatrices de mise (Kelly/flat), feuilles de suivi, alertes mouvement de cotes, agrégateurs multi-book.</p>
+      </div>
+      <div class="glass rounded-2xl p-5 card">
+        <h3 class="font-semibold">Communauté & Formation</h3>
+        <p class="text-sm text-white/80 mt-2">Groupes de discussion qualitatifs, livres méthodologiques, cours orientés data & discipline.</p>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href="https://bit.ly/1xbetins_mhd_axex" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg">COMMENCER DÈS MAINTENANT</a>
+      <a href="home.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Retour à l’accueil</a>
+      <a href="victoires.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Victoires du jour</a>
+      <a href="plan abonnement.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Activer le VIP</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-10">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-6 justify-between">
+      <div>
+        <div class="text-lg font-extrabold lowercase">mhd pronos</div>
+        <div class="text-sm text-white/60">Meilleur pronostiqueur ivoirien.</div>
+      </div>
+      <div class="text-xs text-white/50 max-w-xl">
+        Avertissement : Les jeux d’argent comportent des risques. Ne pariez que ce que vous pouvez vous permettre de perdre. Ce site ne garantit aucun gain. Réservé aux personnes majeures selon la législation locale.
+      </div>
+    </div>
   </footer>
 
+  <!-- Scripts animations & menu -->
+  <script>
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Mobile menu
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+  </script>
 </body>
 </html>
