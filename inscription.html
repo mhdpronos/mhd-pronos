@@ -1,47 +1,61 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Inscription - MHD Pronos</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
       background: linear-gradient(135deg, #0f172a, #1e293b);
     }
+    .card {
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .input:focus {
+      outline: none;
+      border: 1px solid #3b82f6;
+      box-shadow: 0 0 6px #3b82f6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
-<body class="flex items-center justify-center min-h-screen text-white">
-  <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md">
-    <h1 class="text-3xl font-bold text-center mb-6">Créer un compte</h1>
+<body class="min-h-screen flex items-center justify-center text-white">
 
-    <!-- Formulaire principal -->
+  <div class="card w-full max-w-md p-8 rounded-2xl">
+    <!-- Logo + Nom -->
+    <div class="flex flex-col items-center mb-6">
+      <img src="logo.JPG" alt="Logo MHD Pronos" class="w-20 h-20 rounded-full shadow-lg">
+      <h1 class="text-2xl font-extrabold mt-2 text-blue-400">MHD PRONOS</h1>
+    </div>
+
+    <h2 class="text-center text-lg text-gray-300 mb-6">Créer un compte</h2>
+
+    <!-- Formulaire d'inscription -->
     <form id="formInscription" class="space-y-4">
       <div>
-        <label for="nom" class="block text-sm mb-1">Nom d'utilisateur</label>
-        <input type="text" id="nom" required minlength="3"
-          class="w-full px-3 py-2 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <label for="nom" class="block text-sm mb-1 text-gray-400">Nom d'utilisateur</label>
+        <input id="nom" type="text" required minlength="3" class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="Votre nom d'utilisateur">
       </div>
 
       <div>
-        <label for="email" class="block text-sm mb-1">Adresse e-mail</label>
-        <input type="email" id="email" required
-          class="w-full px-3 py-2 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <label for="email" class="block text-sm mb-1 text-gray-400">Adresse e-mail</label>
+        <input id="email" type="email" required class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="exemple@email.com">
       </div>
 
       <div>
-        <label for="password" class="block text-sm mb-1">Mot de passe</label>
-        <input type="password" id="password" required
-          class="w-full px-3 py-2 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <p class="text-xs text-gray-400 mt-1">
-          Le mot de passe doit contenir au moins 8 caractères, incluant lettres, chiffres et symboles.
-        </p>
+        <label for="password" class="block text-sm mb-1 text-gray-400">Mot de passe</label>
+        <input id="password" type="password" required minlength="8" class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="••••••••">
+        <p class="text-xs text-gray-500 mt-1">8 caractères minimum (lettres, chiffres et symboles).</p>
       </div>
 
-      <button type="submit"
-        class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">
-        S'inscrire
-      </button>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">S'inscrire</button>
     </form>
 
     <!-- Ligne de séparation -->
@@ -51,46 +65,35 @@
       <hr class="flex-grow border-gray-600">
     </div>
 
-    <!-- Connexion sociale -->
+    <!-- Inscription sociale -->
     <div class="space-y-3">
-      <button id="googleSignUp"
-        class="w-full bg-white text-gray-800 py-2 rounded-lg flex items-center justify-center font-medium hover:bg-gray-100 transition">
+      <button id="googleSignUp" class="w-full bg-white text-gray-800 py-2 rounded-lg flex items-center justify-center font-medium hover:bg-gray-100 transition">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5 mr-2"> Continuer avec Google
       </button>
 
-      <button id="facebookSignUp"
-        class="w-full bg-blue-700 hover:bg-blue-800 py-2 rounded-lg flex items-center justify-center font-medium transition">
-        <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" class="w-5 h-5 mr-2"> Continuer avec Facebook
+      <button id="facebookSignUp" class="w-full bg-blue-700 hover:bg-blue-800 py-2 rounded-lg flex items-center justify-center font-medium transition">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg" class="w-5 h-5 mr-2"> Continuer avec Facebook
       </button>
 
-      <button id="appleSignUp"
-        class="w-full bg-black hover:bg-gray-900 py-2 rounded-lg flex items-center justify-center font-medium transition">
-        <img src="https://www.svgrepo.com/show/475656/apple.svg" class="w-5 h-5 mr-2"> Continuer avec Apple
+      <button id="appleSignUp" class="w-full bg-black hover:bg-gray-900 py-2 rounded-lg flex items-center justify-center font-medium transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="w-5 h-5 mr-2"> Continuer avec Apple
       </button>
 
-      <button id="microsoftSignUp"
-        class="w-full bg-gray-200 text-black hover:bg-gray-300 py-2 rounded-lg flex items-center justify-center font-medium transition">
-        <img src="https://www.svgrepo.com/show/475700/microsoft.svg" class="w-5 h-5 mr-2"> Continuer avec Microsoft
+      <button id="microsoftSignUp" class="w-full bg-gray-200 text-black hover:bg-gray-300 py-2 rounded-lg flex items-center justify-center font-medium transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Windows_logo_-_2012.svg" class="w-5 h-5 mr-2"> Continuer avec Microsoft
       </button>
     </div>
 
-    <p class="text-center text-sm mt-6">
+    <p class="text-center text-sm mt-6 text-gray-400">
       Déjà inscrit ? <a href="index.html" class="text-blue-400 hover:underline">Se connecter</a>
     </p>
   </div>
 
+  <!-- 🔥 Script Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      GoogleAuthProvider,
-      FacebookAuthProvider,
-      OAuthProvider,
-      signInWithPopup
-    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    // 🔥 Configuration Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
       authDomain: "mhd-pronos.firebaseapp.com",
@@ -100,22 +103,18 @@
       appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
     };
 
-    // Initialisation
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Validation du mot de passe (force minimale)
     function motDePasseValide(password) {
-      const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.#^_-])[A-Za-z\d@$!%*?&.#^_-]{8,}$/;
       return regex.test(password);
     }
 
-    // Inscription par email
-    const form = document.getElementById("formInscription");
-    form.addEventListener("submit", async (e) => {
+    document.getElementById("formInscription").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
       if (!motDePasseValide(password)) {
         alert("Le mot de passe doit contenir au moins 8 caractères, avec lettres, chiffres et symboles.");
@@ -131,31 +130,15 @@
       }
     });
 
-    // Providers sociaux
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
     const appleProvider = new OAuthProvider('apple.com');
     const microsoftProvider = new OAuthProvider('microsoft.com');
 
-    document.getElementById("googleSignUp").addEventListener("click", () => signInWithPopup(auth, googleProvider).then(() => {
-      alert("Inscription via Google réussie !");
-      window.location.href = "home.html";
-    }).catch(e => alert("Erreur : " + e.message)));
-
-    document.getElementById("facebookSignUp").addEventListener("click", () => signInWithPopup(auth, facebookProvider).then(() => {
-      alert("Inscription via Facebook réussie !");
-      window.location.href = "home.html";
-    }).catch(e => alert("Erreur : " + e.message)));
-
-    document.getElementById("appleSignUp").addEventListener("click", () => signInWithPopup(auth, appleProvider).then(() => {
-      alert("Inscription via Apple réussie !");
-      window.location.href = "home.html";
-    }).catch(e => alert("Erreur : " + e.message)));
-
-    document.getElementById("microsoftSignUp").addEventListener("click", () => signInWithPopup(auth, microsoftProvider).then(() => {
-      alert("Inscription via Microsoft réussie !");
-      window.location.href = "home.html";
-    }).catch(e => alert("Erreur : " + e.message)));
+    document.getElementById("googleSignUp").addEventListener("click", () => signInWithPopup(auth, googleProvider).then(() => window.location.href = "home.html").catch(e => alert("Erreur : " + e.message)));
+    document.getElementById("facebookSignUp").addEventListener("click", () => signInWithPopup(auth, facebookProvider).then(() => window.location.href = "home.html").catch(e => alert("Erreur : " + e.message)));
+    document.getElementById("appleSignUp").addEventListener("click", () => signInWithPopup(auth, appleProvider).then(() => window.location.href = "home.html").catch(e => alert("Erreur : " + e.message)));
+    document.getElementById("microsoftSignUp").addEventListener("click", () => signInWithPopup(auth, microsoftProvider).then(() => window.location.href = "home.html").catch(e => alert("Erreur : " + e.message)));
   </script>
 </body>
 </html>
