@@ -18,6 +18,17 @@
     .stat:hover { transform: translateY(-2px); }
     .table-wrap { border-radius: 1rem; overflow: hidden; }
     .pill { display:inline-block; padding:.25rem .75rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#E5E7EB; }
+    tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* ligne fine et élégante */
+}
+
+tbody tr:last-child {
+  border-bottom: none; /* pas de ligne sous le dernier */
+}
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
   </style>
 </head>
 <body class="text-white">
