@@ -127,5 +127,27 @@
 
     loadNotifications();
   </script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function marquerToutesCommeLues() {
+    const querySnapshot = await getDocs(collection(db, "notifications"));
+    querySnapshot.forEach(async (notif) => {
+      await updateDoc(doc(db, "notifications", notif.id), { lu: true });
+    });
+  }
+
+  marquerToutesCommeLues();
+</script>
 </body>
 </html>
