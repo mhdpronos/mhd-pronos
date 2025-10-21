@@ -1,20 +1,22 @@
 {
-  "name": "mhd-pronos-functions",
-  "description": "Fonctions Cloud pour l'envoi d'e-mails",
+  "name": "functions",
+  "description": "Fonctions Cloud pour envoyer des e-mails",
+  "dependencies": {
+    "firebase-admin": "^11.0.0",
+    "firebase-functions": "^4.3.0",
+    "nodemailer": "^6.9.1"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions"
-  },
-  "dependencies": {
-    "firebase-admin": "^11.10.1",
-    "firebase-functions": "^4.4.1",
-    "nodemailer": "^6.9.3"
-  },
-  "engines": {
-    "node": "18"
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
   },
   "private": true
 }
