@@ -4,16 +4,16 @@ const nodemailer = require("nodemailer");
 
 admin.initializeApp();
 
-// 🔐 Configuration de ton adresse Gmail
+// ✅ Configurer l'envoi via Gmail
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "mo64166946@gmail.com", // ton email
-    pass: "catvoboxzrspuzuc" // mot de passe d’application SANS espace
+    user: "mo64166946@gmail.com", 
+    pass: "catvoboxzrspuzuc" 
   }
 });
 
-// ✅ Fonction pour envoyer un e-mail personnalisé
+// ✅ Fonction Cloud pour envoyer un e-mail personnalisé
 exports.envoyerEmail = functions.https.onCall(async (data, context) => {
   const { email, sujet, message } = data;
 
@@ -26,9 +26,9 @@ exports.envoyerEmail = functions.https.onCall(async (data, context) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    return { success: true, message: "E-mail envoyé avec succès 🚀" };
+    return { success: true, message: "📨 E-mail envoyé avec succès !" };
   } catch (error) {
-    console.error("Erreur d'envoi d'email :", error);
+    console.error("Erreur d'envoi :", error);
     return { success: false, error: error.message };
   }
 });
