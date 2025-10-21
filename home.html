@@ -117,6 +117,10 @@ tbody tr:hover {
           <span class="pill"><strong>Code promo: AXEX</strong></span>
           <a href="https://t.me/mhd_pronos" class="pill hover:bg-white/10">Support Telegram</a>
           <span class="pill">Tips quotidiens</span>
+          <button id="notifBtn" class="relative bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition">
+  🔔 Notifications
+  <span id="notifCount" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
+</button>
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
@@ -463,6 +467,26 @@ tbody tr:hover {
       menu.classList.toggle('hidden');
     });
   }
+</script>
+  <script>
+  // ✅ Simulation du nombre de notifications non lues (plus tard, ça viendra de Firestore)
+  let unreadNotifications = 3; // tu peux changer ce chiffre pour tester
+
+  const notifCount = document.getElementById("notifCount");
+  const notifBtn = document.getElementById("notifBtn");
+
+  // Affiche ou cache le badge selon s'il y a des notifications
+  if (unreadNotifications > 0) {
+    notifCount.textContent = unreadNotifications;
+    notifCount.classList.remove("hidden");
+  } else {
+    notifCount.classList.add("hidden");
+  }
+
+  // Redirige vers la page notifications.html quand on clique
+  notifBtn.addEventListener("click", () => {
+    window.location.href = "notifications.html";
+  });
 </script>
 
 </body>
