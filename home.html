@@ -144,8 +144,10 @@ tbody tr:hover {
           <span class="pill"><strong>Code promo: AXEX</strong></span>
           <a href="https://t.me/mhd_pronos" class="pill hover:bg-white/10">Support Telegram</a>
           <span class="pill">Tips quotidiens</span>
-          <button id="notifications-btn" onclick="window.location='notifications.html'">
-  🔔 Notifications 
+          <button id="notificationsBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
+  🔔 Notifications
+  <span id="notifBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 hidden">0</span>
+</button>
   <span id="notif-badge" style="
     display:none;
     background:red;
@@ -573,5 +575,42 @@ tbody tr:hover {
 
   chargerNotificationsNonLues();
 </script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+    storageBucket: "mhd-pronos.firebasestorage.app",
+    messagingSenderId: "366441954219",
+    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function updateNotificationBadge() {
+    const q = query(collection(db, "notifications"), where("lu", "==", false));
+    const snapshot = await getDocs(q);
+    const unreadCount = snapshot.size;
+
+    const badge = document.getElementById("notifBadge");
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount;
+      badge.classList.remove("hidden");
+    } else {
+      badge.classList.add("hidden");
+    }
+  }
+
+  document.getElementById("notificationsBtn").addEventListener("click", () => {
+    window.location.href = "notifications.html";
+  });
+
+  updateNotificationBadge();
+</script>
+
 </body>
 </html>
