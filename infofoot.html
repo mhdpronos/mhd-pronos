@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Info Foot — MHD PRONOS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#0b0e14; --panel:#121826; --muted:#a3aed0; --violet:#7c5cff; --green:#16c784; --red:#ff4d4d; --blue:#3b82f6;
+    }
+    body{background: radial-gradient(1200px 600px at 20% 0%, rgba(124,92,255,.15), transparent 40%), var(--bg); color:#fff;}
+    .glass{background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.08); box-shadow: 0 10px 40px rgba(0,0,0,.35);}
+    .pill{border:1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06);}
+    .chip{border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); transition:.2s}
+    .chip.active{border-color:var(--violet); box-shadow: 0 0 0 3px rgba(124,92,255,.25) inset; color:#fff;}
+    .card-anim{transition: transform .25s ease, box-shadow .25s ease;}
+    .card-anim:hover{transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,.45);}
+    .fade-in{animation:fade .35s ease both;}
+    @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+    .badge-cat{font-size:.7rem; padding:.18rem .5rem; border-radius:999px; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.08)}
+    .partner-btn{display:inline-block; padding:.6rem 1.2rem; border-radius:999px; font-weight:700; background:linear-gradient(135deg,#6366F1,#8B5CF6); border:1px solid rgba(255,255,255,.12); transition:.2s}
+    .partner-btn:hover{opacity:.92; transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg,#6366F1,#8B5CF6); border:1px solid rgba(255,255,255,.12);}
+    .btn-primary:hover{opacity:.95}
+    .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.6); z-index:50}
+    .modal.open{display:grid}
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto px-4 pt-6 pb-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="logo.JPG" alt="MHD PRONOS" class="w-10 h-10 rounded-full object-cover ring-2 ring-white/10">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Info Foot</h1>
+          <p class="text-sm text-white/60 -mt-0.5">Actus & analyses — publications en temps réel depuis Firebase.</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-2">
+        <a href="home.html" class="pill px-4 py-2 rounded-xl hover:opacity-90">Accueil</a>
+        <a href="plan abonnement.html" class="pill px-4 py-2 rounded-xl hover:opacity-90">Abonnements</a>
+        <a href="notifications.html" class="pill px-4 py-2 rounded-xl hover:opacity-90">Notifications</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 pb-24">
+    <!-- Filtres & actions -->
+    <div class="glass rounded-2xl p-3 md:p-4 mb-6">
+      <div class="flex flex-wrap items-center gap-2">
+        <button class="chip active px-3 py-1.5 rounded-full text-sm" data-cat="ALL">Tous</button>
+        <button class="chip px-3 py-1.5 rounded-full text-sm" data-cat="Mercato">Mercato</button>
+        <button class="chip px-3 py-1.5 rounded-full text-sm" data-cat="Résultats">Résultats</button>
+        <button class="chip px-3 py-1.5 rounded-full text-sm" data-cat="Blessures">Blessures</button>
+        <button class="chip px-3 py-1.5 rounded-full text-sm" data-cat="Afrique">Afrique</button>
+        <button class="chip px-3 py-1.5 rounded-full text-sm" data-cat="Europe">Europe</button>
+
+        <div class="ml-auto flex items-center gap-2">
+          <button id="markAllRead" class="px-3 py-1.5 rounded-xl text-sm btn-primary">Marquer tout comme lu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liste -->
+    <section id="newsList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></section>
+
+    <!-- Partenaires -->
+    <section class="mt-10 glass rounded-2xl p-5">
+      <h3 class="text-lg font-bold mb-3">Nos partenaires officiels</h3>
+      <div class="flex flex-wrap gap-2">
+        <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" class="partner-btn">1XBET</a>
+        <a href="https://bwredir.com/1Xxd?p=%2Fregistration%2F" target="_blank" class="partner-btn">BETWINNER</a>
+        <a href="https://1wyvrz.life/?p=vteh" target="_blank" class="partner-btn">1WIN</a>
+        <a href="https://refpa3665.com/L?tag=d_2526373m_45415c_&site=2526373&ad=45415" target="_blank" class="partner-btn">MELBET</a>
+        <a href="https://top100bonus.com/L?tag=d_2625843m_37513c_&site=2625843&ad=37513" target="_blank" class="partner-btn">888STARZ</a>
+        <a href="https://combodef.com/L?tag=d_3703799m_60651c_&site=3703799&ad=60651" target="_blank" class="partner-btn">PARIPESA</a>
+        <a href="https://gpaff.top/L?tag=d_3453290m_69627c_&site=3453290&ad=69627" target="_blank" class="partner-btn">GOLDPARI</a>
+        <a href="https://refpazitag.top/L?tag=d_2561833m_25437c_&site=2561833&ad=25437" target="_blank" class="partner-btn">MEGAPARI</a>
+        <a href="https://lb-aff.com/L?tag=d_2378251m_22611c_&site=2378251&ad=22611" target="_blank" class="partner-btn">LINEBET</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal lecture -->
+  <div id="modal" class="modal">
+    <div class="glass rounded-2xl p-0 w-[95%] max-w-2xl overflow-hidden">
+      <div class="flex items-center justify-between p-4 border-b border-white/10">
+        <div>
+          <h3 id="mTitle" class="text-xl font-bold"></h3>
+          <div class="text-xs text-white/60" id="mMeta"></div>
+        </div>
+        <button id="mClose" class="pill px-3 py-1.5 rounded-lg">Fermer</button>
+      </div>
+      <div class="p-4">
+        <img id="mImg" class="w-full max-h-80 object-cover rounded-xl mb-4 hidden" alt="">
+        <div id="mBody" class="text-sm leading-relaxed whitespace-pre-wrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase + logique -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // ⚙️ CONFIG FIREBASE (la même que tes autres pages)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+      authDomain: "mhd-pronos.firebaseapp.com",
+      projectId: "mhd-pronos",
+      storageBucket: "mhd-pronos.firebasestorage.app",
+      messagingSenderId: "366441954219",
+      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    // 📚 Collection Firestore
+    const colRef = collection(db, "infos_foot");
+    const q = query(colRef, orderBy("publishedAt", "desc")); // publishedAt = Firestore Timestamp
+
+    // 🧠 État
+    let allDocs = [];
+    let currentCat = "ALL";
+
+    // 🧩 Helpers
+    const fmtDate = (ts) => {
+      if(!ts) return "";
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return d.toLocaleString();
+    };
+
+    const $list = document.getElementById("newsList");
+    const $modal = document.getElementById("modal");
+    const $mTitle = document.getElementById("mTitle");
+    const $mMeta = document.getElementById("mMeta");
+    const $mImg = document.getElementById("mImg");
+    const $mBody = document.getElementById("mBody");
+    const $mClose = document.getElementById("mClose");
+    const $markAll = document.getElementById("markAllRead");
+
+    function cardTemplate(d){
+      const cat = d.category || "Info";
+      const dateTxt = fmtDate(d.publishedAt);
+      const img = d.imageUrl || "";
+      const excerpt = (d.body || "").slice(0, 140) + ((d.body || "").length > 140 ? "…" : "");
+
+      return `
+        <article class="glass rounded-2xl p-3 card-anim fade-in">
+          <div class="relative">
+            ${img ? `<img src="${img}" alt="" class="w-full h-44 object-cover rounded-xl mb-3">`
+                  : `<div class="w-full h-44 rounded-xl mb-3" style="background:linear-gradient(135deg,#2a2f45,#1b2134)"></div>`}
+            <span class="badge-cat absolute top-2 left-2">${cat}</span>
+          </div>
+          <h4 class="font-bold text-lg leading-tight">${d.title || "(Sans titre)"}</h4>
+          <div class="text-xs text-white/60 mt-1">${dateTxt}</div>
+          <p class="text-sm text-white/80 mt-2">${excerpt}</p>
+          <div class="mt-3 flex items-center justify-between">
+            <button class="px-3 py-1.5 rounded-xl text-sm btn-primary" data-open="${d.id}">Lire</button>
+            ${d.pinned ? `<span class="text-[11px] text-yellow-300">📌 Épinglé</span>` : `<span></span>`}
+          </div>
+        </article>
+      `;
+    }
+
+    function render(){
+      const rows = currentCat==="ALL" ? allDocs : allDocs.filter(d => (d.category||"") === currentCat);
+      if(rows.length === 0){
+        $list.innerHTML = `
+          <div class="col-span-full glass rounded-2xl p-6 text-center text-sm text-white/70">
+            Aucune info à afficher pour ce filtre.
+          </div>`;
+        return;
+      }
+      $list.innerHTML = rows.map(cardTemplate).join("");
+
+      // boutons "Lire"
+      $list.querySelectorAll("[data-open]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const id = btn.getAttribute("data-open");
+          const d = allDocs.find(x => x.id === id);
+          if(!d) return;
+          $mTitle.textContent = d.title || "";
+          $mMeta.textContent = `${d.category || "Info"} • ${fmtDate(d.publishedAt)}`;
+          if(d.imageUrl){
+            $mImg.src = d.imageUrl; $mImg.classList.remove("hidden");
+          } else {
+            $mImg.classList.add("hidden");
+          }
+          $mBody.textContent = d.body || "";
+          $modal.classList.add("open");
+        });
+      });
+    }
+
+    // 🏷️ Filtres
+    document.querySelectorAll("[data-cat]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));
+        btn.classList.add("active");
+        currentCat = btn.getAttribute("data-cat");
+        render();
+      });
+    });
+
+    // ❌ Fermer modal
+    $mClose.addEventListener("click", ()=> $modal.classList.remove("open"));
+    $modal.addEventListener("click", (e)=>{ if(e.target === $modal) $modal.classList.remove("open"); });
+
+    // 🔴 Unread counter : on stocke la dernière consultation
+    function updateUnreadBadgeState(){
+      // met à jour un compteur local pour le bouton sur home
+      if(allDocs.length === 0) {
+        localStorage.setItem("infofoot_unread_count", "0");
+        return;
+      }
+      const lastRead = Number(localStorage.getItem("infofoot_last_read") || 0);
+      // publishedAt est un Timestamp — on le transforme en ms
+      const count = allDocs.filter(d=>{
+        const ms = d.publishedAt?.toMillis ? d.publishedAt.toMillis() : new Date(d.publishedAt).getTime();
+        return ms > lastRead;
+      }).length;
+      localStorage.setItem("infofoot_unread_count", String(count));
+      // On garde aussi le plus récent pour affichage dans d’autres pages si besoin
+      const latestMs = Math.max(...allDocs.map(d => d.publishedAt?.toMillis ? d.publishedAt.toMillis() : new Date(d.publishedAt).getTime()));
+      localStorage.setItem("infofoot_latest_ms", String(latestMs));
+    }
+
+    // ✅ Marquer tout lu
+    $markAll.addEventListener("click", ()=>{
+      const now = Date.now();
+      localStorage.setItem("infofoot_last_read", String(now));
+      updateUnreadBadgeState();
+      // Feedback discret
+      $markAll.textContent = "Tout marqué comme lu ✓";
+      setTimeout(()=>{$markAll.textContent="Marquer tout comme lu"}, 1500);
+    });
+
+    // 🔄 Écoute Firestore temps réel
+    onSnapshot(q, (snap)=>{
+      allDocs = snap.docs.map(d=> ({id:d.id, ...d.data()}));
+      render();
+      updateUnreadBadgeState();
+    });
+  </script>
+</body>
+</html>
