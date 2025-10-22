@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matchs en direct — MHD Pronos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#0b0e14; --panel:#121826; --muted:#a3aed0; --violet:#7c5cff; --green:#16c784; --red:#ff4d4d; --blue:#3b82f6;
+    }
+    body{background: radial-gradient(1200px 600px at 20% 0%, rgba(124,92,255,.15), transparent 40%), var(--bg); color:#fff;}
+    .glass{background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.08); box-shadow: 0 10px 40px rgba(0,0,0,.35);}
+    .pill{border:1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06);}
+    .pill.active{border-color:var(--violet); box-shadow: 0 0 0 3px rgba(124,92,255,.25) inset; color:#fff;}
+    .tab-btn{border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); transition:.2s}
+    .tab-btn.active{background: var(--violet); border-color:transparent;}
+    .live-dot{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 6px rgba(255,77,77,.15)}
+    .table-wrap{overflow-x:auto}
+    table{min-width: 760px; border-collapse:separate;border-spacing:0}
+    thead th{position:sticky; top:0; background:rgba(255,255,255,.05); backdrop-filter: blur(6px);}
+    tr+tr td{border-top:1px dashed rgba(255,255,255,.08)}
+    .badge{font-size:.75rem; padding:.2rem .5rem; border-radius:999px;}
+    .badge.live{background:rgba(255,77,77,.15); color:#ffb3b3; border:1px solid rgba(255,77,77,.35)}
+    .badge.soon{background:rgba(60,167,255,.12); color:#b9dcff; border:1px solid rgba(60,167,255,.35)}
+    .badge.done{background:rgba(22,199,132,.12); color:#9bf0c9; border:1px solid rgba(22,199,132,.35)}
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); z-index:50}
+    .modal.open{display:flex}
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Header minimal cohérent -->
+  <header class="max-w-6xl mx-auto px-4 pt-6 pb-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="logo.JPG" alt="MHD" class="w-10 h-10 rounded-full object-cover ring-2 ring-white/10">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Matchs en direct</h1>
+          <p class="text-sm text-white/60 -mt-0.5">LDC, Premier League, LaLiga, Bundesliga, Ligue 1 – mis à jour en temps réel.</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-2">
+        <a href="home.html" class="pill px-4 py-2 rounded-xl hover:opacity-90">Accueil</a>
+        <a href="plan abonnement.html" class="pill px-4 py-2 rounded-xl hover:opacity-90">Abonnements</a>
+        <a href="notifications.html" class="pill px-4 py-2 rounded-xl hover:opacity-90">Notifications</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 pb-24">
+    <!-- Onglets -->
+    <div class="glass rounded-2xl p-3 md:p-4 mb-4">
+      <div class="flex flex-wrap items-center gap-2">
+        <button data-tab="live" class="tab-btn active px-4 py-2 rounded-xl font-semibold">En cours ⚡</button>
+        <button data-tab="upcoming" class="tab-btn px-4 py-2 rounded-xl font-semibold">À venir 🕒</button>
+        <button data-tab="finished" class="tab-btn px-4 py-2 rounded-xl font-semibold">Terminés 🔴</button>
+        <div class="ml-auto text-xs text-white/60">MAJ auto <span id="refreshIn">20s</span></div>
+      </div>
+    </div>
+
+    <!-- Filtres ligues -->
+    <div class="glass rounded-2xl p-3 md:p-4 mb-6">
+      <div class="flex flex-wrap gap-2">
+        <!-- data-league correspond aux IDs API-Football -->
+        <button class="pill active px-3 py-1.5 rounded-full text-sm" data-league="ALL">Tous</button>
+        <button class="pill px-3 py-1.5 rounded-full text-sm" data-league="2">Ligue des Champions</button>
+        <button class="pill px-3 py-1.5 rounded-full text-sm" data-league="39">Premier League</button>
+        <button class="pill px-3 py-1.5 rounded-full text-sm" data-league="140">LaLiga</button>
+        <button class="pill px-3 py-1.5 rounded-full text-sm" data-league="78">Bundesliga</button>
+        <button class="pill px-3 py-1.5 rounded-full text-sm" data-league="61">Ligue 1</button>
+      </div>
+    </div>
+
+    <!-- Conteneurs par onglet -->
+    <section id="tab-live" class="space-y-8"></section>
+    <section id="tab-upcoming" class="space-y-8 hidden"></section>
+    <section id="tab-finished" class="space-y-8 hidden"></section>
+  </main>
+
+  <!-- Modal détail -->
+  <div id="matchModal" class="modal">
+    <div class="glass rounded-2xl p-5 w-[95%] max-w-2xl">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h3 id="mTitle" class="text-xl font-bold"></h3>
+          <p id="mComp" class="text-sm text-white/60"></p>
+        </div>
+        <button id="mClose" class="pill px-3 py-1.5 rounded-lg">Fermer</button>
+      </div>
+      <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="glass rounded-xl p-4">
+          <div id="mScore" class="text-3xl font-extrabold"></div>
+          <div id="mStatus" class="text-xs text-white/60 mt-1"></div>
+        </div>
+        <div class="glass rounded-xl p-4 text-sm">
+          <div id="mExtra" class="space-y-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- CONFIG ----------
+    const API_HOST = "https://v3.football.api-sports.io";
+    const API_KEY  = "YOUR_APIFOOTBALL_KEY"; // <-- remplace par ta clé
+    // Si tu utilises RapidAPI, laisse aussi ces headers :
+    const HEADERS = {
+      "x-apisports-key": API_KEY,
+      "X-RapidAPI-Key": API_KEY,
+      "X-RapidAPI-Host": "v3.football.api-sports.io"
+    };
+
+    // Ligues ciblées
+    const LEAGUES = [
+      {id:2,   name:"Ligue des Champions"},
+      {id:39,  name:"Premier League"},
+      {id:140, name:"LaLiga"},
+      {id:78,  name:"Bundesliga"},
+      {id:61,  name:"Ligue 1"}
+    ];
+
+    // Etat actuel
+    let currentTab = "live";         // live | upcoming | finished
+    let activeLeague = "ALL";        // "ALL" ou id
+    let refreshTimer = null;
+    let countdown = 20;
+
+    // Helpers
+    const $ = (s,root=document)=>root.querySelector(s);
+    const $$ = (s,root=document)=>[...root.querySelectorAll(s)];
+    const fmtTime = iso => {
+      const d = new Date(iso);
+      return d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+    };
+    const fmtDate = iso => {
+      const d = new Date(iso);
+      return d.toLocaleDateString([], {day:"2-digit", month:"2-digit", year:"numeric"});
+    };
+
+    // Tabs
+    $$(".tab-btn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        $$(".tab-btn").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        currentTab = btn.dataset.tab;
+        // Afficher/masquer sections
+        $("#tab-live").classList.toggle("hidden", currentTab!=="live");
+        $("#tab-upcoming").classList.toggle("hidden", currentTab!=="upcoming");
+        $("#tab-finished").classList.toggle("hidden", currentTab!=="finished");
+        loadAll();
+      })
+    });
+
+    // Filtres ligues
+    $$(".pill[data-league]").forEach(p=>{
+      p.addEventListener("click", ()=>{
+        $$(".pill[data-league]").forEach(x=>x.classList.remove("active"));
+        p.classList.add("active");
+        activeLeague = p.dataset.league;
+        loadAll();
+      });
+    });
+
+    // Auto refresh (20s)
+    function startAutoRefresh(){
+      if(refreshTimer) clearInterval(refreshTimer);
+      countdown = 20;
+      $("#refreshIn").textContent = countdown+"s";
+      refreshTimer = setInterval(()=>{
+        countdown--;
+        if(countdown<=0){
+          loadAll();
+          countdown = 20;
+        }
+        $("#refreshIn").textContent = countdown+"s";
+      }, 1000);
+    }
+
+    // Récup fixtures pour un onglet
+    async function fetchFixturesForTab(tab){
+      const dateStr = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+      const leaguesIds = activeLeague==="ALL" ? LEAGUES.map(l=>l.id).join(",") : activeLeague;
+
+      let url = `${API_HOST}/fixtures?league=${leaguesIds}&season=${new Date().getFullYear()}`;
+
+      if(tab==="live"){
+        url = `${API_HOST}/fixtures?live=all&league=${leaguesIds}`;
+      } else if(tab==="upcoming"){
+        // Aujourd’hui et demain
+        const today = dateStr;
+        const dt = new Date(); dt.setDate(dt.getDate()+1);
+        const tomorrow = dt.toISOString().slice(0,10);
+        url = `${API_HOST}/fixtures?league=${leaguesIds}&from=${today}&to=${tomorrow}`;
+      } else if(tab==="finished"){
+        // Hier
+        const d = new Date(); d.setDate(d.getDate()-1);
+        const yest = d.toISOString().slice(0,10);
+        url = `${API_HOST}/fixtures?league=${leaguesIds}&date=${yest}`;
+      }
+
+      const res = await fetch(url, {headers: HEADERS});
+      if(!res.ok) throw new Error("API error");
+      const json = await res.json();
+      // Tri: par ligue puis par heure
+      const grouped = {};
+      (json.response||[]).forEach(f=>{
+        const lid = f.league.id;
+        if(!grouped[lid]) grouped[lid] = [];
+        grouped[lid].push(f);
+      });
+      for(const lid in grouped){
+        grouped[lid].sort((a,b)=> new Date(a.fixture.date) - new Date(b.fixture.date));
+      }
+      return grouped;
+    }
+
+    function statusBadge(f){
+      const s = f.fixture.status;
+      if(s.short==="FT" || s.short==="AET" || s.short==="PEN") return `<span class="badge done">Terminé</span>`;
+      if(["NS","TBD","PST"].includes(s.short)) return `<span class="badge soon">À venir</span>`;
+      return `<span class="badge live">En cours ${s.elapsed?`• ${s.elapsed}'`:""}</span>`;
+    }
+
+    function rowHTML(f){
+      const h = f.teams.home, a = f.teams.away;
+      const score = f.goals.home==null?"-":f.goals.home;
+      const scoreA = f.goals.away==null?"-":f.goals.away;
+      const time = fmtTime(f.fixture.date);
+      return `
+        <tr class="hover:bg-white/5 cursor-pointer" data-fixture='${JSON.stringify({id:f.fixture.id})}'>
+          <td class="px-3 py-3 text-white/75">${fmtDate(f.fixture.date)}<div class="text-xs text-white/45">${time}</div></td>
+          <td class="px-3 py-3">
+            <div class="flex items-center gap-2">
+              <img src="${h.logo}" class="w-6 h-6 rounded" alt="${h.name}">
+              <span>${h.name}</span>
+            </div>
+          </td>
+          <td class="px-3 py-3 font-bold text-center">${score} : ${scoreA}</td>
+          <td class="px-3 py-3">
+            <div class="flex items-center gap-2">
+              <img src="${a.logo}" class="w-6 h-6 rounded" alt="${a.name}">
+              <span>${a.name}</span>
+            </div>
+          </td>
+          <td class="px-3 py-3 text-right">${statusBadge(f)}</td>
+        </tr>`;
+    }
+
+    function tableHTML(leagueName, list){
+      if(!list || !list.length) return "";
+      return `
+        <section class="glass rounded-2xl p-4">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="live-dot ${currentTab==='live'?'':'hidden'}"></div>
+            <h3 class="text-lg md:text-xl font-extrabold tracking-wide">${leagueName}</h3>
+          </div>
+          <div class="table-wrap rounded-xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-left text-white/70">
+                  <th class="px-3 py-3">Date</th>
+                  <th class="px-3 py-3">Domicile</th>
+                  <th class="px-3 py-3 text-center">Score</th>
+                  <th class="px-3 py-3">Extérieur</th>
+                  <th class="px-3 py-3 text-right">Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${list.map(rowHTML).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>`;
+    }
+
+    async function loadAll(){
+      try{
+        const target = {
+          live: $("#tab-live"),
+          upcoming: $("#tab-upcoming"),
+          finished: $("#tab-finished")
+        }[currentTab];
+        target.innerHTML = `<div class="text-white/60 text-sm">Chargement…</div>`;
+
+        const grouped = await fetchFixturesForTab(currentTab);
+        const pieces = [];
+        (activeLeague==="ALL" ? LEAGUES : LEAGUES.filter(l=>(""+l.id)===(""+activeLeague))).forEach(L=>{
+          const list = grouped[L.id] || [];
+          pieces.push(tableHTML(L.name, list));
+        });
+        const html = pieces.join("");
+        target.innerHTML = html || `<div class="glass rounded-2xl p-6 text-white/60">Aucun match à afficher pour cet onglet.</div>`;
+
+        // écouteurs modal par ligne
+        $$("tbody tr[data-fixture]").forEach(tr=>{
+          tr.addEventListener("click", ()=> openModal(parseInt(JSON.parse(tr.dataset.fixture).id,10)));
+        });
+
+        startAutoRefresh();
+      }catch(e){
+        console.error(e);
+        const target = {
+          live: $("#tab-live"),
+          upcoming: $("#tab-upcoming"),
+          finished: $("#tab-finished")
+        }[currentTab];
+        target.innerHTML = `<div class="glass rounded-2xl p-6 text-red-300">
+          Erreur de chargement des matchs. Vérifie ta clé API ou réessaie plus tard.
+        </div>`;
+      }
+    }
+
+    async function openModal(fixtureId){
+      // détail d’un match
+      const res = await fetch(`${API_HOST}/fixtures?id=${fixtureId}`, {headers: HEADERS});
+      const j = await res.json();
+      const f = j.response?.[0];
+      if(!f) return;
+      $("#mTitle").textContent = `${f.teams.home.name} vs ${f.teams.away.name}`;
+      $("#mComp").textContent = `${f.league.name} — ${f.league.round || ""}`;
+      $("#mScore").textContent = `${f.goals.home ?? "-"} : ${f.goals.away ?? "-"}`;
+      $("#mStatus").textContent = `${f.fixture.status.long} ${f.fixture.status.elapsed?`(${f.fixture.status.elapsed}')`:""}`;
+      $("#mExtra").innerHTML = `
+        <div>Date : <span class="text-white/70">${fmtDate(f.fixture.date)} ${fmtTime(f.fixture.date)}</span></div>
+        <div>Arbitre : <span class="text-white/70">${f.fixture.referee || "N/D"}</span></div>
+        <div>Stade : <span class="text-white/70">${f.fixture.venue?.name || "N/D"} — ${f.fixture.venue?.city || ""}</span></div>
+      `;
+      $("#matchModal").classList.add("open");
+    }
+    $("#mClose").addEventListener("click", ()=> $("#matchModal").classList.remove("open"));
+    $("#matchModal").addEventListener("click", (e)=>{ if(e.target.id==="matchModal") $("#matchModal").classList.remove("open"); });
+
+    // GO
+    loadAll();
+  </script>
+</body>
+</html>
