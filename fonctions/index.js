@@ -32,3 +32,30 @@ exports.envoyerEmail = functions.https.onCall(async (data, context) => {
     return { success: false, error: error.message };
   }
 });
+
+
+const functions = require("firebase-functions");
+const fetch = require("node-fetch");
+
+exports.proxy = functions.https.onRequest(async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.status(204).send('');
+    return;
+  }
+
+  const API_TOKEN = "KAYxTdFviUVgBb9yBHOMIZVTGrwJK5RxMgO6rCjzHB6Av9YsKsoJDEgHcxWn";
+  const API_URL = "https://api.sportmonks.com/v3/football/livescores?include=league;participants;state;scores";
+
+  try {
+    const response = await fetch(`${API_URL}&api_token=${API_TOKEN}`);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur de chargement" });
+  }
+});
