@@ -325,9 +325,20 @@ tbody tr:hover {
         <p class="text-sm text-white/50">Débloquez les pronostics premium et les analyses complètes.</p>
       </div>
       <div class="flex gap-3">
-        <a href="livescore.html" class="px-5 py-2 rounded-xl font-semibold bg-gradient-to-r from-blue-500 to-blue-700 hover:opacity-90 transition">
-          ⚽ Matchs en direct
-        </a>
+        <!-- Bouton Info Foot + badge -->
+<a href="infofoot.html"
+   class="relative inline-block rounded-full px-4 py-2 text-xs font-semibold border border-white/10"
+   style="background:linear-gradient(135deg,#6366F1,#8B5CF6);">
+  Info Foot
+  <!-- Badge -->
+  <span id="infofootBadge"
+        style="position:absolute; top:-6px; right:-6px; background:#ef4444; color:#fff; font-size:11px;
+               line-height:18px; min-width:18px; height:18px; text-align:center; border-radius:999px; padding:0 4px;
+               box-shadow:0 0 0 2px rgba(11,11,18,1); display:none;">
+    0
+  </span>
+</a>
+
         <a href="vip.html" class="px-5 py-2 rounded-xl font-semibold bg-gradient-to-r from-violet-500 to-purple-700 hover:opacity-90 transition">
           🚀 Activer le VIP
         </a>
@@ -620,6 +631,28 @@ tbody tr:hover {
   window.location.href = "about.html";
 });
 
+</script>
+<script type="module">
+  // Ce script lit le compteur calculé par infofoot.html dans localStorage
+  // et affiche le badge en conséquence.
+
+  const b = document.getElementById('infofootBadge');
+  function refreshInfoFootBadge(){
+    const n = Number(localStorage.getItem('infofoot_unread_count') || 0);
+    if (!b) return;
+    if (n > 0){
+      b.textContent = String(n);
+      b.style.display = 'inline-block';
+    } else {
+      b.style.display = 'none';
+    }
+  }
+
+  // Met à jour au chargement...
+  refreshInfoFootBadge();
+  // ...et ensuite toutes les 15s pour suivre un éventuel changement local
+  const id = setInterval(refreshInfoFootBadge, 15000);
+  window.addEventListener('beforeunload', ()=> clearInterval(id));
 </script>
 
 </body>
