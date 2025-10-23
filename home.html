@@ -150,7 +150,17 @@ tbody tr:hover {
         </p>
       
         <div class="mt-6 flex flex-wrap gap-3">
-          <span class="pill"><strong>CODE PROMO: AXEX</strong></span>
+          <!-- BOUTON CONSEIL DU JOUR (même style que FOOT NEWS, avec badge rouge) -->
+<a href="conseil.html" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold"
+   style="border:1px solid rgba(255,255,255,.15); background: linear-gradient(135deg,#6366F1,#8B5CF6);">
+  <span>CONSEIL DU JOUR</span>
+  <!-- Badge rouge dynamique -->
+  <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
+        style="background:#ef4444; color:white; border:2px solid rgba(0,0,0,.35);">
+    0
+  </span>
+</a>
+
           <!-- Bouton FOOT NEWS avec badge -->
 <a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90">
   <strong>FOOT NEWS</strong>
@@ -712,6 +722,34 @@ if (window.location.pathname.includes("infofoot.html")) {
 
 // Vérifie à chaque chargement de la page
 checkUnreadNews();
+</script>
+<script>
+  // Met à jour le badge "CONSEIL DU JOUR" à partir du localStorage
+  (function(){
+    const badge = document.getElementById('badge-conseil');
+    if(!badge) return;
+
+    function refreshBadge(){
+      const count = Number(localStorage.getItem('conseil_unread_count') || '0');
+      if(count > 0){
+        badge.textContent = count > 99 ? '99+' : String(count);
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    // 1) initial
+    refreshBadge();
+
+    // 2) si info mise à jour depuis une autre page/onglet
+    window.addEventListener('storage', (e)=>{
+      if(e.key === 'conseil_unread_count') refreshBadge();
+    });
+
+    // 3) petit rafraîchissement périodique au cas où
+    setInterval(refreshBadge, 5000);
+  })();
 </script>
 
 </body>
