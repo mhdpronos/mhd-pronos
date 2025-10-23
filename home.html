@@ -104,7 +104,7 @@ tbody tr:hover {
 
     <!-- Actions visibles sur mobile -->
     <div class="ml-auto flex items-center space-x-2 md:hidden">
-      <a href="profil.html" class="btn-primary px-3 py-2 rounded-lg font-semibold shadow">
+      <a href="profil.html" class="btn-primary px-3 py-2 rounded-lg font-semibold shadow requires-auth">
         Mon profil
       </a>
       <button id="menuBtn" class="px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5" aria-label="Ouvrir le menu">
@@ -121,7 +121,7 @@ tbody tr:hover {
       <a class="text-white/80 hover:text-white" href="#method">Méthode</a>
       <a class="text-white/80 hover:text-white" href="#pricing">Abonnements</a>
       <a class="text-white/80 hover:text-white" href="#faq">FAQ</a>
-      <a href="profil.html" class="inline-flex items-center px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">
+      <a href="profil.html" class="inline-flex items-center px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 requires-auth">
         Mon profil
       </a>
     </nav>
@@ -134,7 +134,7 @@ tbody tr:hover {
       <a class="text-white/90" href="#method">Méthode</a>
       <a class="text-white/90" href="#pricing">Abonnements</a>
       <a class="text-white/90" href="#faq">FAQ</a>
-      <a class="text-white/90" href="profil.html">Mon profil</a>
+      <a class="text-white/90" href="profil.html requires-auth">Mon profil</a>
     </div>
   </nav>
 </header>
@@ -151,8 +151,8 @@ tbody tr:hover {
       
         <div class="mt-6 flex flex-wrap gap-3">
           <!-- BOUTON CONSEIL DU JOUR (même style que FOOT NEWS, avec badge rouge) -->
-<a href="conseil.html" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold"
-   style="border:1px solid rgba(255,255,255,.15); background: linear-gradient(135deg,#6366F1,#8B5CF6);">
+<a href="conseil.html" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold requires-auth"
+   style="border:1px solid rgba(255,255,255,.15); background: linear-gradient(135deg,#6366F1,#8B5CF6); ">
   <span><strong>PRONOS CONSEIL</strong></span>
   <!-- Badge rouge dynamique -->
   <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
@@ -162,7 +162,7 @@ tbody tr:hover {
 </a>
 
           <!-- Bouton FOOT NEWS avec badge -->
-<a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90">
+<a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
   <strong>FOOT NEWS</strong>
   <!-- 🔴 Badge rouge dynamique -->
   <span id="infofoot-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
@@ -189,13 +189,13 @@ tbody tr:hover {
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
-  <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
+  <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">
     <strong>ACTIVER VIP</strong>
   </a>
   <a href="https://t.me/+3qums05XWOw2ZWJk" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
     <strong>CANAL TELEGRAM</strong>
   </a>
-  <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+  <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center requires-auth">
     <strong>DEVENIR PRO</strong>
   </a>
   <a href="victoires.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
@@ -350,7 +350,7 @@ tbody tr:hover {
         <p class="text-sm text-white/70"><h4>ACCÈS VIP REQUIS</p>
         <p class="text-sm text-white/50">Débloquez les pronostics premium et les analyses complètes.</p>
       </div>
-      <div><a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a></div>
+      <div><a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">S’abonner</a></div>
       <div class="flex gap-3">
   <!-- Badge rouge dynamique -->
   <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
@@ -443,7 +443,7 @@ tbody tr:hover {
             <li>Code promo disponible</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center" requires-auth>S’abonner</a>
       </div>
 
       <div class="glass rounded-2xl p-5 flex flex-col border border-indigo-400/50">
@@ -459,7 +459,7 @@ tbody tr:hover {
             <li>Bankroll guide</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">S’abonner</a>
       </div>
 
       <div class="glass rounded-2xl p-5 flex flex-col">
@@ -472,7 +472,7 @@ tbody tr:hover {
             <li>Priorité support</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">S’abonner</a>
       </div>
     </div>
   </section>
@@ -748,6 +748,102 @@ checkUnreadNews();
     // 3) petit rafraîchissement périodique au cas où
     setInterval(refreshBadge, 5000);
   })();
+</script>
+<!-- MODALE D’ACCÈS PROTÉGÉ -->
+<style>
+  .modal-auth{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;place-items:center;z-index:100;}
+  .modal-auth.open{display:grid}
+  .modal-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    border:1px solid rgba(255,255,255,.12);border-radius:1rem;max-width:520px;width:92%;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+</style>
+
+<div id="authModal" class="modal-auth">
+  <div class="modal-card p-5">
+    <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
+      <div>
+        <h3 class="text-xl font-bold">Connexion requise</h3>
+        <p class="text-sm text-white/70">Pour accéder à cette section (VIP, Astuces, Conseils, Foot News, Profil), veuillez vous connecter ou créer un compte.</p>
+      </div>
+      <button id="authClose" class="pill px-3 py-1.5 rounded-lg">Fermer</button>
+    </div>
+
+    <div class="mt-4 text-sm text-white/80">
+      <ul class="list-disc ml-5 space-y-1">
+        <li>Accès sécurisé avec Firebase Auth</li>
+        <li>Redirection automatique vers la page choisie après connexion</li>
+      </ul>
+    </div>
+
+    <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <a id="goLogin" href="index.html" class="btn-primary px-4 py-2 rounded-xl text-center font-semibold">Se connecter</a>
+      <a id="goSignup" href="inscription.html" class="px-4 py-2 rounded-xl text-center font-semibold"
+         style="background:linear-gradient(135deg,#10B981,#34D399);border:1px solid rgba(255,255,255,.12);">Créer un compte</a>
+    </div>
+
+    <div class="mt-4 text-xs text-white/60">
+      En vous connectant, vous acceptez nos conditions d’utilisation.
+    </div>
+  </div>
+</div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  // ⚙️ CONFIG FIREBASE (identique aux autres pages)
+  const firebaseConfig = {
+    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+    storageBucket: "mhd-pronos.firebasestorage.app",
+    messagingSenderId: "366441954219",
+    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Références modale
+  const modal = document.getElementById('authModal');
+  const btnClose = document.getElementById('authClose');
+  const btnLogin = document.getElementById('goLogin');
+  const btnSignup = document.getElementById('goSignup');
+
+  // Retient vers où on voulait aller
+  let pendingTarget = null;
+
+  // Ouvre/ferme modale
+  function openModal(){ modal.classList.add('open'); }
+  function closeModal(){ modal.classList.remove('open'); pendingTarget = null; }
+
+  btnClose.addEventListener('click', closeModal);
+
+  // Ajoute ?redirect=<url> aux liens login/inscription
+  function updateAuthLinks(targetHref){
+    const enc = encodeURIComponent(targetHref);
+    btnLogin.href  = `index.html?redirect=${enc}`;
+    btnSignup.href = `inscription.html?redirect=${enc}`;
+  }
+
+  // Intercepteur sur tous les liens protégés
+  function wireAuthGuards(user){
+    document.querySelectorAll('a.requires-auth').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href') || '#';
+        if(user){ return; } // utilisateur connecté : laisser passer
+        e.preventDefault();
+        pendingTarget = href;
+        updateAuthLinks(href);
+        // En plus, on garde dans sessionStorage au cas où
+        sessionStorage.setItem('postLoginRedirect', href);
+        openModal();
+      }, { capture:true });
+    });
+  }
+
+  // Dès que l’état change, recâble les gardes
+  onAuthStateChanged(auth, (user)=>{
+    wireAuthGuards(user);
+  });
 </script>
 
 </body>

@@ -96,7 +96,12 @@
       noticeEl.className = 'mb-4 text-center text-sm ' + (type === 'error' ? 'text-red-400' : 'text-green-400');
     }
 
-    onAuthStateChanged(auth, (user) => { if (user) { localStorage.setItem('loggedIn', 'true'); window.location.href = 'home.html'; } });
+    onAuthStateChanged(auth, (user) => { if (user) { localStorage.setItem('loggedIn', 'true'); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
+const urlParams = new URLSearchParams(window.location.search);
+const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+sessionStorage.removeItem('postLoginRedirect');
+window.location.href = fromUrl || 'home.html';
+ } });
 
     function isPasswordStrong(password) {
       const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.#^_-])[A-Za-z\d@$!%*?&.#^_-]{8,}$/;
@@ -114,7 +119,12 @@
       }
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "home.html";
+        // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
+const urlParams = new URLSearchParams(window.location.search);
+const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+sessionStorage.removeItem('postLoginRedirect');
+window.location.href = fromUrl || 'home.html';
+
       } catch (err) {
         showNotice("Erreur : " + err.message, "error");
       }
@@ -129,10 +139,30 @@
       } catch (err) { showNotice("Erreur : " + err.message, "error"); }
     });
 
-    document.getElementById("googleBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new GoogleAuthProvider()); window.location.href = "home.html"; } catch (err) { showNotice("Erreur Google : " + err.message, "error"); } });
-    document.getElementById("facebookBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new FacebookAuthProvider()); window.location.href = "home.html"; } catch (err) { showNotice("Erreur Facebook : " + err.message, "error"); } });
-    document.getElementById("appleBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new OAuthProvider("apple.com")); window.location.href = "home.html"; } catch (err) { showNotice("Erreur Apple : " + err.message, "error"); } });
-    document.getElementById("microsoftBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new OAuthProvider("microsoft.com")); window.location.href = "home.html"; } catch (err) { showNotice("Erreur Microsoft : " + err.message, "error"); } });
+    document.getElementById("googleBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new GoogleAuthProvider()); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
+const urlParams = new URLSearchParams(window.location.search);
+const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+sessionStorage.removeItem('postLoginRedirect');
+window.location.href = fromUrl || 'home.html';
+ } catch (err) { showNotice("Erreur Google : " + err.message, "error"); } });
+    document.getElementById("facebookBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new FacebookAuthProvider()); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
+const urlParams = new URLSearchParams(window.location.search);
+const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+sessionStorage.removeItem('postLoginRedirect');
+window.location.href = fromUrl || 'home.html';
+ } catch (err) { showNotice("Erreur Facebook : " + err.message, "error"); } });
+    document.getElementById("appleBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new OAuthProvider("apple.com")); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
+const urlParams = new URLSearchParams(window.location.search);
+const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+sessionStorage.removeItem('postLoginRedirect');
+window.location.href = fromUrl || 'home.html';
+ } catch (err) { showNotice("Erreur Apple : " + err.message, "error"); } });
+    document.getElementById("microsoftBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new OAuthProvider("microsoft.com")); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
+const urlParams = new URLSearchParams(window.location.search);
+const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+sessionStorage.removeItem('postLoginRedirect');
+window.location.href = fromUrl || 'home.html';
+ } catch (err) { showNotice("Erreur Microsoft : " + err.message, "error"); } });
   </script>
 </body>
 </html>
