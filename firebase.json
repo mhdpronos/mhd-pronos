@@ -8,6 +8,10 @@
     ],
     "rewrites": [
       {
+        "source": "/",
+        "destination": "/home.html"
+      },
+      {
         "source": "/mode de paiement",
         "destination": "/page payment.html"
       },
