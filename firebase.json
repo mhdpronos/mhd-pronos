@@ -9,7 +9,7 @@
     "rewrites": [
       {
         "source": "/",
-        "destination": "/home.html"
+        "destination": "/index.html"
       },
       {
         "source": "/mode de paiement",
@@ -17,7 +17,7 @@
       },
       {
         "source": "/accueil",
-        "destination": "/home"
+        "destination": "/index"
       },
       {
         "source": "/vip",
