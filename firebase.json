@@ -9,15 +9,15 @@
     "rewrites": [
       {
         "source": "/",
-        "destination": "/index.html"
+        "destination": "/home.html"
       },
       {
-        "source": "/mode de paiement",
-        "destination": "/page payment.html"
+        "source": "/mode-de-paiement",
+        "destination": "/page-payment.html"
       },
       {
         "source": "/accueil",
-        "destination": "/index"
+        "destination": "/home.html"
       },
       {
         "source": "/vip",
@@ -29,7 +29,7 @@
       },
       {
         "source": "/connexion",
-        "destination": "/connexion"
+        "destination": "/connexion.html"
       }
     ]
   }
