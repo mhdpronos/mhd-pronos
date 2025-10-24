@@ -84,12 +84,19 @@ tbody tr:hover {
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        // Non connecté -> retour à la page de connexion
-        window.location.href = "index.html";
-      }
-    });
+    <script>
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("Utilisateur connecté :", user.email);
+      // Tu peux personnaliser ce que tu veux ici
+      // Ex: document.getElementById("userName").textContent = user.email;
+    } else {
+      console.log("Utilisateur non connecté");
+      // Aucun blocage, la page reste affichée
+    }
+  });
+</script>
+
   </script>
 
   <!-- Header -->
