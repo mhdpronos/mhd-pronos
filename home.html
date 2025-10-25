@@ -169,7 +169,7 @@ tbody tr:hover {
 </a>
 
           <!-- Bouton FOOT NEWS avec badge -->
-<a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90" requires-auth>
+<a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90">
   <strong>FOOT NEWS</strong>
   <!-- 🔴 Badge rouge dynamique -->
   <span id="infofoot-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
@@ -196,13 +196,13 @@ tbody tr:hover {
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
-  <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">
+  <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
     <strong>ACTIVER VIP</strong>
   </a>
   <a href="https://t.me/+3qums05XWOw2ZWJk" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
     <strong>CANAL TELEGRAM</strong>
   </a>
-  <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center requires-auth">
+  <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
     <strong>DEVENIR PRO</strong>
   </a>
   <a href="victoires.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
@@ -357,7 +357,7 @@ tbody tr:hover {
         <p class="text-sm text-white/70"><h4>ACCÈS VIP REQUIS</p>
         <p class="text-sm text-white/50">Débloquez les pronostics premium et les analyses complètes.</p>
       </div>
-      <div><a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">S’abonner</a></div>
+      <div><a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a></div>
       <div class="flex gap-3">
   <!-- Badge rouge dynamique -->
   <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
@@ -450,7 +450,7 @@ tbody tr:hover {
             <li>Code promo disponible</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">S’abonner</a>
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
       </div>
 
       <div class="glass rounded-2xl p-5 flex flex-col border border-indigo-400/50">
@@ -466,7 +466,7 @@ tbody tr:hover {
             <li>Bankroll guide</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">S’abonner</a>
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
       </div>
 
       <div class="glass rounded-2xl p-5 flex flex-col">
@@ -479,7 +479,7 @@ tbody tr:hover {
             <li>Priorité support</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center requires-auth">S’abonner</a>
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
       </div>
     </div>
   </section>
@@ -756,42 +756,6 @@ checkUnreadNews();
     setInterval(refreshBadge, 5000);
   })();
 </script>
-<!-- MODALE D’ACCÈS PROTÉGÉ -->
-<style>
-  .modal-auth{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;place-items:center;z-index:100;}
-  .modal-auth.open{display:grid}
-  .modal-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    border:1px solid rgba(255,255,255,.12);border-radius:1rem;max-width:520px;width:92%;box-shadow:0 10px 40px rgba(0,0,0,.35)}
-</style>
 
-<div id="authModal" class="modal-auth">
-  <div class="modal-card p-5">
-    <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
-      <div>
-        <h3 class="text-xl font-bold">Connexion requise</h3>
-        <p class="text-sm text-white/70">Pour accéder à cette section (VIP, Astuces, Conseils, Foot News, Profil), veuillez vous connecter ou créer un compte.</p>
-      </div>
-      <button id="authClose" class="pill px-3 py-1.5 rounded-lg">Fermer</button>
-    </div>
-
-    <div class="mt-4 text-sm text-white/80">
-      <ul class="list-disc ml-5 space-y-1">
-        <li>Accès sécurisé avec Firebase Auth</li>
-        <li>Redirection automatique vers la page choisie après connexion</li>
-      </ul>
-    </div>
-
-    <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <a id="goLogin" href="index.html" class="btn-primary px-4 py-2 rounded-xl text-center font-semibold">Se connecter</a>
-      <a id="goSignup" href="inscription.html" class="px-4 py-2 rounded-xl text-center font-semibold"
-         style="background:linear-gradient(135deg,#10B981,#34D399);border:1px solid rgba(255,255,255,.12);">Créer un compte</a>
-    </div>
-
-    <div class="mt-4 text-xs text-white/60">
-      En vous connectant, vous acceptez nos conditions d’utilisation.
-    </div>
-  </div>
-</div>
-  
 </body>
 </html>
