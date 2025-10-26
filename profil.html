@@ -413,7 +413,7 @@
       if (!user) return;
       try {
         await signOut(auth);
-        window.location.href = "home.html";
+        window.location.href = "index.html";
       } catch (e) {
         setStatus("Erreur : " + e.message, 'error');
       }
@@ -429,7 +429,7 @@
       try {
         await deleteUser(user);
         alert("Compte supprimé.");
-        window.location.href = "home.html";
+        window.location.href = "index.html";
       } catch (e) {
         if (e.code === 'auth/requires-recent-login') {
           setStatus("Veuillez vous réauthentifier (popup Google), puis relancez la suppression.", 'error');
@@ -437,7 +437,7 @@
             await reauthenticateWithPopup(user, new GoogleAuthProvider());
             await deleteUser(user);
             alert("Compte supprimé.");
-            window.location.href = "home.html";
+            window.location.href = "index.html";
           } catch (reauthErr) {
             setStatus("Erreur suppression : " + reauthErr.message, 'error');
           }
