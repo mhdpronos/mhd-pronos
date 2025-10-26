@@ -96,7 +96,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
       sessionStorage.removeItem('postLoginRedirect');
-      window.location.href = fromUrl || 'home.html';
+      window.location.href = fromUrl || 'index.html';
     }
 
     onAuthStateChanged(auth, (user) => {
