@@ -31,8 +31,10 @@
   <div class="card w-full max-w-md p-8 rounded-2xl">
     <!-- Logo + Nom -->
     <div class="flex flex-col items-center mb-6">
-      <img src="logo.JPG" alt="Logo MHD Pronos" class="w-20 h-20 rounded-full shadow-lg">
-      <h1 class="text-2xl font-extrabold mt-2 text-blue-400">MHD PRONOS</h1>
+      <a href="home.html" class="flex flex-col items-center group">
+        <img src="logo.JPG" alt="Logo MHD Pronos" class="w-20 h-20 rounded-full shadow-lg transition transform group-hover:scale-105">
+        <h1 class="text-2xl font-extrabold mt-2 text-blue-400">MHD PRONOS</h1>
+      </a>
     </div>
 
     <h2 class="text-center text-lg text-gray-300 mb-6">Connexion à votre compte</h2>
@@ -90,12 +92,19 @@
       noticeEl.className = 'mb-4 text-center text-sm ' + (type === 'error' ? 'text-red-400' : 'text-green-400');
     }
 
-    onAuthStateChanged(auth, (user) => { if (user) { localStorage.setItem('loggedIn', 'true'); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
-const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'home.html';
- } });
+    function handlePostLoginRedirect() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+      sessionStorage.removeItem('postLoginRedirect');
+      window.location.href = fromUrl || 'home.html';
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        localStorage.setItem('loggedIn', 'true');
+        handlePostLoginRedirect();
+      }
+    });
 
     function isPasswordStrong(password) {
       const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.#^_-])[A-Za-z\d@$!%*?&.#^_-]{8,}$/;
@@ -113,12 +122,7 @@ window.location.href = fromUrl || 'home.html';
       }
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
-const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'home.html';
-
+        handlePostLoginRedirect();
       } catch (err) {
         showNotice("Erreur : " + err.message, "error");
       }
@@ -133,30 +137,23 @@ window.location.href = fromUrl || 'home.html';
       } catch (err) { showNotice("Erreur : " + err.message, "error"); }
     });
 
-    document.getElementById("googleBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new GoogleAuthProvider()); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
-const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'home.html';
- } catch (err) { showNotice("Erreur Google : " + err.message, "error"); } });
-    document.getElementById("facebookBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new FacebookAuthProvider()); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
-const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'home.html';
- } catch (err) { showNotice("Erreur Facebook : " + err.message, "error"); } });
-    document.getElementById("appleBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new OAuthProvider("apple.com")); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
-const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'home.html';
- } catch (err) { showNotice("Erreur Apple : " + err.message, "error"); } });
-    document.getElementById("microsoftBtn").addEventListener("click", async () => { try { await signInWithPopup(auth, new OAuthProvider("microsoft.com")); // après signInWithEmailAndPassword(...) ou signInWithPopup(...)
-const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'home.html';
- } catch (err) { showNotice("Erreur Microsoft : " + err.message, "error"); } });
+    function setupSocialLogin(buttonId, providerFactory, providerLabel) {
+      const button = document.getElementById(buttonId);
+      if (!button) return;
+      button.addEventListener("click", async () => {
+        try {
+          await signInWithPopup(auth, providerFactory());
+          handlePostLoginRedirect();
+        } catch (err) {
+          showNotice(`Erreur ${providerLabel} : ${err.message}`, "error");
+        }
+      });
+    }
+
+    setupSocialLogin("googleBtn", () => new GoogleAuthProvider(), "Google");
+    setupSocialLogin("facebookBtn", () => new FacebookAuthProvider(), "Facebook");
+    setupSocialLogin("appleBtn", () => new OAuthProvider("apple.com"), "Apple");
+    setupSocialLogin("microsoftBtn", () => new OAuthProvider("microsoft.com"), "Microsoft");
   </script>
 </body>
 </html>
