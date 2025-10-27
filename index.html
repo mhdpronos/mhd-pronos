@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MHD Pronos — Accueil</title>
-  <script defer src="tracking.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
   <style>
@@ -69,6 +68,38 @@ tbody tr:hover {
   </style>
 </head>
 <body class="text-white">
+  <!-- Auth Guard + Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+      authDomain: "mhd-pronos.firebaseapp.com",
+      projectId: "mhd-pronos",
+      storageBucket: "mhd-pronos.firebasestorage.app",
+      messagingSenderId: "366441954219",
+      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    <script>
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("Utilisateur connecté :", user.email);
+      // Tu peux personnaliser ce que tu veux ici
+      // Ex: document.getElementById("userName").textContent = user.email;
+    } else {
+      console.log("Utilisateur non connecté");
+      // Aucun blocage, la page reste affichée
+    }
+  });
+</script>
+
+  </script>
+
+  <!-- Header -->
   <!-- Header -->
 <header class="sticky top-0 z-50 glass">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
@@ -128,7 +159,7 @@ tbody tr:hover {
         <div class="mt-6 flex flex-wrap gap-3">
           <!-- BOUTON CONSEIL DU JOUR (même style que FOOT NEWS, avec badge rouge) -->
 <a href="conseil.html" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold"
-   style="border:1px solid rgba(255,255,255,.15); background: linear-gradient(135deg,#6366F1,#8B5CF6); ">
+   style="border:1px solid rgba(255,255,255,.15); background: linear-gradient(135deg,#6366F1,#8B5CF6); " requires-auth>
   <span><strong>PRONOS CONSEIL</strong></span>
   <!-- Badge rouge dynamique -->
   <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
@@ -149,9 +180,19 @@ tbody tr:hover {
   <strong>À PROPOS</strong>
 </button>
           <button id="notificationsBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
-            🔔 <strong>NOTIFICATION</strong>
-            <span id="notifBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 hidden">0</span>
-          </button>
+  🔔 <strong>NOTIFICATION</strong>
+  <span id="notifBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 hidden">0</span>
+</button>
+  <span id="notif-badge" style="
+    display:none;
+    background:red;
+    color:white;
+    border-radius:50%;
+    padding:2px 7px;
+    font-size:12px;
+    margin-left:5px;
+  ">0</span>
+</button>
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
@@ -317,6 +358,23 @@ tbody tr:hover {
         <p class="text-sm text-white/50">Débloquez les pronostics premium et les analyses complètes.</p>
       </div>
       <div><a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a></div>
+      <div class="flex gap-3">
+  <!-- Badge rouge dynamique -->
+  <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
+        style="background:#ef4444; color:white; border:2px solid rgba(0,0,0,.35);">
+    0
+  </span>
+</a>
+
+  <!-- Badge -->
+  <span id="infofootBadge"
+        style="position:absolute; top:-6px; right:-6px; background:#ef4444; color:#fff; font-size:11px;
+               line-height:18px; min-width:18px; height:18px; text-align:center; border-radius:999px; padding:0 4px;
+               box-shadow:0 0 0 2px rgba(11,11,18,1); display:none;">
+    0
+  </span>
+</a>
+    </div>
   </div>
 </section>
 
@@ -469,7 +527,7 @@ tbody tr:hover {
     <a href="https://www.instagram.com/mhd_pronos?igsh=aTM5ZmZkNWpjb3hj&utm_source=qr" target="_blank">
       <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
     </a>
-    <a href="https://www.facebook.com/share/19qP6L4f51/?mibextid=wwXIfr" target="_blank">
+    <a href="https://www.facebook.com/share/19qP6L4f51/?mibextid=wwXIfr"_blank">
       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
     </a>
     <a href="https://www.tiktok.com/@mhdpronos.ci?_t=ZN-90jzIChx178&_r=1" target="_blank">
@@ -506,107 +564,171 @@ tbody tr:hover {
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
   <script>
-    // Toggle menu mobile
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('mobileMenu');
-    if (btn && menu) {
-      btn.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-      });
-    }
-  </script>
-  <script type="module">
-    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-      authDomain: "mhd-pronos.firebaseapp.com",
-      projectId: "mhd-pronos",
-      storageBucket: "mhd-pronos.firebasestorage.app",
-      messagingSenderId: "366441954219",
-      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-    };
-
-    const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("Utilisateur connecté :", user.email);
-      } else {
-        console.log("Utilisateur non connecté");
-      }
+  // Toggle menu mobile
+  const btn = document.getElementById('menuBtn');
+  const menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
     });
-
-    const aboutBtn = document.getElementById('aboutBtn');
-    aboutBtn?.addEventListener('click', () => {
-      window.location.href = 'about.html';
-    });
-
-    const notifBtn = document.getElementById('notificationsBtn');
-    const notifBadge = document.getElementById('notifBadge');
-
-    notifBtn?.addEventListener('click', () => {
-      window.location.href = 'notifications.html';
-    });
-
-    async function refreshNotificationBadge() {
-      if (!notifBadge) return;
-      try {
-        const q = query(collection(db, 'notifications'), where('lu', '==', false));
-        const snapshot = await getDocs(q);
-        const unread = snapshot.size;
-        if (unread > 0) {
-          notifBadge.textContent = unread > 99 ? '99+' : String(unread);
-          notifBadge.classList.remove('hidden');
-        } else {
-          notifBadge.classList.add('hidden');
-        }
-      } catch (err) {
-        console.error('Erreur de chargement des notifications :', err);
-        notifBadge.classList.add('hidden');
-      }
-    }
-
-    const infofootBadge = document.getElementById('infofoot-badge');
-
-    async function refreshInfofootBadge() {
-      if (!infofootBadge) return;
-      try {
-        const snapshot = await getDocs(collection(db, 'infofoot'));
-        const totalNews = snapshot.size;
-        let lastRead = Number(localStorage.getItem('infofoot_read_count') || 0);
-
-        if (window.location.pathname.includes('infofoot.html')) {
-          localStorage.setItem('infofoot_read_count', String(totalNews));
-          lastRead = totalNews;
-        }
-
-        if (totalNews > lastRead) {
-          const diff = totalNews - lastRead;
-          infofootBadge.textContent = diff > 9 ? '9+' : String(diff);
-          infofootBadge.classList.remove('hidden');
-        } else {
-          infofootBadge.classList.add('hidden');
-        }
-      } catch (err) {
-        console.error('Erreur de chargement des actualités :', err);
-        infofootBadge.classList.add('hidden');
-      }
-    }
-
-    refreshNotificationBadge();
-    refreshInfofootBadge();
-
-    setInterval(() => {
-      refreshNotificationBadge();
-      refreshInfofootBadge();
-    }, 60000);
-  </script>
+  }
+</script>
   <script>
+  // ✅ Simulation du nombre de notifications non lues (plus tard, ça viendra de Firestore)
+  let unreadNotifications = 3; // tu peux changer ce chiffre pour tester
+
+  const notifCount = document.getElementById("notifCount");
+  const notifBtn = document.getElementById("notifBtn");
+
+  // Affiche ou cache le badge selon s'il y a des notifications
+  if (unreadNotifications > 0) {
+    notifCount.textContent = unreadNotifications;
+    notifCount.classList.remove("hidden");
+  } else {
+    notifCount.classList.add("hidden");
+  }
+
+  // Redirige vers la page notifications.html quand on clique
+  notifBtn.addEventListener("click", () => {
+    window.location.href = "notifications.html";
+  });
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function chargerNotificationsNonLues() {
+    const q = query(collection(db, "notifications"), where("lu", "==", false));
+    const querySnapshot = await getDocs(q);
+
+    const badge = document.getElementById("notif-badge");
+    const count = querySnapshot.size;
+
+    if (count > 0) {
+      badge.style.display = "inline-block";
+      badge.textContent = count;
+    } else {
+      badge.style.display = "none";
+    }
+  }
+
+  chargerNotificationsNonLues();
+</script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+    storageBucket: "mhd-pronos.firebasestorage.app",
+    messagingSenderId: "366441954219",
+    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function updateNotificationBadge() {
+    const q = query(collection(db, "notifications"), where("lu", "==", false));
+    const snapshot = await getDocs(q);
+    const unreadCount = snapshot.size;
+
+    const badge = document.getElementById("notifBadge");
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount;
+      badge.classList.remove("hidden");
+    } else {
+      badge.classList.add("hidden");
+    }
+  }
+
+  document.getElementById("notificationsBtn").addEventListener("click", () => {
+    window.location.href = "notifications.html";
+  });
+
+  updateNotificationBadge();
+    document.getElementById("aboutBtn").addEventListener("click", () => {
+  window.location.href = "about.html";
+});
+
+</script>
+<script type="module">
+  // Ce script lit le compteur calculé par infofoot.html dans localStorage
+  // et affiche le badge en conséquence.
+
+  const b = document.getElementById('infofootBadge');
+  function refreshInfoFootBadge(){
+    const n = Number(localStorage.getItem('infofoot_unread_count') || 0);
+    if (!b) return;
+    if (n > 0){
+      b.textContent = String(n);
+      b.style.display = 'inline-block';
+    } else {
+      b.style.display = 'none';
+    }
+  }
+
+  // Met à jour au chargement...
+  refreshInfoFootBadge();
+  // ...et ensuite toutes les 15s pour suivre un éventuel changement local
+  const id = setInterval(refreshInfoFootBadge, 15000);
+  window.addEventListener('beforeunload', ()=> clearInterval(id));
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+  authDomain: "mhd-pronos.firebaseapp.com",
+  projectId: "mhd-pronos",
+  storageBucket: "mhd-pronos.appspot.com",
+  messagingSenderId: "366441954219",
+  appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function checkUnreadNews() {
+  const badge = document.getElementById("infofoot-badge");
+  const snapshot = await getDocs(collection(db, "infofoot"));
+  const newsCount = snapshot.size;
+
+  // Récupère le dernier nombre lu
+  const lastCount = Number(localStorage.getItem("infofoot_read_count") || 0);
+
+  // Affiche le badge uniquement s’il y a du nouveau
+  if (newsCount > lastCount) {
+    const diff = newsCount - lastCount;
+    badge.textContent = diff > 9 ? "9+" : diff;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
+// Quand l’utilisateur visite la page infofoot.html, on marque tout comme lu
+if (window.location.pathname.includes("infofoot.html")) {
+  const snapshot = await getDocs(collection(db, "infofoot"));
+  localStorage.setItem("infofoot_read_count", snapshot.size.toString());
+}
+
+// Vérifie à chaque chargement de la page
+checkUnreadNews();
+</script>
+<script>
   // Met à jour le badge "CONSEIL DU JOUR" à partir du localStorage
   (function(){
     const badge = document.getElementById('badge-conseil');
@@ -635,5 +757,6 @@ tbody tr:hover {
   })();
 </script>
 
+  <script defer src="tracking.js"></script>
 </body>
 </html>

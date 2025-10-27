@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mon profil — MHD Pronos</title>
-  <script defer src="tracking.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body { background: radial-gradient(1000px 500px at -10% -20%, rgba(99,102,241,.12), transparent 60%), #0b0b12; }
@@ -180,87 +179,28 @@
     const statusBox = document.getElementById('status');
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const defaultAvatarUrl = "https://api.dicebear.com/7.x/initials/svg?seed=Visiteur&backgroundType=gradientLinear&fontFamily=Arial";
-    const interactiveElements = [
-      photoInput,
-      savePhotoBtn,
-      nameField,
-      emailField,
-      saveProfileBtn,
-      verifyEmailBtn,
-      changePasswordBtn,
-      prefNotif,
-      prefTips,
-      prefDark,
-      savePrefsBtn,
-      logoutBtn,
-      logoutBtn2,
-      deleteAccountBtn
-    ];
-
-    function setFormEnabled(enabled) {
-      interactiveElements.forEach((el) => {
-        if (!el) return;
-        if (typeof el.disabled === 'boolean') {
-          el.disabled = !enabled;
-        }
-        el.classList.toggle('opacity-60', !enabled);
-        el.classList.toggle('cursor-not-allowed', !enabled);
-      });
-    }
-
-    function resetProfileView() {
-      avatar.src = defaultAvatarUrl;
-      displayName.textContent = 'Visiteur';
-      emailEl.textContent = 'Non connecté';
-      nameField.value = '';
-      emailField.value = '';
-      vipBadge.textContent = 'VIP : —';
-      prefNotif.checked = false;
-      prefTips.checked = false;
-      prefDark.checked = true;
-      createdAtEl.textContent = '—';
-      lastLoginEl.textContent = '—';
-    }
-
     function setStatus(msg, type='info') {
       statusBox.textContent = msg || '';
       statusBox.className = 'mt-6 text-sm ' + (type === 'error' ? 'text-red-400' : 'text-white/80');
     }
 
-    function requireAuth() {
-      const user = auth.currentUser;
-      if (!user) {
-        setStatus('Connectez-vous pour utiliser cette fonctionnalité.', 'error');
-        return null;
-      }
-      return user;
-    }
-
-    setFormEnabled(false);
-    resetProfileView();
-    setStatus('Chargement du profil…');
-
     // Auth guard + chargement profil
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        resetProfileView();
-        setFormEnabled(false);
-        setStatus('Connectez-vous pour modifier votre profil. Vous pouvez consulter cette page librement.');
+        window.location.href = "connexion.html";
         return;
       }
 
-      setFormEnabled(true);
-
       try {
-        setStatus('');
         // Base Auth data
         displayName.textContent = user.displayName || 'Utilisateur';
         emailEl.textContent = user.email || '—';
         nameField.value = user.displayName || '';
         emailField.value = user.email || '';
 
-        avatar.src = user.photoURL || defaultAvatarUrl;
+        if (user.photoURL) {
+          avatar.src = user.photoURL;
+        }
 
         const created = user.metadata?.creationTime ? new Date(user.metadata.creationTime) : null;
         const lastLogin = user.metadata?.lastSignInTime ? new Date(user.metadata.lastSignInTime) : null;
@@ -281,25 +221,22 @@
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
           });
-          vipBadge.textContent = 'VIP : non';
-          prefNotif.checked = false;
-          prefTips.checked = false;
-          prefDark.checked = true;
+          vipBadge.textContent = "VIP : non";
         } else {
           const data = snap.data();
-          vipBadge.textContent = 'VIP : ' + (data.vip ? 'oui' : 'non');
+          vipBadge.textContent = "VIP : " + (data.vip ? "oui" : "non");
           prefNotif.checked = !!data.preferences?.notif;
           prefTips.checked = !!data.preferences?.tipsByEmail;
           prefDark.checked = data.preferences?.dark !== false;
         }
       } catch (e) {
-        setStatus('Erreur de chargement du profil : ' + e.message, 'error');
+        setStatus("Erreur de chargement du profil : " + e.message, 'error');
       }
     });
 
     // Save photo
     savePhotoBtn.addEventListener('click', async () => {
-      const user = requireAuth();
+      const user = auth.currentUser;
       if (!user) return;
       const file = photoInput.files?.[0];
       if (!file) return setStatus("Choisissez une image avant d’enregistrer.", 'error');
@@ -324,7 +261,7 @@
 
     // Save name + email
     saveProfileBtn.addEventListener('click', async () => {
-      const user = requireAuth();
+      const user = auth.currentUser;
       if (!user) return;
       const newName = nameField.value.trim();
       const newEmail = emailField.value.trim();
@@ -363,7 +300,7 @@
 
     // Verify email
     verifyEmailBtn.addEventListener('click', async () => {
-      const user = requireAuth();
+      const user = auth.currentUser;
       if (!user) return;
       try {
         await sendEmailVerification(user);
@@ -375,12 +312,8 @@
 
     // Change password (envoie un lien de reset)
     changePasswordBtn.addEventListener('click', async () => {
-      const user = requireAuth();
-      if (!user) return;
-      if (!user.email) {
-        setStatus("Aucun e-mail trouvé sur ce compte.", 'error');
-        return;
-      }
+      const user = auth.currentUser;
+      if (!user?.email) return setStatus("Aucun e-mail trouvé sur ce compte.", 'error');
       try {
         await sendPasswordResetEmail(auth, user.email);
         setStatus("Lien de réinitialisation de mot de passe envoyé à " + user.email + " ✅");
@@ -391,7 +324,7 @@
 
     // Save preferences
     savePrefsBtn.addEventListener('click', async () => {
-      const user = requireAuth();
+      const user = auth.currentUser;
       if (!user) return;
       try {
         await updateDoc(doc(db, 'users', user.uid), {
@@ -410,11 +343,9 @@
 
     // Logout
     const doLogout = async () => {
-      const user = requireAuth();
-      if (!user) return;
       try {
         await signOut(auth);
-        window.location.href = "index.html";
+        window.location.href = "connexion.html";
       } catch (e) {
         setStatus("Erreur : " + e.message, 'error');
       }
@@ -424,13 +355,13 @@
 
     // Delete account
     deleteAccountBtn.addEventListener('click', async () => {
-      const user = requireAuth();
+      const user = auth.currentUser;
       if (!user) return;
       if (!confirm("Êtes-vous sûr de vouloir supprimer définitivement votre compte ?")) return;
       try {
         await deleteUser(user);
         alert("Compte supprimé.");
-        window.location.href = "index.html";
+        window.location.href = "connexion.html";
       } catch (e) {
         if (e.code === 'auth/requires-recent-login') {
           setStatus("Veuillez vous réauthentifier (popup Google), puis relancez la suppression.", 'error');
@@ -438,7 +369,7 @@
             await reauthenticateWithPopup(user, new GoogleAuthProvider());
             await deleteUser(user);
             alert("Compte supprimé.");
-            window.location.href = "index.html";
+            window.location.href = "connexion.html";
           } catch (reauthErr) {
             setStatus("Erreur suppression : " + reauthErr.message, 'error');
           }
@@ -448,5 +379,6 @@
       }
     });
   </script>
+  <script defer src="tracking.js"></script>
 </body>
 </html>

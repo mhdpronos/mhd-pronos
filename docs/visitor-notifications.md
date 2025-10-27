@@ -1,59 +1,71 @@
-# Notifier chaque visite sur le site
+# Notifications e-mail pour chaque visite
 
-Obtenir une notification à chaque visite nécessite de suivre les requêtes entrantes
-et de propager cette information vers un canal (e-mail, webhook, push…).
-Voici trois scénarios possibles, classés du plus simple au plus robuste.
+Ce dépôt contient tout le nécessaire pour recevoir un e-mail à chaque
+chargement d'une page du site public.
 
-## 1. Utiliser un service d'analyse avec alertes
+## Fonctionnement général
 
-1. Créez un compte sur une plateforme telle que Google Analytics, Plausible ou
-   Umami, puis intégrez leur script de suivi dans toutes vos pages HTML.
-2. Configurez une alerte qui se déclenche sur chaque nouvelle session ou lorsque le
-   nombre d'utilisateurs actifs dépasse `0`. Certaines solutions proposent des
-   notifications par e-mail, Slack ou webhook.
-3. Les solutions hébergées restent simples à configurer, mais dépendent d'un
-   service tiers et ne garantissent pas l'envoi immédiat d'une notification
-   (délai de collecte, filtrage des robots).
+1. Un script commun (`tracking.js`) est inclus dans toutes les pages HTML.
+   Dès que la page est chargée (hors environnement local), le script envoie
+   une requête `POST` vers la fonction Cloud `notifyVisit`.
+2. La fonction (`fonctions/index.js`) accepte l'appel cross-origin, enrichit
+   les métadonnées (URL, référent, agent utilisateur, IP) et déclenche
+   l'envoi d'un e-mail via Gmail/Nodemailer vers `mo64166946@gmail.com`.
+3. Une garde anti-double envoi (`window.__MHD_VISIT_RECORDED__`) évite de
+   notifier plusieurs fois la même visite, et le script ignore les hôtes
+   `localhost`/`127.0.0.1` pour ne pas spammer pendant le développement.
 
-## 2. Journaliser les visites via un backend léger
+## À faire avant déploiement
 
-1. Déployez un point de terminaison (par exemple sur Firebase Functions,
-   Cloudflare Workers ou un serveur Express) qui reçoit les requêtes de suivi
-   (`POST /track-visit`).
-2. Depuis chaque page, ajoutez un script qui envoie une requête fetch à ce
-   endpoint lorsqu'elle se charge.
-3. Dans le backend, enregistrez l'heure, l'adresse IP et l'agent utilisateur dans
-   une base de données (Firestore, Supabase, MongoDB…).
-4. Configurez le backend pour déclencher une notification en temps réel :
-   * envoi d'un e-mail via un service SMTP ou SendGrid;
-   * message webhook vers Discord/Slack;
-   * notification push via Firebase Cloud Messaging.
-5. Implémentez un filtrage de base (par exemple, ignorer les bots connus ou vos
-   propres visites) pour éviter le bruit.
+1. Ouvrir un terminal dans `fonctions/` puis installer les dépendances :
 
-## 3. Déployer un pixel de suivi auto-hébergé
+   ```bash
+   cd fonctions
+   npm install
+   ```
 
-1. Hébergez un micro-service qui renvoie une image transparente ("tracking
-   pixel").
-2. Incluez cette image (`<img src="https://votre-domaine/pixel.gif" />`) dans
-   chaque page : à chaque chargement, le navigateur demandera le pixel.
-3. Le service enregistre la requête et peut immédiatement déclencher un webhook ou
-   un e-mail.
-4. Cette approche fonctionne même si JavaScript est désactivé, mais nécessite de
-   bloquer le cache (en ajoutant un paramètre unique) pour s'assurer que chaque
-   visite génère bien une requête.
+2. Vérifier que le mot de passe d'application Gmail renseigné dans
+   `transporter` est valide. Si besoin, régénérer un mot de passe
+   d'application depuis le compte `mo64166946@gmail.com` (sécurité > mot de
+   passe d'application) et mettre à jour `fonctions/index.js`.
 
-## Points de vigilance
+3. Déployer la fonction :
 
-- Respectez les réglementations (RGPD) : affichez une bannière de consentement et
-  mettez à jour votre politique de confidentialité si vous collectez des données
-  personnelles.
-- Limitez les notifications en regroupant les visites (batch) ou en définissant
-  des seuils, faute de quoi vous serez submergé par les alertes.
-- Pour valider le fonctionnement, testez avec un navigateur privé et vérifiez que
-  l'événement déclenche bien l'envoi (log serveur, e-mail reçu, etc.).
+   ```bash
+   firebase deploy --only functions:notifyVisit
+   ```
 
-En résumé, oui c'est possible, mais cela requiert un composant serveur ou un
-service tiers capable de capter chaque visite et de vous alerter en temps réel.
-Choisissez la solution en fonction de vos contraintes d'hébergement et de
-respect de la vie privée.
+   > Bonus : `firebase deploy --only functions` publiera aussi les autres
+   > fonctions (`envoyerEmail`, `proxy`) si vous souhaitez les garder à jour.
+
+4. Déployer l'hébergement pour pousser `tracking.js` et les pages HTML
+   modifiées :
+
+   ```bash
+   firebase deploy --only hosting
+   ```
+
+## Tests rapides
+
+1. Ouvrir le site hébergé depuis une fenêtre de navigation privée.
+2. Attendre quelques secondes que la page se charge complètement.
+3. Vérifier la boîte de réception `mo64166946@gmail.com`. Un message
+   "Nouvelle visite sur MHD Pronos" doit apparaître. En cas d'échec,
+   consulter les logs :
+
+   ```bash
+   firebase functions:log --only notifyVisit
+   ```
+
+4. Répéter sur différentes pages pour confirmer que le suivi s'applique à
+   tout le site.
+
+## Personnalisation
+
+- Pour modifier l'adresse de destination, ajuster `to:` dans
+  `notifyVisit`.
+- Pour ignorer certains chemins (ex. `/connexion.html`), ajouter une
+  condition dans `tracking.js` avant `sendVisitNotification()`.
+- Pour compléter les données (géolocalisation, etc.), enrichir le payload
+  dans le script ou la fonction Cloud avant l'envoi du mail.
+
