@@ -31,8 +31,10 @@
   <div class="card w-full max-w-md p-8 rounded-2xl">
     <!-- Logo + Nom -->
     <div class="flex flex-col items-center mb-6">
-      <img src="logo.JPG" alt="Logo MHD Pronos" class="w-20 h-20 rounded-full shadow-lg">
-      <h1 class="text-2xl font-extrabold mt-2 text-blue-400">MHD PRONOS</h1>
+      <a href="home.html" class="flex flex-col items-center group">
+        <img src="logo.JPG" alt="Logo MHD Pronos" class="w-20 h-20 rounded-full shadow-lg transition transform group-hover:scale-105">
+        <h1 class="text-2xl font-extrabold mt-2 text-blue-400">MHD PRONOS</h1>
+      </a>
     </div>
 
     <h2 class="text-center text-lg text-gray-300 mb-6">Connexion à votre compte</h2>
@@ -90,7 +92,7 @@
       noticeEl.className = 'mb-4 text-center text-sm ' + (type === 'error' ? 'text-red-400' : 'text-green-400');
     }
 
-    function redirectAfterAuth() {
+    function handlePostLoginRedirect() {
       const urlParams = new URLSearchParams(window.location.search);
       const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
       sessionStorage.removeItem('postLoginRedirect');
@@ -98,11 +100,10 @@
     }
 
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        return;
+      if (user) {
+        localStorage.setItem('loggedIn', 'true');
+        handlePostLoginRedirect();
       }
-      localStorage.setItem('loggedIn', 'true');
-      redirectAfterAuth();
     });
 
     function isPasswordStrong(password) {
@@ -110,64 +111,49 @@
       return regex.test(password);
     }
 
-    const emailForm = document.getElementById('emailForm');
-    if (emailForm) {
-      emailForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value.trim();
+    document.getElementById("emailForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-        if (!isPasswordStrong(password)) {
-          showNotice('Le mot de passe est trop faible.', 'error');
-          return;
-        }
-
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-          redirectAfterAuth();
-        } catch (err) {
-          showNotice('Erreur : ' + err.message, 'error');
-        }
-      });
-    }
-
-    const forgotPasswordBtn = document.getElementById('forgotPassword');
-    if (forgotPasswordBtn) {
-      forgotPasswordBtn.addEventListener('click', async () => {
-        const email = document.getElementById('email').value.trim();
-        if (!email) {
-          showNotice("Entrez votre e-mail d'abord", 'error');
-          return;
-        }
-        try {
-          await sendPasswordResetEmail(auth, email);
-          showNotice('Lien envoyé à ' + email);
-        } catch (err) {
-          showNotice('Erreur : ' + err.message, 'error');
-        }
-      });
-    }
-
-    function attachProvider(buttonId, providerFactory, providerName) {
-      const button = document.getElementById(buttonId);
-      if (!button) {
+      if (!isPasswordStrong(password)) {
+        showNotice("Le mot de passe est trop faible.", "error");
         return;
       }
-      button.addEventListener('click', async () => {
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        handlePostLoginRedirect();
+      } catch (err) {
+        showNotice("Erreur : " + err.message, "error");
+      }
+    });
+
+    document.getElementById("forgotPassword").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      if (!email) return showNotice("Entrez votre e-mail d'abord", "error");
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showNotice("Lien envoyé à " + email);
+      } catch (err) { showNotice("Erreur : " + err.message, "error"); }
+    });
+
+    function setupSocialLogin(buttonId, providerFactory, providerLabel) {
+      const button = document.getElementById(buttonId);
+      if (!button) return;
+      button.addEventListener("click", async () => {
         try {
           await signInWithPopup(auth, providerFactory());
-          redirectAfterAuth();
+          handlePostLoginRedirect();
         } catch (err) {
-          showNotice(`Erreur ${providerName} : ` + err.message, 'error');
+          showNotice(`Erreur ${providerLabel} : ${err.message}`, "error");
         }
       });
     }
 
-    attachProvider('googleBtn', () => new GoogleAuthProvider(), 'Google');
-    attachProvider('facebookBtn', () => new FacebookAuthProvider(), 'Facebook');
-    attachProvider('appleBtn', () => new OAuthProvider('apple.com'), 'Apple');
-    attachProvider('microsoftBtn', () => new OAuthProvider('microsoft.com'), 'Microsoft');
+    setupSocialLogin("googleBtn", () => new GoogleAuthProvider(), "Google");
+    setupSocialLogin("facebookBtn", () => new FacebookAuthProvider(), "Facebook");
+    setupSocialLogin("appleBtn", () => new OAuthProvider("apple.com"), "Apple");
+    setupSocialLogin("microsoftBtn", () => new OAuthProvider("microsoft.com"), "Microsoft");
   </script>
-  <script defer src="tracking.js"></script>
 </body>
 </html>

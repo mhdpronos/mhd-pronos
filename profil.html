@@ -16,13 +16,13 @@
   <!-- Header -->
   <header class="sticky top-0 z-50 glass">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-4">
-      <a href="index.html" class="flex items-center space-x-3">
+      <a href="home.html" class="flex items-center space-x-3">
         <img src="logo.JPG" alt="Logo MHD Pronos" class="w-10 h-10 rounded-md object-cover">
         <span class="text-lg font-extrabold lowercase">mhd pronos</span>
       </a>
       <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
-        <a class="text-white/80 hover:text-white" href="index.html#tips">Pronostics</a>
-        <a class="text-white/80 hover:text-white" href="index.html#pricing">Abonnements</a>
+        <a class="text-white/80 hover:text-white" href="home.html#tips">Pronostics</a>
+        <a class="text-white/80 hover:text-white" href="home.html#pricing">Abonnements</a>
         <button id="logoutBtn" class="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">Se déconnecter</button>
       </nav>
     </div>
@@ -243,7 +243,9 @@
     // Auth guard + chargement profil
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        window.location.href = "connexion.html";
+        resetProfileView();
+        setFormEnabled(false);
+        setStatus('Connectez-vous pour modifier votre profil. Vous pouvez consulter cette page librement.');
         return;
       }
 
@@ -411,7 +413,7 @@
       if (!user) return;
       try {
         await signOut(auth);
-        window.location.href = "connexion.html";
+        window.location.href = "index.html";
       } catch (e) {
         setStatus("Erreur : " + e.message, 'error');
       }
@@ -427,7 +429,7 @@
       try {
         await deleteUser(user);
         alert("Compte supprimé.");
-        window.location.href = "connexion.html";
+        window.location.href = "index.html";
       } catch (e) {
         if (e.code === 'auth/requires-recent-login') {
           setStatus("Veuillez vous réauthentifier (popup Google), puis relancez la suppression.", 'error');
@@ -435,7 +437,7 @@
             await reauthenticateWithPopup(user, new GoogleAuthProvider());
             await deleteUser(user);
             alert("Compte supprimé.");
-            window.location.href = "connexion.html";
+            window.location.href = "index.html";
           } catch (reauthErr) {
             setStatus("Erreur suppression : " + reauthErr.message, 'error');
           }
@@ -445,6 +447,5 @@
       }
     });
   </script>
-  <script defer src="tracking.js"></script>
 </body>
 </html>
