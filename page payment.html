@@ -4,6 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Paiement VIP — MHD Pronos</title>
+  <script defer src="tracking.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     :root { color-scheme: dark; }
@@ -32,20 +33,20 @@
   <!-- Header -->
   <header class="sticky top-0 z-50 glass">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
-      <a href="home.html" class="flex items-center space-x-3">
+      <a href="index.html" class="flex items-center space-x-3">
         <img src="./logo.JPG" alt="Logo" class="w-10 h-10 rounded-md object-cover">
         <span class="text-lg font-extrabold lowercase">mhd pronos</span>
       </a>
 
       <div class="ml-auto flex items-center space-x-2 md:hidden">
-        <a href="home.html" class="inline-btn btn-outline hover:bg-white hover:bg-opacity-5 text-sm">Accueil</a>
+        <a href="index.html" class="inline-btn btn-outline hover:bg-white hover:bg-opacity-5 text-sm">Accueil</a>
         <button id="menuBtn" class="inline-btn btn-outline hover:bg-white hover:bg-opacity-5" aria-label="menu">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
 
       <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
-        <a class="text-white/80 hover:text-white" href="home.html">Accueil</a>
+        <a class="text-white/80 hover:text-white" href="index.html">Accueil</a>
         <a class="text-white/80 hover:text-white" href="plan abonnement.html">Plans</a>
         <a class="text-white/80 hover:text-white" href="astuce.html">Devenir pro</a>
         <a class="text-white/80 hover:text-white" href="victoires.html">Victoires</a>
@@ -54,7 +55,7 @@
     </div>
     <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
       <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
-        <a class="text-white/90" href="home.html">Accueil</a>
+        <a class="text-white/90" href="index.html">Accueil</a>
         <a class="text-white/90" href="plan abonnement.html">Plans</a>
         <a class="text-white/90" href="astuce.html">Devenir pro</a>
         <a class="text-white/90" href="victoires.html">Victoires</a>

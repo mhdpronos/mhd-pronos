@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mon profil — MHD Pronos</title>
+  <script defer src="tracking.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body { background: radial-gradient(1000px 500px at -10% -20%, rgba(99,102,241,.12), transparent 60%), #0b0b12; }
@@ -16,13 +17,13 @@
   <!-- Header -->
   <header class="sticky top-0 z-50 glass">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-4">
-      <a href="home.html" class="flex items-center space-x-3">
+      <a href="index.html" class="flex items-center space-x-3">
         <img src="logo.JPG" alt="Logo MHD Pronos" class="w-10 h-10 rounded-md object-cover">
         <span class="text-lg font-extrabold lowercase">mhd pronos</span>
       </a>
       <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
-        <a class="text-white/80 hover:text-white" href="home.html#tips">Pronostics</a>
-        <a class="text-white/80 hover:text-white" href="home.html#pricing">Abonnements</a>
+        <a class="text-white/80 hover:text-white" href="index.html#tips">Pronostics</a>
+        <a class="text-white/80 hover:text-white" href="index.html#pricing">Abonnements</a>
         <button id="logoutBtn" class="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">Se déconnecter</button>
       </nav>
     </div>
@@ -179,28 +180,87 @@
     const statusBox = document.getElementById('status');
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    const defaultAvatarUrl = "https://api.dicebear.com/7.x/initials/svg?seed=Visiteur&backgroundType=gradientLinear&fontFamily=Arial";
+    const interactiveElements = [
+      photoInput,
+      savePhotoBtn,
+      nameField,
+      emailField,
+      saveProfileBtn,
+      verifyEmailBtn,
+      changePasswordBtn,
+      prefNotif,
+      prefTips,
+      prefDark,
+      savePrefsBtn,
+      logoutBtn,
+      logoutBtn2,
+      deleteAccountBtn
+    ];
+
+    function setFormEnabled(enabled) {
+      interactiveElements.forEach((el) => {
+        if (!el) return;
+        if (typeof el.disabled === 'boolean') {
+          el.disabled = !enabled;
+        }
+        el.classList.toggle('opacity-60', !enabled);
+        el.classList.toggle('cursor-not-allowed', !enabled);
+      });
+    }
+
+    function resetProfileView() {
+      avatar.src = defaultAvatarUrl;
+      displayName.textContent = 'Visiteur';
+      emailEl.textContent = 'Non connecté';
+      nameField.value = '';
+      emailField.value = '';
+      vipBadge.textContent = 'VIP : —';
+      prefNotif.checked = false;
+      prefTips.checked = false;
+      prefDark.checked = true;
+      createdAtEl.textContent = '—';
+      lastLoginEl.textContent = '—';
+    }
+
     function setStatus(msg, type='info') {
       statusBox.textContent = msg || '';
       statusBox.className = 'mt-6 text-sm ' + (type === 'error' ? 'text-red-400' : 'text-white/80');
     }
 
+    function requireAuth() {
+      const user = auth.currentUser;
+      if (!user) {
+        setStatus('Connectez-vous pour utiliser cette fonctionnalité.', 'error');
+        return null;
+      }
+      return user;
+    }
+
+    setFormEnabled(false);
+    resetProfileView();
+    setStatus('Chargement du profil…');
+
     // Auth guard + chargement profil
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        window.location.href = "index.html";
+        resetProfileView();
+        setFormEnabled(false);
+        setStatus('Connectez-vous pour modifier votre profil. Vous pouvez consulter cette page librement.');
         return;
       }
 
+      setFormEnabled(true);
+
       try {
+        setStatus('');
         // Base Auth data
         displayName.textContent = user.displayName || 'Utilisateur';
         emailEl.textContent = user.email || '—';
         nameField.value = user.displayName || '';
         emailField.value = user.email || '';
 
-        if (user.photoURL) {
-          avatar.src = user.photoURL;
-        }
+        avatar.src = user.photoURL || defaultAvatarUrl;
 
         const created = user.metadata?.creationTime ? new Date(user.metadata.creationTime) : null;
         const lastLogin = user.metadata?.lastSignInTime ? new Date(user.metadata.lastSignInTime) : null;
@@ -221,22 +281,25 @@
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
           });
-          vipBadge.textContent = "VIP : non";
+          vipBadge.textContent = 'VIP : non';
+          prefNotif.checked = false;
+          prefTips.checked = false;
+          prefDark.checked = true;
         } else {
           const data = snap.data();
-          vipBadge.textContent = "VIP : " + (data.vip ? "oui" : "non");
+          vipBadge.textContent = 'VIP : ' + (data.vip ? 'oui' : 'non');
           prefNotif.checked = !!data.preferences?.notif;
           prefTips.checked = !!data.preferences?.tipsByEmail;
           prefDark.checked = data.preferences?.dark !== false;
         }
       } catch (e) {
-        setStatus("Erreur de chargement du profil : " + e.message, 'error');
+        setStatus('Erreur de chargement du profil : ' + e.message, 'error');
       }
     });
 
     // Save photo
     savePhotoBtn.addEventListener('click', async () => {
-      const user = auth.currentUser;
+      const user = requireAuth();
       if (!user) return;
       const file = photoInput.files?.[0];
       if (!file) return setStatus("Choisissez une image avant d’enregistrer.", 'error');
@@ -261,7 +324,7 @@
 
     // Save name + email
     saveProfileBtn.addEventListener('click', async () => {
-      const user = auth.currentUser;
+      const user = requireAuth();
       if (!user) return;
       const newName = nameField.value.trim();
       const newEmail = emailField.value.trim();
@@ -300,7 +363,7 @@
 
     // Verify email
     verifyEmailBtn.addEventListener('click', async () => {
-      const user = auth.currentUser;
+      const user = requireAuth();
       if (!user) return;
       try {
         await sendEmailVerification(user);
@@ -312,8 +375,12 @@
 
     // Change password (envoie un lien de reset)
     changePasswordBtn.addEventListener('click', async () => {
-      const user = auth.currentUser;
-      if (!user?.email) return setStatus("Aucun e-mail trouvé sur ce compte.", 'error');
+      const user = requireAuth();
+      if (!user) return;
+      if (!user.email) {
+        setStatus("Aucun e-mail trouvé sur ce compte.", 'error');
+        return;
+      }
       try {
         await sendPasswordResetEmail(auth, user.email);
         setStatus("Lien de réinitialisation de mot de passe envoyé à " + user.email + " ✅");
@@ -324,7 +391,7 @@
 
     // Save preferences
     savePrefsBtn.addEventListener('click', async () => {
-      const user = auth.currentUser;
+      const user = requireAuth();
       if (!user) return;
       try {
         await updateDoc(doc(db, 'users', user.uid), {
@@ -343,6 +410,8 @@
 
     // Logout
     const doLogout = async () => {
+      const user = requireAuth();
+      if (!user) return;
       try {
         await signOut(auth);
         window.location.href = "index.html";
@@ -355,7 +424,7 @@
 
     // Delete account
     deleteAccountBtn.addEventListener('click', async () => {
-      const user = auth.currentUser;
+      const user = requireAuth();
       if (!user) return;
       if (!confirm("Êtes-vous sûr de vouloir supprimer définitivement votre compte ?")) return;
       try {

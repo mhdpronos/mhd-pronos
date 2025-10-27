@@ -4,6 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Abonnements VIP — MHD Pronos</title>
+  <script defer src="tracking.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     :root { color-scheme: dark; }
@@ -41,7 +42,7 @@
   <!-- Header -->
   <header class="sticky top-0 z-50 glass">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
-      <a href="home.html" class="flex items-center space-x-3">
+      <a href="index.html" class="flex items-center space-x-3">
         <img src="logo.JPG" alt="Logo" class="w-10 h-10 rounded-md object-cover">
         <span class="text-lg font-extrabold lowercase">mhd pronos</span>
       </a>
@@ -56,8 +57,8 @@
 
       <!-- Desktop nav -->
       <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
-        <a class="text-white/80 hover:text-white" href="home.html">Accueil</a>
-        <a class="text-white/80 hover:text-white" href="home.html#tips">Pronostics</a>
+        <a class="text-white/80 hover:text-white" href="index.html">Accueil</a>
+        <a class="text-white/80 hover:text-white" href="index.html#tips">Pronostics</a>
         <a class="text-white/80 hover:text-white" href="victoires.html">Victoires du jour</a>
         <a class="text-white/80 hover:text-white" href="astuce.html">Devenir pro</a>
         <a class="text-white/80 hover:text-white" href="about.html">Qui est mhd pronos</a>
@@ -67,8 +68,8 @@
     <!-- Mobile menu -->
     <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
       <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
-        <a class="text-white/90" href="home.html">Accueil</a>
-        <a class="text-white/90" href="home.html#tips">Pronostics</a>
+        <a class="text-white/90" href="index.html">Accueil</a>
+        <a class="text-white/90" href="index.html#tips">Pronostics</a>
         <a class="text-white/90" href="victoires.html">Victoires du jour</a>
         <a class="text-white/90" href="astuce.html">Devenir pro</a>
         <a class="text-white/90" href="about.html">Qui est mhd pronos</a>
@@ -89,7 +90,7 @@
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href="about.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Qui est mhd pronos</a>
-          <a href="home.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Retour Accueil</a>
+          <a href="index.html" class="px-6 py-3 rounded-xl btn-outline hover:bg-white hover:bg-opacity-5">Retour Accueil</a>
         </div>
       </div>
       <div class="reveal">
@@ -284,7 +285,7 @@
         if (!isAuthed) {
           e.preventDefault();
           alert("Connectez-vous pour continuer votre abonnement.");
-          window.location.href = "index.html"; // ta page de connexion
+          window.location.href = "connexion.html"; // ta page de connexion
         }
         // Sinon on laisse suivre le href="paiement.html"
       }, { passive: false });

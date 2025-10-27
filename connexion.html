@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Connexion - MHD Pronos</title>
+  <script defer src="tracking.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+    }
+    .card {
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .input:focus {
+      outline: none;
+      border: 1px solid #3b82f6;
+      box-shadow: 0 0 6px #3b82f6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-white">
+  <div class="card w-full max-w-md p-8 rounded-2xl">
+    <!-- Logo + Nom -->
+    <div class="flex flex-col items-center mb-6">
+      <a href="index.html" class="flex flex-col items-center group">
+        <img src="logo.JPG" alt="Logo MHD Pronos" class="w-20 h-20 rounded-full shadow-lg transition transform group-hover:scale-105">
+        <h1 class="text-2xl font-extrabold mt-2 text-blue-400">MHD PRONOS</h1>
+      </a>
+    </div>
+
+    <h2 class="text-center text-lg text-gray-300 mb-6">Connexion à votre compte</h2>
+
+    <div id="notice" class="mb-4 text-center text-sm text-yellow-300"></div>
+
+    <form id="emailForm" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm mb-1 text-gray-400">Adresse e-mail</label>
+        <input id="email" type="email" required class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="exemple@email.com">
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm mb-1 text-gray-400">Mot de passe</label>
+        <input id="password" type="password" required minlength="8" class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="••••••••">
+        <p class="text-xs text-gray-500 mt-1">8 caractères minimum (lettres, chiffres et symboles).</p>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">Se connecter</button>
+    </form>
+
+    <div class="flex justify-end mt-2">
+      <button id="forgotPassword" class="text-sm text-blue-400 hover:underline">Mot de passe oublié ?</button>
+    </div>
+
+    <div class="my-6 text-center text-sm text-gray-400">— ou continuer avec —</div>
+
+    <!-- Connexions sociales -->
+    <div class="grid grid-cols-1 gap-3">
+      <button id="googleBtn" class="flex items-center justify-center gap-2 bg-white text-black py-2 rounded-lg shadow hover:bg-gray-100">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"> Google
+      </button>
+      <button id="appleBtn" class="flex items-center justify-center gap-2 bg-white text-black py-2 rounded-lg shadow hover:bg-gray-900">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="w-5 h-5"> Apple
+      </button>
+    </div>
+
+    <p class="text-center text-sm mt-6 text-gray-400">
+      <strong>Pas encore de compte ?</strong> <a href="inscription.html" class="text-blue-400 hover:underline"><strong>S'inscrire</strong></a>
+    </p>
+  </div>
+
+  <!-- 🔥 Script Firebase (inchangé, déjà optimisé) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = { apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k", authDomain: "mhd-pronos.firebaseapp.com", projectId: "mhd-pronos", storageBucket: "mhd-pronos.firebasestorage.app", messagingSenderId: "366441954219", appId: "1:366441954219:web:a8be6641c5c922c59cf0ee" };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const noticeEl = document.getElementById('notice');
+    function showNotice(msg, type = 'info') {
+      noticeEl.textContent = msg;
+      noticeEl.className = 'mb-4 text-center text-sm ' + (type === 'error' ? 'text-red-400' : 'text-green-400');
+    }
+
+    function handlePostLoginRedirect() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+      sessionStorage.removeItem('postLoginRedirect');
+      window.location.href = fromUrl || 'index.html';
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        localStorage.setItem('loggedIn', 'true');
+        handlePostLoginRedirect();
+      }
+    });
+
+    function isPasswordStrong(password) {
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.#^_-])[A-Za-z\d@$!%*?&.#^_-]{8,}$/;
+      return regex.test(password);
+    }
+
+    document.getElementById("emailForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!isPasswordStrong(password)) {
+        showNotice("Le mot de passe est trop faible.", "error");
+        return;
+      }
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        handlePostLoginRedirect();
+      } catch (err) {
+        showNotice("Erreur : " + err.message, "error");
+      }
+    });
+
+    document.getElementById("forgotPassword").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      if (!email) return showNotice("Entrez votre e-mail d'abord", "error");
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showNotice("Lien envoyé à " + email);
+      } catch (err) { showNotice("Erreur : " + err.message, "error"); }
+    });
+
+    function setupSocialLogin(buttonId, providerFactory, providerLabel) {
+      const button = document.getElementById(buttonId);
+      if (!button) return;
+      button.addEventListener("click", async () => {
+        try {
+          await signInWithPopup(auth, providerFactory());
+          handlePostLoginRedirect();
+        } catch (err) {
+          showNotice(`Erreur ${providerLabel} : ${err.message}`, "error");
+        }
+      });
+    }
+
+    setupSocialLogin("googleBtn", () => new GoogleAuthProvider(), "Google");
+    setupSocialLogin("facebookBtn", () => new FacebookAuthProvider(), "Facebook");
+    setupSocialLogin("appleBtn", () => new OAuthProvider("apple.com"), "Apple");
+    setupSocialLogin("microsoftBtn", () => new OAuthProvider("microsoft.com"), "Microsoft");
+  </script>
+</body>
+</html>
