@@ -641,6 +641,36 @@ tbody tr:hover {
     setInterval(refreshBadge, 5000);
   })();
 </script>
+<script type="module">
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
+
+const messaging = getMessaging();
+
+// Demander la permission à l'utilisateur
+Notification.requestPermission().then((permission) => {
+  if (permission === 'granted') {
+    console.log('Notification autorisée ✅');
+
+    getToken(messaging, {
+      vapidKey: 'BNXGgnomRUT_ZyPlCwuebJzbDoF7IwQcim1de2aHuQzI7XkYaYEyubQqYqqldXd3lfnm_Tp-x7uIQmws1hYuE94' // <-- ici je colle ma vraie clé VAPID
+    }).then((currentToken) => {
+      if (currentToken) {
+        console.log("Token FCM :", currentToken);
+      } else {
+        console.log("Aucun token disponible. L'utilisateur doit autoriser les notifications.");
+      }
+    });
+  } else {
+    console.log('Notification refusée ❌');
+  }
+});
+
+// Quand une notification arrive pendant que le site est ouvert :
+onMessage(messaging, (payload) => {
+  console.log('Message reçu : ', payload);
+  alert(payload.notification.title + "\n" + payload.notification.body);
+});
+</script>
 
 </body>
 </html>
