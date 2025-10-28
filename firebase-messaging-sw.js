@@ -1,6 +1,8 @@
+/* firebase-messaging-sw.js — à la racine du site */
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
 
+// ⚠️ Mets EXACTEMENT la même config que dans tes pages
 firebase.initializeApp({
   apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
   authDomain: "mhd-pronos.firebaseapp.com",
@@ -12,13 +14,19 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
-  console.log('Notification reçue en arrière-plan : ', payload);
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: '/logo.JPG'
-  };
+// Affichage des notifications quand le site est en arrière-plan / fermé
+messaging.onBackgroundMessage((payload) => {
+  const { title, body, icon, click_action } = payload.notification || {};
+  self.registration.showNotification(title || "MHD PRONOS", {
+    body: body || "Nouvelle notification",
+    icon: icon || "/logo.JPG",
+    data: { url: click_action || "/notifications.html" }
+  });
+});
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+// Ouvrir la page au clic
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = event.notification?.data?.url || '/notifications.html';
+  event.waitUntil(self.clients.openWindow(url));
 });
