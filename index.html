@@ -805,6 +805,22 @@ tbody tr:hover {
     wireAuthGuards(user);
   });
 </script>
+<script>
+import { initializeApp } from "firebase/app";
+import { getMessaging } from "firebase/messaging";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+    storageBucket: "mhd-pronos.firebasestorage.app",
+    messagingSenderId: "366441954219",
+    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+};
+
+// Initialisez Firebase
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+</script>
 </body>
 </html>
