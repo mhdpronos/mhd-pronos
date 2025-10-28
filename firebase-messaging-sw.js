@@ -4,15 +4,14 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
 
-// Copiez ici votre configuration Firebase (la même que dans votre application principale)
+// configuration Firebase
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+  apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+    storageBucket: "mhd-pronos.firebasestorage.app",
+    messagingSenderId: "366441954219",
+    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
 };
 
 // Initialisez Firebase dans le service worker
