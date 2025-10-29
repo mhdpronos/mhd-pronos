@@ -126,8 +126,9 @@ tbody tr:hover {
       
         <div class="mt-6 flex flex-wrap gap-3">
           <!-- BOUTON CONSEIL DU JOUR (même style que FOOT NEWS, avec badge rouge) -->
-<a href="conseil.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
-  <strong>PRONOS CONSEIL</strong>
+<a href="conseil.html" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold requires-auth"
+   style="border:1px solid rgba(255,255,255,.15); ">
+  <span><strong>PRONOS CONSEIL</strong></span>
   <!-- Badge rouge dynamique -->
   <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
         style="background:#ef4444; color:white; border:2px solid rgba(0,0,0,.35);">
@@ -511,6 +512,7 @@ tbody tr:hover {
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
+  
   <script>
     // Toggle menu mobile
     const btn = document.getElementById('menuBtn');
@@ -521,6 +523,7 @@ tbody tr:hover {
       });
     }
   </script>
+  
   <script type="module">
     import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -612,6 +615,7 @@ tbody tr:hover {
       refreshInfofootBadge();
     }, 60000);
   </script>
+  
   <script>
   // Met à jour le badge "CONSEIL DU JOUR" à partir du localStorage
   (function(){
@@ -640,74 +644,7 @@ tbody tr:hover {
     setInterval(refreshBadge, 5000);
   })();
 </script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
-  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  // ⚙️ TA CONFIG (identique aux autres pages)
-  const firebaseConfig = {
-    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-    authDomain: "mhd-pronos.firebaseapp.com",
-    projectId: "mhd-pronos",
-    storageBucket: "mhd-pronos.firebasestorage.app",
-    messagingSenderId: "366441954219",
-    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
-  const auth = getAuth(app);
-  const messaging = getMessaging(app);
-
-  // 1) Enregistrer le service worker
-  if ('serviceWorker' in navigator) {
-    const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-    console.log('SW FCM enregistré:', reg);
-  }
-
-  // 2) Demander la permission + récupérer le token
-  async function enablePushForUser(user) {
-    try {
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        console.warn('Permission notifications refusée');
-        return;
-      }
-
-      const vapidPublicKey = "BNXGgnomRUT_ZyPlCwuebJzbDoF7IwQcim1de2aHuQzI7XkYaYEyubQqYqqldXd3lfnm_Tp-x7uIQmws1hYuE94	28 oct. 2025		
-"; // depuis Console > Cloud Messaging > Web push certs
-      const token = await getToken(messaging, { vapidKey: vapidPublicKey });
-
-      console.log('FCM token:', token);
-
-      // 3) Sauver le token en Firestore (par utilisateur)
-      // Chemin conseillé: users/{uid}/fcmTokens/{token}
-      const uid = user ? user.uid : 'anonymous';
-      await setDoc(
-        doc(db, 'users', uid, 'fcmTokens', token),
-        { token, createdAt: serverTimestamp(), ua: navigator.userAgent },
-        { merge: true }
-      );
-    } catch (e) {
-      console.error('Erreur FCM:', e);
-    }
-  }
-
-  // Activer FCM quand on connaît l’utilisateur (si connecté)
-  onAuthStateChanged(auth, (user) => {
-    // 👉 même si l’utilisateur n’est pas connecté, on peut sauvegarder sous "anonymous"
-    enablePushForUser(user);
-  });
-
-  // 4) Notifications reçues pendant que l’onglet est OUVERT
-  onMessage(messaging, (payload) => {
-    console.log('Message en premier plan:', payload);
-    // Optionnel: afficher une alerte, jouer un son, etc.
-    // new Audio('/sons/notification.mp3').play();
-  });
-</script>
 <!-- MODALE D’ACCÈS PROTÉGÉ -->
 <style>
   .modal-auth{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;place-items:center;z-index:100;}
@@ -744,6 +681,7 @@ tbody tr:hover {
     </div>
   </div>
 </div>
+  
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
