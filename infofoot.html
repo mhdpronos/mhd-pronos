@@ -173,6 +173,11 @@
     onSnapshot(q, snap=>{
       allDocs = snap.docs.map(d=>({id:d.id, ...d.data()}));
       render();
+      try {
+        localStorage.setItem('infofoot_read_count', String(snap.size));
+      } catch (err) {
+        console.warn('Impossible de mettre à jour le compteur infofoot :', err);
+      }
     });
   </script>
 <script type="module">
