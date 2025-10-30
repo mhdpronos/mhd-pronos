@@ -142,6 +142,10 @@
   };
 
   document.addEventListener('click', (event) => {
+    if (event.defaultPrevented) {
+      return;
+    }
+
     const link = event.target.closest('a');
     if (!shouldHandleNavigation(link)) {
       return;
