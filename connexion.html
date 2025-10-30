@@ -100,6 +100,9 @@
     }
 
     onAuthStateChanged(auth, (user) => {
+      const authenticated = !!user;
+      window.__mhdIsAuthenticated = authenticated;
+      window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
       if (user) {
         localStorage.setItem('loggedIn', 'true');
         handlePostLoginRedirect();
@@ -155,5 +158,6 @@
     setupSocialLogin("appleBtn", () => new OAuthProvider("apple.com"), "Apple");
     setupSocialLogin("microsoftBtn", () => new OAuthProvider("microsoft.com"), "Microsoft");
   </script>
+  <script src="transition.js"></script>
 </body>
 </html>

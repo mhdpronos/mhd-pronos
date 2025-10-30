@@ -130,26 +130,29 @@ window.location.href = fromUrl || 'index.html';
     const appleProvider = new OAuthProvider('apple.com');
     const microsoftProvider = new OAuthProvider('microsoft.com');
 
-    document.getElementById("googleSignUp").addEventListener("click", () => signInWithPopup(auth, googleProvider).then(() => const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'index.html';
-).catch(e => alert("Erreur : " + e.message)));
-    document.getElementById("facebookSignUp").addEventListener("click", () => signInWithPopup(auth, facebookProvider).then(() => const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'index.html';
-).catch(e => alert("Erreur : " + e.message)));
-    document.getElementById("appleSignUp").addEventListener("click", () => signInWithPopup(auth, appleProvider).then(() => const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'index.html';
-).catch(e => alert("Erreur : " + e.message)));
-    document.getElementById("microsoftSignUp").addEventListener("click", () => signInWithPopup(auth, microsoftProvider).then(() => const urlParams = new URLSearchParams(window.location.search);
-const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
-sessionStorage.removeItem('postLoginRedirect');
-window.location.href = fromUrl || 'index.html';
-).catch(e => alert("Erreur : " + e.message)));
+    const redirectAfterLogin = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromUrl = urlParams.get('redirect') || sessionStorage.getItem('postLoginRedirect');
+      sessionStorage.removeItem('postLoginRedirect');
+      window.location.href = fromUrl || 'index.html';
+    };
+
+    const attachPopupHandler = (elementId, provider) => {
+      const button = document.getElementById(elementId);
+      if (!button) return;
+
+      button.addEventListener('click', () =>
+        signInWithPopup(auth, provider)
+          .then(redirectAfterLogin)
+          .catch(e => alert("Erreur : " + e.message))
+      );
+    };
+
+    attachPopupHandler('googleSignUp', googleProvider);
+    attachPopupHandler('facebookSignUp', facebookProvider);
+    attachPopupHandler('appleSignUp', appleProvider);
+    attachPopupHandler('microsoftSignUp', microsoftProvider);
   </script>
+  <script src="transition.js"></script>
 </body>
 </html>

@@ -242,6 +242,9 @@
 
     // Auth guard + chargement profil
     onAuthStateChanged(auth, async (user) => {
+      const authenticated = !!user;
+      window.__mhdIsAuthenticated = authenticated;
+      window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
       if (!user) {
         resetProfileView();
         setFormEnabled(false);
@@ -447,5 +450,6 @@
       }
     });
   </script>
+  <script src="transition.js"></script>
 </body>
 </html>

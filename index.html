@@ -126,14 +126,10 @@ tbody tr:hover {
       
         <div class="mt-6 flex flex-wrap gap-3">
           <!-- BOUTON CONSEIL DU JOUR (même style que FOOT NEWS, avec badge rouge) -->
-<a href="conseil.html" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold requires-auth"
-   style="border:1px solid rgba(255,255,255,.15); background: linear-gradient(135deg,#6366F1,#8B5CF6); ">
-  <span><strong>PRONOS CONSEIL</strong></span>
+<a href="conseil.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
+  <strong>PRONOS CONSEIL</strong>
   <!-- Badge rouge dynamique -->
-  <span id="badge-conseil" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1 rounded-full text-xs flex items-center justify-center"
-        style="background:#ef4444; color:white; border:2px solid rgba(0,0,0,.35);">
-    0
-  </span>
+  <span id="badge-conseil" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
 </a>
 
           <!-- Bouton FOOT NEWS avec badge -->
@@ -541,6 +537,9 @@ tbody tr:hover {
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, (user) => {
+      const authenticated = !!user;
+      window.__mhdIsAuthenticated = authenticated;
+      window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
       if (user) {
         console.log("Utilisateur connecté :", user.email);
       } else {
@@ -698,6 +697,9 @@ tbody tr:hover {
 
   // Activer FCM quand on connaît l’utilisateur (si connecté)
   onAuthStateChanged(auth, (user) => {
+    const authenticated = !!user;
+    window.__mhdIsAuthenticated = authenticated;
+    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
     // 👉 même si l’utilisateur n’est pas connecté, on peut sauvegarder sous "anonymous"
     enablePushForUser(user);
   });
@@ -802,9 +804,13 @@ tbody tr:hover {
 
   // Dès que l’état change, recâble les gardes
   onAuthStateChanged(auth, (user)=>{
+    const authenticated = !!user;
+    window.__mhdIsAuthenticated = authenticated;
+    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
     wireAuthGuards(user);
   });
 </script>
 
+  <script src="transition.js"></script>
 </body>
 </html>
