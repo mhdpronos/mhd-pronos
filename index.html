@@ -97,7 +97,7 @@ tbody tr:hover {
 
     #promoOverlay .promo-card {
       position: relative;
-      width: min(92vw, 520px);
+      width: min(100%, 640px);
       border-radius: 28px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -211,9 +211,14 @@ tbody tr:hover {
 </head>
 <body class="text-white">
   <!-- Publicité retardée -->
-  <div id="promoOverlay">
-    <div class="promo-backdrop"></div>
-    <div class="promo-card">
+  <div id="promoOverlay" class="fixed inset-0 z-[100] items-center justify-center px-4">
+    <div class="promo-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="promo-card relative max-w-xl w-full rounded-3xl overflow-hidden glass border border-white/20 bg-gradient-to-br from-slate-900/90 via-indigo-900/90 to-purple-900/90">
+      <button id="promoClose" class="absolute top-4 right-4 text-white/60 hover:text-white transition" aria-label="Fermer la publicité">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+        </svg>
+      </button>
       <div class="grid md:grid-cols-[1.1fr_1fr]">
         <div class="relative">
           <img src="imagepronos.png" alt="imagepronos.png (ajoutez votre visuel)" class="h-full w-full object-cover">
