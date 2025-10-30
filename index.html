@@ -184,6 +184,29 @@ tbody tr:hover {
       transform: translateY(-3px) scale(1.01);
       box-shadow: 0 18px 45px rgba(236, 72, 153, 0.4);
     }
+
+    .promo-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 9999px;
+      background: rgba(15, 16, 35, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .promo-close:hover {
+      background: rgba(236, 72, 153, 0.65);
+      color: #fff;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body class="text-white">
@@ -200,6 +223,11 @@ tbody tr:hover {
         <div class="relative">
           <img src="imagepronos.png" alt="imagepronos.png (ajoutez votre visuel)" class="h-full w-full object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-transparent to-transparent"></div>
+          <button id="promoClose" class="promo-close" aria-label="Fermer la publicité">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+            </svg>
+          </button>
         </div>
         <div class="p-6 md:p-8 flex flex-col gap-4">
           <span class="promo-badge">
