@@ -1,32 +1,34 @@
-/* firebase-messaging-sw.js — à la racine du site */
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
+// firebase-messaging-sw.js
 
-// ⚠️ Mets EXACTEMENT la même config que dans tes pages
-firebase.initializeApp({
+// Importez les fonctions nécessaires de Firebase SDK pour le service worker
+import { initializeApp } from "firebase/app";
+import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
+
+// configuration Firebase
+const firebaseConfig = {
   apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-  authDomain: "mhd-pronos.firebaseapp.com",
-  projectId: "mhd-pronos",
-  storageBucket: "mhd-pronos.firebasestorage.app",
-  messagingSenderId: "366441954219",
-  appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-});
+    authDomain: "mhd-pronos.firebaseapp.com",
+    projectId: "mhd-pronos",
+    storageBucket: "mhd-pronos.firebasestorage.app",
+    messagingSenderId: "366441954219",
+    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
+};
 
-const messaging = firebase.messaging();
+// Initialisez Firebase dans le service worker
+const app = initializeApp(firebaseConfig);
 
-// Affichage des notifications quand le site est en arrière-plan / fermé
-messaging.onBackgroundMessage((payload) => {
-  const { title, body, icon, click_action } = payload.notification || {};
-  self.registration.showNotification(title || "MHD PRONOS", {
-    body: body || "Nouvelle notification",
-    icon: icon || "/logo.JPG",
-    data: { url: click_action || "/notifications.html" }
-  });
-});
+// Récupérez l'instance de messagerie pour le service worker
+const messaging = getMessaging(app);
 
-// Ouvrir la page au clic
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-  const url = event.notification?.data?.url || '/notifications.html';
-  event.waitUntil(self.clients.openWindow(url));
+// Gérez les messages en arrière-plan
+onBackgroundMessage(messaging, (payload) => {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  // Personnalisation 
+  const notificationTitle = payload.notification.title || 'mhd pronos';
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: '/logo.JPG'
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
