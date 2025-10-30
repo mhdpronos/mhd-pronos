@@ -85,29 +85,6 @@
     document.addEventListener('DOMContentLoaded', applyStyles, { once: true });
   }
 
-  const authState = {
-    value: window.__mhdIsAuthenticated === true,
-  };
-
-  const updateAuthState = (value) => {
-    authState.value = value === true;
-  };
-
-  if (typeof window.__mhdIsAuthenticated !== 'undefined') {
-    updateAuthState(window.__mhdIsAuthenticated);
-  }
-
-  window.addEventListener('mhd:auth-state', (event) => {
-    if (!event || typeof event.detail === 'undefined') {
-      updateAuthState(window.__mhdIsAuthenticated);
-      return;
-    }
-    const next = event.detail && typeof event.detail.authenticated !== 'undefined'
-      ? event.detail.authenticated
-      : window.__mhdIsAuthenticated;
-    updateAuthState(next);
-  });
-
   const overlay = document.createElement('div');
   overlay.id = 'page-transition-overlay';
   overlay.innerHTML = `
@@ -171,10 +148,6 @@
 
     const link = event.target.closest('a');
     if (!shouldHandleNavigation(link)) {
-      return;
-    }
-
-    if (link.classList && link.classList.contains('requires-auth') && authState.value !== true) {
       return;
     }
 
