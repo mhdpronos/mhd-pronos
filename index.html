@@ -97,7 +97,7 @@ tbody tr:hover {
 
     #promoOverlay .promo-card {
       position: relative;
-      width: min(92vw, 520px);
+      width: min(100%, 640px);
       border-radius: 28px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -191,45 +191,40 @@ tbody tr:hover {
       right: 0.75rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.85rem;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
       border-radius: 9999px;
-      background: rgba(15, 16, 35, 0.7);
+      background: rgba(15, 16, 35, 0.65);
       border: 1px solid rgba(255, 255, 255, 0.14);
-      color: rgba(255, 255, 255, 0.75);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(6px);
-      cursor: pointer;
       transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
     }
 
-    .promo-close svg {
-      width: 0.85rem;
-      height: 0.85rem;
-    }
-
     .promo-close:hover {
-      background: rgba(236, 72, 153, 0.75);
+      background: rgba(236, 72, 153, 0.65);
       color: #fff;
-      transform: translateY(-1px) scale(1.02);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body class="text-white">
   <!-- Publicité retardée -->
-  <div id="promoOverlay">
-    <div class="promo-backdrop"></div>
-    <div class="promo-card">
+  <div id="promoOverlay" class="fixed inset-0 z-[100] items-center justify-center px-4">
+    <div class="promo-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="promo-card relative max-w-xl w-full rounded-3xl overflow-hidden glass border border-white/20 bg-gradient-to-br from-slate-900/90 via-indigo-900/90 to-purple-900/90">
+      <button id="promoClose" class="absolute top-4 right-4 text-white/60 hover:text-white transition" aria-label="Fermer la publicité">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+        </svg>
+      </button>
       <div class="grid md:grid-cols-[1.1fr_1fr]">
         <div class="relative">
           <img src="imagepronos.png" alt="imagepronos.png (ajoutez votre visuel)" class="h-full w-full object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-transparent to-transparent"></div>
-          <button id="promoClose" type="button" class="promo-close" aria-label="Fermer la publicité">
-            <span>FERMER LA PUB</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <button id="promoClose" class="promo-close" aria-label="Fermer la publicité">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
             </svg>
           </button>
