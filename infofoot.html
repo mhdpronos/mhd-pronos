@@ -199,6 +199,9 @@
   const here = window.location.pathname.split('/').pop() || 'index.html';
 
   onAuthStateChanged(auth, (user)=>{
+    const authenticated = !!user;
+    window.__mhdIsAuthenticated = authenticated;
+    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
     if(!user){
       // pas connecté → on garde la cible et on pousse vers la connexion
       sessionStorage.setItem('postLoginRedirect', here);

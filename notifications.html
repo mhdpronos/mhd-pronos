@@ -279,6 +279,9 @@ onSnapshot(collection(db, "notifications"), (snapshot) => {
 
   // Dès que l’état change, recâble les gardes
   onAuthStateChanged(auth, (user)=>{
+    const authenticated = !!user;
+    window.__mhdIsAuthenticated = authenticated;
+    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
     wireAuthGuards(user);
   });
 </script>

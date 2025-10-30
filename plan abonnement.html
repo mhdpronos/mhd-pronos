@@ -270,7 +270,12 @@
 
     // Connaître l'état d'auth rapidement
     let isAuthed = null;
-    onAuthStateChanged(auth, (user) => { isAuthed = !!user; });
+    onAuthStateChanged(auth, (user) => {
+      const authenticated = !!user;
+      window.__mhdIsAuthenticated = authenticated;
+      window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
+      isAuthed = authenticated;
+    });
 
     // Boutons "S’abonner" => <a href="paiement.html" data-plan="...">
     const planLinks = document.querySelectorAll('[data-plan]');
@@ -392,6 +397,9 @@
 
   // Dès que l’état change, recâble les gardes
   onAuthStateChanged(auth, (user)=>{
+    const authenticated = !!user;
+    window.__mhdIsAuthenticated = authenticated;
+    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
     wireAuthGuards(user);
   });
 </script>

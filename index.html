@@ -539,6 +539,9 @@ tbody tr:hover {
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, (user) => {
+      const authenticated = !!user;
+      window.__mhdIsAuthenticated = authenticated;
+      window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
       if (user) {
         console.log("Utilisateur connecté :", user.email);
       } else {
@@ -735,6 +738,9 @@ tbody tr:hover {
 
   // Dès que l’état change, recâble les gardes
   onAuthStateChanged(auth, (user)=>{
+    const authenticated = !!user;
+    window.__mhdIsAuthenticated = authenticated;
+    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
     wireAuthGuards(user);
   });
 </script>

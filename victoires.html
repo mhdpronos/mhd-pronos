@@ -372,6 +372,9 @@
 
     // Affichage conditionnel du formulaire selon l'auth
     onAuthStateChanged(auth, (user) => {
+      const authenticated = !!user;
+      window.__mhdIsAuthenticated = authenticated;
+      window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
       if(user){
         needAuth.classList.add('hidden');
         form.classList.remove('hidden');
@@ -529,6 +532,9 @@
 
   // Dès que l’état change, recâble les gardes
   onAuthStateChanged(auth, (user)=>{
+    const authenticated = !!user;
+    window.__mhdIsAuthenticated = authenticated;
+    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
     wireAuthGuards(user);
   });
 </script>
