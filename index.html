@@ -68,7 +68,14 @@ tbody tr:hover {
 
     /* Publicité */
     #promoOverlay {
+      position: fixed;
+      inset: 0;
       display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 9999;
+      overflow-y: auto;
     }
 
     #promoOverlay.active {
@@ -76,14 +83,26 @@ tbody tr:hover {
     }
 
     #promoOverlay .promo-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 10, 25, 0.78);
+      backdrop-filter: blur(16px);
       opacity: 0;
+      transition: opacity .3s ease;
     }
 
     #promoOverlay.active .promo-backdrop {
-      animation: promoFadeIn .6s ease forwards;
+      animation: promoFadeIn .4s ease forwards;
     }
 
     #promoOverlay .promo-card {
+      position: relative;
+      width: min(100%, 640px);
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: linear-gradient(135deg, rgba(20, 22, 45, 0.95), rgba(67, 56, 202, 0.92), rgba(236, 72, 153, 0.88));
+      box-shadow: 0 28px 80px rgba(11, 13, 30, 0.75);
       opacity: 0;
       transform: translateY(40px) scale(0.95);
     }
@@ -145,6 +164,20 @@ tbody tr:hover {
       gap: 0.5rem;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       box-shadow: 0 15px 35px rgba(99, 102, 241, 0.35);
+    }
+
+    body.promo-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 640px) {
+      #promoOverlay {
+        padding: 1rem;
+      }
+
+      #promoOverlay .promo-card {
+        border-radius: 22px;
+      }
     }
 
     .promo-button:hover {
@@ -632,9 +665,16 @@ tbody tr:hover {
       if (!overlay) return;
       const closeBtn = document.getElementById('promoClose');
       const backdrop = overlay.querySelector('.promo-backdrop');
+      const body = document.body;
 
-      const showPromo = () => overlay.classList.add('active');
-      const hidePromo = () => overlay.classList.remove('active');
+      const showPromo = () => {
+        overlay.classList.add('active');
+        body.classList.add('promo-open');
+      };
+      const hidePromo = () => {
+        overlay.classList.remove('active');
+        body.classList.remove('promo-open');
+      };
 
       setTimeout(showPromo, 5000);
 
