@@ -53,6 +53,11 @@
     .stat { transition: transform .25s ease; }
     .stat:hover { transform: translateY(-2px); }
     .table-wrap { border-radius: 1rem; overflow: hidden; }
+    .coupon-blurred { filter: blur(8px); pointer-events: none; user-select: none; transition: filter .3s ease; }
+    .coupon-overlay {
+      background: linear-gradient(135deg, rgba(12, 16, 42, 0.88), rgba(79, 70, 229, 0.86));
+      backdrop-filter: blur(6px);
+    }
     .pill { display:inline-block; padding:.25rem .75rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#E5E7EB; }
     tbody tr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* ligne fine et élégante */
@@ -458,7 +463,8 @@ tbody tr:hover {
    <!-- COUPONS DU JOUR -->
 <section class="max-w-6xl mx-auto px-4 py-8 text-white">
   <div class="glass rounded-2xl overflow-hidden border border-white/10">
-    <div class="overflow-x-auto">
+    <div class="relative" id="dailyCouponsCard">
+      <div class="overflow-x-auto coupon-blurred" data-coupons-table>
       <table class="w-full border-collapse">
         <thead class="bg-white/5 text-white/70 text-sm uppercase tracking-wide">
           <tr>
@@ -535,6 +541,16 @@ tbody tr:hover {
       </table>
     </div>
 
+      <div class="coupon-overlay absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-center px-6" data-coupons-overlay>
+        <div class="text-xl md:text-2xl font-extrabold">Contenu réservé à nos membres</div>
+        <p class="text-sm md:text-base text-white/80 max-w-md">Connectez-vous ou créez votre compte pour consulter en clair les coupons du jour et profiter de nos analyses expertes.</p>
+        <div class="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+          <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se connecter</a>
+          <a href="inscription.html" class="w-full text-center px-6 py-3 rounded-lg border border-white/20 hover:bg-white/10 transition">S’inscrire</a>
+        </div>
+      </div>
+    </div>
+
     <!-- Zone bouton VIP -->
     <div class="flex flex-col sm:flex-row justify-between items-center bg-white/5 p-6 gap-4">
       <div>
@@ -555,6 +571,35 @@ tbody tr:hover {
     table th, table td { padding: 0.8rem 0.5rem; }
   }
 </style>
+
+<script>
+  (function () {
+    const card = document.getElementById('dailyCouponsCard');
+    if (!card) return;
+
+    const tableWrapper = card.querySelector('[data-coupons-table]');
+    const overlay = card.querySelector('[data-coupons-overlay]');
+
+    const toggleAccess = (authenticated) => {
+      if (!tableWrapper || !overlay) return;
+      if (authenticated) {
+        tableWrapper.classList.remove('coupon-blurred');
+        overlay.classList.add('hidden');
+        localStorage.setItem('loggedIn', 'true');
+      } else {
+        tableWrapper.classList.add('coupon-blurred');
+        overlay.classList.remove('hidden');
+        localStorage.removeItem('loggedIn');
+      }
+    };
+
+    toggleAccess(window.__mhdIsAuthenticated === true);
+
+    window.addEventListener('mhd:auth-state', (event) => {
+      toggleAccess(Boolean(event.detail && event.detail.authenticated));
+    });
+  })();
+</script>
 
   </section>
 
