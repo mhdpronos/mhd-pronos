@@ -258,3 +258,27 @@
     showOverlay();
   });
 })();
+
+(function injectPushModule() {
+  if (window.__mhdPushScriptInjected) {
+    return;
+  }
+  window.__mhdPushScriptInjected = true;
+
+  const loadPushScript = () => {
+    if (document.querySelector('script[data-mhd-push]')) {
+      return;
+    }
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'push-notifications.js';
+    script.setAttribute('data-mhd-push', '');
+    document.head.appendChild(script);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadPushScript, { once: true });
+  } else {
+    loadPushScript();
+  }
+})();
