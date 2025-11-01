@@ -71,6 +71,65 @@
         opacity: 1;
       }
     }
+
+    #floating-home-button {
+      position: fixed;
+      bottom: clamp(18px, 3vw, 32px);
+      right: clamp(18px, 3vw, 32px);
+      z-index: 9998;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.9rem 1.35rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(236, 72, 153, 0.95));
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      text-decoration: none;
+      box-shadow: 0 18px 40px rgba(99, 102, 241, 0.35), 0 10px 22px rgba(8, 8, 17, 0.55);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+
+    #floating-home-button:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 22px 46px rgba(129, 140, 248, 0.45), 0 12px 26px rgba(8, 8, 17, 0.6);
+      filter: brightness(1.05);
+    }
+
+    #floating-home-button:active {
+      transform: translateY(-1px) scale(0.99);
+    }
+
+    #floating-home-button .floating-home-icon {
+      width: 2.35rem;
+      height: 2.35rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+
+    #floating-home-button svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    @media (max-width: 480px) {
+      #floating-home-button {
+        padding: 0.75rem 1.1rem;
+        font-size: 0.78rem;
+      }
+
+      #floating-home-button .floating-home-icon {
+        width: 2.1rem;
+        height: 2.1rem;
+      }
+    }
   `;
 
   const applyStyles = () => {
@@ -104,6 +163,35 @@
     appendOverlay();
   } else {
     document.addEventListener('DOMContentLoaded', appendOverlay, { once: true });
+  }
+
+  const createHomeButton = () => {
+    if (document.getElementById('floating-home-button')) {
+      return;
+    }
+
+    const homeButton = document.createElement('a');
+    homeButton.id = 'floating-home-button';
+    homeButton.href = 'index.html';
+    homeButton.setAttribute('aria-label', "Revenir à l'accueil");
+    homeButton.innerHTML = `
+      <span class="floating-home-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.5 10.75L12 4l7.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M6.75 9.25V19.5a.75.75 0 0 0 .75.75h9a.75.75 0 0 0 .75-.75V9.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M10 20.25v-5a2 2 0 0 1 4 0v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+      <span class="floating-home-text">Accueil</span>
+    `;
+
+    document.body.appendChild(homeButton);
+  };
+
+  if (document.body) {
+    createHomeButton();
+  } else {
+    document.addEventListener('DOMContentLoaded', createHomeButton, { once: true });
   }
 
   const hideOverlay = () => {
