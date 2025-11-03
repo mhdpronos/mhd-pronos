@@ -148,8 +148,8 @@
   overlay.id = 'page-transition-overlay';
   overlay.innerHTML = `
     <div class="transition-wrapper">
-      <img src="logo.JPG" alt="Chargement MHD Pronos">
-      <div class="transition-text">mhd pronos</div>
+      <img src="anime.gif" alt="Chargement MHD Pronos">
+      <div class="transition-text">Chargement...</div>
     </div>
   `;
 
