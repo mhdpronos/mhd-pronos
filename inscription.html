@@ -37,7 +37,12 @@
 
     <h2 class="text-center text-lg text-gray-300 mb-6">Créer un compte</h2>
 
-    <!-- Formulaire d'inscription -->
+    <div class="flex justify-center gap-2 mb-6">
+      <button id="toggleEmail" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-blue-400">Par e-mail</button>
+      <button id="togglePhone" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-blue-400">Par téléphone</button>
+    </div>
+
+    <!-- Formulaire d'inscription par e-mail -->
     <form id="formInscription" class="space-y-4">
       <div>
         <label for="nom" class="block text-sm mb-1 text-gray-400">Nom d'utilisateur</label>
@@ -57,6 +62,33 @@
 
       <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">S'inscrire</button>
     </form>
+
+    <!-- Formulaire d'inscription par téléphone -->
+    <form id="phoneSignupForm" class="space-y-4 hidden">
+      <div>
+        <label for="phoneDisplayName" class="block text-sm mb-1 text-gray-400">Nom d'utilisateur</label>
+        <input id="phoneDisplayName" type="text" minlength="3" required class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="Votre nom d'utilisateur">
+      </div>
+
+      <div>
+        <label for="phoneNumber" class="block text-sm mb-1 text-gray-400">Numéro de téléphone</label>
+        <input id="phoneNumber" type="tel" required class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="Ex. +2250700000000">
+        <p class="text-xs text-gray-500 mt-1">Incluez l'indicatif pays, par exemple +225 pour la Côte d'Ivoire.</p>
+      </div>
+
+      <div id="recaptcha-container" class="flex justify-center"></div>
+
+      <button id="sendCode" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition" type="button">Envoyer le code SMS</button>
+
+      <div>
+        <label for="verificationCode" class="block text-sm mb-1 text-gray-400">Code de vérification</label>
+        <input id="verificationCode" type="text" maxlength="6" class="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 input" placeholder="Code reçu par SMS">
+      </div>
+
+      <button id="verifyCode" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition" type="submit">Valider et créer le compte</button>
+    </form>
+
+    <p id="phoneStatus" class="text-center text-sm mt-4 text-gray-400"></p>
 
     <!-- Ligne de séparation -->
     <div class="flex items-center my-6">
@@ -83,7 +115,7 @@
   <!-- 🔥 Script Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
@@ -102,7 +134,54 @@
       return regex.test(password);
     }
 
-    document.getElementById("formInscription").addEventListener("submit", async (e) => {
+    const emailForm = document.getElementById("formInscription");
+    const phoneForm = document.getElementById("phoneSignupForm");
+    const toggleEmailBtn = document.getElementById('toggleEmail');
+    const togglePhoneBtn = document.getElementById('togglePhone');
+    const phoneStatus = document.getElementById('phoneStatus');
+    const phoneDisplayNameInput = document.getElementById('phoneDisplayName');
+    let confirmationResult = null;
+    let recaptchaVerifier = null;
+
+    const switchToEmail = () => {
+      emailForm.classList.remove('hidden');
+      phoneForm.classList.add('hidden');
+      phoneStatus.textContent = '';
+      toggleEmailBtn.classList.replace('bg-gray-700', 'bg-blue-600');
+      toggleEmailBtn.classList.replace('hover:bg-gray-600', 'hover:bg-blue-700');
+      togglePhoneBtn.classList.replace('bg-blue-600', 'bg-gray-700');
+      togglePhoneBtn.classList.replace('hover:bg-blue-700', 'hover:bg-gray-600');
+      if (recaptchaVerifier) {
+        recaptchaVerifier.clear();
+        recaptchaVerifier = null;
+        document.getElementById('recaptcha-container').innerHTML = '';
+      }
+      confirmationResult = null;
+    };
+
+    const switchToPhone = () => {
+      emailForm.classList.add('hidden');
+      phoneForm.classList.remove('hidden');
+      phoneStatus.textContent = '';
+      togglePhoneBtn.classList.replace('bg-gray-700', 'bg-blue-600');
+      togglePhoneBtn.classList.replace('hover:bg-gray-600', 'hover:bg-blue-700');
+      toggleEmailBtn.classList.replace('bg-blue-600', 'bg-gray-700');
+      toggleEmailBtn.classList.replace('hover:bg-blue-700', 'hover:bg-gray-600');
+    };
+
+    toggleEmailBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      switchToEmail();
+    });
+
+    togglePhoneBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      switchToPhone();
+    });
+
+    switchToEmail();
+
+    emailForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
@@ -152,6 +231,89 @@ window.location.href = fromUrl || 'index.html';
     attachPopupHandler('facebookSignUp', facebookProvider);
     attachPopupHandler('appleSignUp', appleProvider);
     attachPopupHandler('microsoftSignUp', microsoftProvider);
+
+    const initRecaptcha = () => {
+      if (recaptchaVerifier) {
+        recaptchaVerifier.clear();
+      }
+      recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        size: 'normal',
+        callback: () => {
+          phoneStatus.textContent = "reCAPTCHA validé. Vous pouvez envoyer le code.";
+          phoneStatus.className = 'text-center text-sm mt-4 text-green-400';
+        },
+        'expired-callback': () => {
+          phoneStatus.textContent = "reCAPTCHA expiré. Veuillez valider à nouveau.";
+          phoneStatus.className = 'text-center text-sm mt-4 text-yellow-300';
+        }
+      });
+    };
+
+    const formatPhoneNumber = (value) => {
+      const trimmed = value.trim();
+      if (!trimmed.startsWith('+')) {
+        return '+' + trimmed.replace(/^0+/, '');
+      }
+      return trimmed;
+    };
+
+    document.getElementById('sendCode').addEventListener('click', async (event) => {
+      event.preventDefault();
+      const rawPhone = document.getElementById('phoneNumber').value;
+      const phoneNumber = formatPhoneNumber(rawPhone);
+      if (phoneNumber.length < 8) {
+        phoneStatus.textContent = "Entrez un numéro de téléphone valide avec l'indicatif pays.";
+        phoneStatus.className = 'text-center text-sm mt-4 text-red-400';
+        return;
+      }
+
+      try {
+        if (!recaptchaVerifier) {
+          initRecaptcha();
+        }
+        confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+        phoneStatus.textContent = `Code envoyé au ${phoneNumber}. Consultez vos SMS.`;
+        phoneStatus.className = 'text-center text-sm mt-4 text-green-400';
+      } catch (error) {
+        phoneStatus.textContent = "Erreur lors de l'envoi du code : " + error.message;
+        phoneStatus.className = 'text-center text-sm mt-4 text-red-400';
+        if (recaptchaVerifier) {
+          recaptchaVerifier.clear();
+          recaptchaVerifier = null;
+        }
+      }
+    });
+
+    phoneForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!confirmationResult) {
+        phoneStatus.textContent = "Veuillez d'abord demander un code SMS.";
+        phoneStatus.className = 'text-center text-sm mt-4 text-red-400';
+        return;
+      }
+
+      const code = document.getElementById('verificationCode').value.trim();
+      if (!code) {
+        phoneStatus.textContent = "Entrez le code de vérification reçu par SMS.";
+        phoneStatus.className = 'text-center text-sm mt-4 text-red-400';
+        return;
+      }
+
+      try {
+        const result = await confirmationResult.confirm(code);
+        const user = result.user;
+        const displayName = phoneDisplayNameInput.value.trim() || document.getElementById('nom').value.trim();
+        if (displayName) {
+          await updateProfile(user, { displayName });
+        }
+        phoneStatus.textContent = "Connexion réussie !";
+        phoneStatus.className = 'text-center text-sm mt-4 text-green-400';
+        redirectAfterLogin();
+      } catch (error) {
+        phoneStatus.textContent = "Erreur lors de la vérification du code : " + error.message;
+        phoneStatus.className = 'text-center text-sm mt-4 text-red-400';
+      }
+    });
   </script>
   <script src="transition.js"></script>
 </body>
