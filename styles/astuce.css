@@ -1,0 +1,23 @@
+:root { color-scheme: dark; }
+    body {
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
+        #0b0b12;
+      color: #fff;
+    }
+    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn-outline { border:1px solid rgba(255,255,255,.12); }
+    .pill { display:inline-block; padding:.25rem .75rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:#E5E7EB; }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+    .card:hover { transform: translateY(-2px); }
+    .card { transition: transform .25s ease; }
+    .grad-title {
+      background: linear-gradient(135deg,#fff 0%,#c7c9ff 60%,#9aa0ff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    /* Mobile table scroll helper */
+    .overflow-x-auto { -webkit-overflow-scrolling: touch; }
