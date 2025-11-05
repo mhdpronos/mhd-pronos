@@ -1,0 +1,19 @@
+:root { color-scheme: dark; }
+    body {
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
+        #0b0b12; color:#fff;
+    }
+    .glass { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); transition: .2s; }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn-outline { border:1px solid rgba(255,255,255,.16); }
+    .reveal { opacity:0; transform: translateY(14px); transition:opacity .6s, transform .6s; }
+    .reveal.show { opacity:1; transform:none; }
+    .card { transition: transform .2s, box-shadow .2s; cursor: pointer; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .card.selected { outline: 2px solid #8B5CF6; }
+    .logo { width:60px; height:60px; border-radius:12px; object-fit:cover; background:#111827; }
+    .pill { display:inline-block; padding:.25rem .7rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.06); }
+    a.inline-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .9rem; border-radius:.75rem; }

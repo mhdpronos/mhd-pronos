@@ -1,0 +1,14 @@
+:root { color-scheme: dark; }
+    body {
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
+        #0b0b12;
+      color: #fff;
+    }
+    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn-outline { border:1px solid rgba(255,255,255,.12); }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity: 1; transform: none; }
