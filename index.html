@@ -75,298 +75,104 @@ tbody tr:hover {
     #promoOverlay {
       position: fixed;
       inset: 0;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
       z-index: 9999;
       overflow-y: auto;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity .35s ease;
     }
 
     #promoOverlay.active {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    #promoOverlay.closing {
-      opacity: 0;
-      visibility: visible;
-      pointer-events: none;
+      display: flex;
     }
 
     #promoOverlay .promo-backdrop {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.35), transparent 55%),
-        radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.3), transparent 60%),
-        rgba(8, 10, 25, 0.82);
-      backdrop-filter: blur(18px);
+      background: rgba(8, 10, 25, 0.78);
+      backdrop-filter: blur(16px);
       opacity: 0;
-      transition: opacity .45s ease;
+      transition: opacity .3s ease;
     }
 
     #promoOverlay.active .promo-backdrop {
-      opacity: 1;
-    }
-
-    #promoOverlay.closing .promo-backdrop {
-      opacity: 0;
+      animation: promoFadeIn .4s ease forwards;
     }
 
     #promoOverlay .promo-card {
       position: relative;
       width: min(100%, 640px);
-      border-radius: 32px;
+      border-radius: 28px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      background: linear-gradient(155deg, rgba(16, 19, 44, 0.96) 5%, rgba(67, 56, 202, 0.92) 50%, rgba(236, 72, 153, 0.9) 100%);
-      box-shadow: 0 30px 90px rgba(10, 12, 28, 0.75);
-      transform: translate3d(var(--promo-offset-x, 0), var(--promo-offset-y, 0), 0) scale(0.4);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: linear-gradient(135deg, rgba(20, 22, 45, 0.95), rgba(67, 56, 202, 0.92), rgba(236, 72, 153, 0.88));
+      box-shadow: 0 28px 80px rgba(11, 13, 30, 0.75);
       opacity: 0;
-      transition: transform .65s cubic-bezier(0.16, 1, 0.3, 1), opacity .4s ease;
-      will-change: transform, opacity;
-    }
-
-    #promoOverlay .promo-card::before {
-      content: "";
-      position: absolute;
-      inset: -40% -30% auto auto;
-      height: 240px;
-      width: 240px;
-      background: radial-gradient(circle, rgba(244, 114, 182, 0.35) 0%, rgba(244, 114, 182, 0) 70%);
-      filter: blur(0);
-      opacity: .65;
-      pointer-events: none;
-    }
-
-    #promoOverlay .promo-card::after {
-      content: "";
-      position: absolute;
-      inset: auto auto -35% -30%;
-      height: 260px;
-      width: 260px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(99, 102, 241, 0) 70%);
-      opacity: .7;
-      pointer-events: none;
+      transform: translateY(40px) scale(0.95);
     }
 
     #promoOverlay.active .promo-card {
-      transform: translate3d(0, 0, 0) scale(1);
-      opacity: 1;
+      animation: promoSlideUp .7s cubic-bezier(0.22, 1, 0.36, 1) forwards, promoGlow 6s ease-in-out 1s infinite alternate;
     }
 
-    #promoOverlay.closing .promo-card {
-      transform: translate3d(var(--promo-offset-x, 0), var(--promo-offset-y, 0), 0) scale(0.35);
-      opacity: 0;
+    @keyframes promoFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
-    .promo-media {
-      position: relative;
-      overflow: hidden;
+    @keyframes promoSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
-    .promo-media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.65));
-    }
-
-    .promo-media-overlay {
-      position: absolute;
-      inset: auto 0 0 0;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      background: linear-gradient(0deg, rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0));
-    }
-
-    .promo-media-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      padding: 0.35rem 0.8rem;
-      border-radius: 9999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .promo-media-caption {
-      font-size: 0.85rem;
-      color: rgba(248, 250, 252, 0.75);
-      line-height: 1.4;
-    }
-
-    .promo-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 1.75rem 0.5rem;
-    }
-
-    .promo-meta {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(226, 232, 240, 0.7);
-    }
-
-    .promo-meta span {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.35rem 0.75rem;
-      border-radius: 9999px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+    @keyframes promoGlow {
+      from {
+        box-shadow: 0 20px 45px rgba(99, 102, 241, 0.25), 0 0 0 rgba(139, 92, 246, 0.4);
+      }
+      to {
+        box-shadow: 0 28px 55px rgba(99, 102, 241, 0.35), 0 0 30px rgba(139, 92, 246, 0.55);
+      }
     }
 
     .promo-badge {
-      background: linear-gradient(135deg, rgba(236, 72, 153, 0.92), rgba(139, 92, 246, 0.9));
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.9), rgba(139, 92, 246, 0.85));
       border-radius: 9999px;
-      padding: 0.4rem 0.9rem;
+      padding: 0.35rem 0.9rem;
       font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      box-shadow: 0 12px 25px rgba(236, 72, 153, 0.35);
     }
 
     .promo-button {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 45%, #ec4899 100%);
       color: #fff;
       font-weight: 700;
-      padding: 0.95rem 1.4rem;
-      border-radius: 1rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: 0.9rem;
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
-      box-shadow: 0 20px 35px rgba(99, 102, 241, 0.35);
-    }
-
-    .promo-button:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 24px 45px rgba(236, 72, 153, 0.45);
+      box-shadow: 0 15px 35px rgba(99, 102, 241, 0.35);
     }
 
     body.promo-open {
       overflow: hidden;
-    }
-
-    .promo-close-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.5rem 1.1rem;
-      border-radius: 9999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 800;
-      background: linear-gradient(135deg, rgba(248, 113, 113, 0.92), rgba(239, 68, 68, 0.9));
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      box-shadow: 0 18px 32px rgba(239, 68, 68, 0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    }
-
-    .promo-close-button:hover {
-      transform: translateY(-1px) scale(1.05);
-      filter: brightness(1.1);
-      box-shadow: 0 24px 42px rgba(239, 68, 68, 0.5);
-    }
-
-    .promo-countdown {
-      padding: 0.45rem 0.9rem;
-      border-radius: 9999px;
-      background: rgba(15, 23, 42, 0.82);
-      color: #f8fafc;
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      box-shadow: 0 16px 28px rgba(15, 23, 42, 0.45);
-    }
-
-    .promo-perks {
-      display: grid;
-      gap: 0.75rem;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    }
-
-    .promo-perks li {
-      display: flex;
-      gap: 0.45rem;
-      align-items: flex-start;
-      font-size: 0.82rem;
-      color: rgba(226, 232, 240, 0.85);
-    }
-
-    .promo-perks li span {
-      font-size: 1rem;
-    }
-
-    .promo-footer-note {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(226, 232, 240, 0.6);
-    }
-
-    .promo-launcher {
-      position: fixed;
-      bottom: 1.75rem;
-      right: 1.5rem;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), rgba(30, 41, 59, 0.95));
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.65);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      color: rgba(226, 232, 240, 0.85);
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(8px) scale(0.85);
-      transition: opacity .35s ease, transform .35s ease;
-      z-index: 9998;
-    }
-
-    .promo-launcher:hover {
-      color: #fff;
-      transform: translateY(3px) scale(0.92);
-    }
-
-    .promo-launcher.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
     }
 
     @media (max-width: 640px) {
@@ -375,89 +181,122 @@ tbody tr:hover {
       }
 
       #promoOverlay .promo-card {
-        border-radius: 26px;
+        border-radius: 22px;
       }
+    }
 
+    .promo-button:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 18px 45px rgba(236, 72, 153, 0.4);
+    }
+
+    .promo-media {
+      position: relative;
+    }
+
+    .promo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem 0.75rem;
+    }
+
+    .promo-close-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 900;
+      background: rgba(239, 68, 68, 0.92);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 18px 28px rgba(239, 68, 68, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .promo-close-button:hover {
+      transform: translateY(-1px) scale(1.04);
+      filter: brightness(1.08);
+      box-shadow: 0 22px 40px rgba(239, 68, 68, 0.55);
+    }
+
+    .promo-countdown {
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #f8fafc;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.45);
+    }
+
+    @media (max-width: 640px) {
       .promo-actions {
-        padding: 1rem 1.25rem 0.35rem;
+        padding: 0 1rem 0.75rem;
       }
     }
   </style>
 </head>
 <body class="text-white">
   <!-- Publicité retardée -->
-  <div id="promoOverlay">
-    <div class="promo-backdrop"></div>
-    <div class="promo-card">
-      <div class="grid md:grid-cols-[1.05fr_1fr] md:grid-rows-[auto_auto]">
+  <div id="promoOverlay" class="fixed inset-0 z-[100] items-center justify-center px-4">
+    <div class="promo-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="promo-card relative max-w-xl w-full rounded-3xl overflow-hidden glass border border-white/20 bg-gradient-to-br from-slate-900/90 via-indigo-900/90 to-purple-900/90">
+      <div class="grid md:grid-cols-[1.1fr_1fr] md:grid-rows-[auto_auto]">
         <div class="promo-media md:row-span-2">
-          <img src="imagepronos.gif" alt="Visuel offre MHD Pronos" class="h-full w-full object-cover">
-          <div class="promo-media-overlay">
-            <span class="promo-media-badge">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2.39 4.847 5.347.777-3.868 3.769.913 5.324L12 15.896l-4.782 2.821.913-5.324-3.868-3.77 5.347-.776L12 3z" />
-              </svg>
-              <span>MHD PRONOS</span>
-            </span>
-            <p class="promo-media-caption">La référence premium des parieurs en Côte d'Ivoire.</p>
-          </div>
+          <img src="imagepronos.gif" alt="imagepronos.gif (ajoutez votre visuel)" class="h-full w-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-transparent to-transparent"></div>
         </div>
+        <span>-----------------------</span>
         <div class="promo-actions md:col-start-2 md:row-start-1">
-          <div class="flex flex-col gap-3">
-            <div id="promoCountdown" class="promo-countdown" aria-live="polite">
-              Fermeture auto dans <span data-countdown-value>15</span>s
-            </div>
-            <div class="promo-meta">
-              <span>⭐ 4.9/5 satisfaits</span>
-              <span>🔒 Bonus vérifié</span>
-            </div>
+          <div id="promoCountdown" class="promo-countdown" aria-live="polite">
+            Fermeture auto dans <span data-countdown-value>15</span>s
           </div>
           <button type="button" id="promoCloseButton" class="promo-close-button" data-action="promo-close">
-            Fermer la pub
+            FERMER LA PUB
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
             </svg>
           </button>
         </div>
-        <div class="p-6 md:p-8 flex flex-col gap-5 md:col-start-2 md:row-start-2">
-          <div class="flex flex-wrap gap-3 items-center">
-            <span class="promo-badge">
-              <span class="text-sm">🔥</span>
-              <span>Offre limitée</span>
-            </span>
-            <span class="pill">Code AXEX</span>
-          </div>
-          <h3 class="text-2xl md:text-3xl font-black leading-snug tracking-tight uppercase">Nouvelle prime de bienvenue</h3>
+        <div class="p-6 md:p-8 flex flex-col gap-4 md:col-start-2 md:row-start-2">
+          <span class="promo-badge">
+            <span class="text-xs">🔥</span>
+            Offre limitée
+          </span>
+          <h3 class="text-2xl md:text-3xl font-black leading-snug">OFFRE POUT TOI !</h3>
           <p class="text-sm md:text-base text-white/80 leading-relaxed">
-            Débloque la meilleure offre 1XBET x MHD Pronos : double ton premier dépôt et bénéficie d'un accompagnement VIP pour sécuriser ta bankroll dès les premiers paris.
+            Inscris-toi maintenant en utilisant le code promo <strong>AXEX</strong> et profite de <strong>200% de bonus</strong> jusqu'à <strong>169.000F</strong> sur ton premier dépôt.
           </p>
-          <ul class="promo-perks">
-            <li><span>✅</span><span>200% de bonus jusqu'à <strong>169&nbsp;000 F</strong> sur ton premier dépôt.</span></li>
-            <li><span>💳</span><span>Cashback mensuel et rechargements boostés chaque lundi et vendredi.</span></li>
-            <li><span>🎯</span><span>Coaching bankroll + pronostics exclusifs réservés aux membres VIP.</span></li>
+          <ul class="space-y-2 text-sm md:text-base text-white/75">
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>100% de bonus sur tes rechargement chaque lundi et vendredi,</span></li>
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>Un remboursement sur toutes tes pertes chaque fin du mois.</span></li>
           </ul>
-          <div class="flex flex-wrap items-center gap-4">
-            <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" rel="noopener" class="promo-button">
-              <span>S'inscrire maintenant</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-            <span class="promo-footer-note">Partenariat officiel MHD Pronos x 1XBET</span>
-          </div>
+          <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" rel="noopener" class="promo-button">
+            <span>S'INSCRIRE MAINTENANT</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </div>
 
-  <button id="promoLauncher" class="promo-launcher" type="button" aria-label="Réouvrir la publicité">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7" />
-    </svg>
-  </button>
-
   <!-- Header -->
-  <header class="sticky top-0 z-50 glass">
+<header class="sticky top-0 z-50 glass">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
     <!-- Logo + marque -->
     <a href="index.html" class="flex items-center space-x-3">
@@ -930,122 +769,68 @@ tbody tr:hover {
     </div>
   </footer>
 
-    <script>
-      (function () {
-        const overlay = document.getElementById('promoOverlay');
-        if (!overlay) return;
-        const closeButtons = overlay.querySelectorAll('[data-action="promo-close"]');
-        const backdrop = overlay.querySelector('.promo-backdrop');
-        const card = overlay.querySelector('.promo-card');
-        const launcher = document.getElementById('promoLauncher');
-        const body = document.body;
-        const countdownContainer = overlay.querySelector('#promoCountdown');
-        const countdownValue = countdownContainer?.querySelector('[data-countdown-value]');
-        const countdownDuration = 15;
-        let countdownInterval;
+  <script>
+    (function () {
+      const overlay = document.getElementById('promoOverlay');
+      if (!overlay) return;
+      const closeButtons = overlay.querySelectorAll('[data-action="promo-close"]');
+      const backdrop = overlay.querySelector('.promo-backdrop');
+      const body = document.body;
+      const countdownContainer = overlay.querySelector('#promoCountdown');
+      const countdownValue = countdownContainer?.querySelector('[data-countdown-value]');
+      const countdownDuration = 15;
+      let countdownInterval;
 
-        const updateOffsets = () => {
-          if (!card || !launcher) return;
-          const buttonRect = launcher.getBoundingClientRect();
-          const cardRect = card.getBoundingClientRect();
-          const offsetX = (buttonRect.left + buttonRect.width / 2) - (cardRect.left + cardRect.width / 2);
-          const offsetY = (buttonRect.top + buttonRect.height / 2) - (cardRect.top + cardRect.height / 2);
-          card.style.setProperty('--promo-offset-x', `${offsetX}px`);
-          card.style.setProperty('--promo-offset-y', `${offsetY}px`);
-        };
+      const resetCountdown = () => {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+          countdownInterval = undefined;
+        }
+        if (countdownValue) {
+          countdownValue.textContent = String(countdownDuration);
+        }
+      };
 
-        const resetCountdown = () => {
-          if (countdownInterval) {
-            clearInterval(countdownInterval);
-            countdownInterval = undefined;
-          }
-          if (countdownValue) {
-            countdownValue.textContent = String(countdownDuration);
-          }
-        };
-
-        const startCountdown = () => {
-          if (!countdownValue) return;
-          let remaining = countdownDuration;
-          countdownValue.textContent = String(remaining);
-          countdownInterval = setInterval(() => {
-            remaining -= 1;
-            countdownValue.textContent = String(Math.max(remaining, 0));
-            if (remaining <= 0) {
-              hidePromo();
-            }
-          }, 1000);
-        };
-
-        const showPromo = () => {
-          if (!card) return;
-          resetCountdown();
-          updateOffsets();
-          overlay.classList.remove('closing');
-          overlay.classList.add('active');
-          body.classList.add('promo-open');
-          if (launcher) {
-            launcher.classList.remove('visible');
-          }
-          requestAnimationFrame(updateOffsets);
-          startCountdown();
-        };
-
-        const hidePromo = () => {
-          if (!card) return;
-          if (!overlay.classList.contains('active') && !overlay.classList.contains('closing')) {
-            if (launcher) launcher.classList.add('visible');
-            return;
-          }
-          overlay.classList.add('closing');
-          body.classList.remove('promo-open');
-          resetCountdown();
-
-          const cleanup = () => {
-            card.removeEventListener('transitionend', handleTransitionEnd);
-            overlay.classList.remove('closing');
-            overlay.classList.remove('active');
-            if (launcher) launcher.classList.add('visible');
-          };
-
-          const handleTransitionEnd = (event) => {
-            if (event.target !== card || event.propertyName !== 'transform') return;
-            cleanup();
-            clearTimeout(fallbackTimeout);
-          };
-
-          const fallbackTimeout = setTimeout(() => {
-            cleanup();
-          }, 750);
-
-          card.addEventListener('transitionend', handleTransitionEnd);
-          overlay.classList.remove('active');
-        };
-
-        updateOffsets();
-        window.addEventListener('resize', updateOffsets);
-        window.addEventListener('orientationchange', updateOffsets);
-
-        setTimeout(showPromo, 5000);
-
-        closeButtons.forEach((button) => {
-          button.addEventListener('click', (event) => {
-            event.preventDefault();
-            hidePromo();
-          });
-        });
-
-        launcher?.addEventListener('click', () => {
-          showPromo();
-        });
-
-        overlay.addEventListener('click', (event) => {
-          if (event.target === overlay || event.target === backdrop) {
+      const startCountdown = () => {
+        if (!countdownValue) return;
+        let remaining = countdownDuration;
+        countdownValue.textContent = String(remaining);
+        countdownInterval = setInterval(() => {
+          remaining -= 1;
+          countdownValue.textContent = String(Math.max(remaining, 0));
+          if (remaining <= 0) {
             hidePromo();
           }
+        }, 1000);
+      };
+
+      const showPromo = () => {
+        overlay.classList.add('active');
+        body.classList.add('promo-open');
+        startCountdown();
+      };
+      const hidePromo = () => {
+        overlay.classList.remove('active');
+        body.classList.remove('promo-open');
+        resetCountdown();
+      };
+
+      setTimeout(showPromo, 5000);
+
+      closeButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          hidePromo();
         });
-      })();
-    </script>
+      });
+
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay || event.target === backdrop) {
+          hidePromo();
+        }
+      });
+    })();
+  </script>
 
   <!-- Animations on scroll -->
   <script>
