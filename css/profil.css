@@ -1,0 +1,7 @@
+/* Extracted from profil.html - style block 1 */
+body { background: radial-gradient(1000px 500px at -10% -20%, rgba(99,102,241,.12), transparent 60%), #0b0b12; }
+    .glass { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(8px); }
+    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
+    .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    p { color: white; }
+

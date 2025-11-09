@@ -1,0 +1,20 @@
+/* Extracted from connexion.html - style block 1 */
+body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+    }
+    .card {
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .input:focus {
+      outline: none;
+      border: 1px solid #3b82f6;
+      box-shadow: 0 0 6px #3b82f6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+

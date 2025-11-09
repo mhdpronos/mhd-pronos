@@ -5,22 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Qui est mhd pronos ?</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    :root { color-scheme: dark; }
-    body {
-      background:
-        radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%),
-        radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%),
-        #0b0b12;
-      color: #fff;
-    }
-    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
-    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
-    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
-    .btn-outline { border:1px solid rgba(255,255,255,.12); }
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.show { opacity: 1; transform: none; }
-  </style>
+  
+
+  <link rel="stylesheet" href="css/about.css">
 </head>
 <body class="text-white">
 
@@ -114,16 +101,9 @@
     </div>
   </footer>
 
-  <script>
-    const io = new IntersectionObserver((entries)=> {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  
 
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('mobileMenu');
-    if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-  </script>
   <script src="transition.js"></script>
+  <script src="js/about_script.js"></script>
 </body>
 </html>
