@@ -5,63 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MHD PRONOS VIP</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to bottom, #0b0b12, #111827);
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(10px);
-      background: rgba(11, 11, 18, 0.85);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .btn-primary {
-      background: linear-gradient(90deg, #6366f1, #8b5cf6);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .btn-primary:hover {
-      opacity: 0.9;
-      transform: scale(1.05);
-    }
-    .glass {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-    }
-    .card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0px 5px 20px rgba(139, 92, 246, 0.3);
-    }
-    .partner-btn {
-      display: inline-block;
-      padding: 12px 28px;
-      background: linear-gradient(135deg, #1414e4, #9a02ff);
-      color: #fff;
-      font-weight: bold;
-      text-transform: uppercase;
-      border-radius: 30px;
-      text-decoration: none;
-      box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
-      transition: 0.3s ease;
-    }
-    .partner-btn:hover {
-      background: linear-gradient(135deg, #ffaa00, #4223df);
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(255, 204, 0, 0.4);
-    }
-  </style>
+  <link rel="stylesheet" href="style-vip.css">
+  
 </head>
 <body>
 
@@ -320,43 +265,9 @@
   <p>Les paris comportent des risques. Jouez de façon responsable.</p>
 </footer>
 
-<script>
-  // Date automatique
-  document.getElementById("date-du-jour").textContent = new Date().toLocaleDateString("fr-FR", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric"
-  });
-</script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-    authDomain: "mhd-pronos.firebaseapp.com",
-    projectId: "mhd-pronos",
-    storageBucket: "mhd-pronos.firebasestorage.app",
-    messagingSenderId: "366441954219",
-    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  const here = window.location.pathname.split('/').pop() || 'index.html';
-
-  onAuthStateChanged(auth, (user)=>{
-    const authenticated = !!user;
-    window.__mhdIsAuthenticated = authenticated;
-    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
-    if(!user){
-      // pas connecté → on garde la cible et on pousse vers la connexion
-      sessionStorage.setItem('postLoginRedirect', here);
-      const enc = encodeURIComponent(here);
-      window.location.href = `connexion.html?redirect=${enc}`;
-    }
-  });
-</script>
-
-  <script src="transition.js"></script>
+  
+<script type="module" src="script-vip.js"></script>
+<script src="transition.js"></script>
+  
 </body>
 </html>
