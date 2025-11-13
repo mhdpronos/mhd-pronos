@@ -4,280 +4,42 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MHD Pronos — Accueil</title>
+
+  <!-- TAILWIND -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
+  <!-- TON FICHIER CSS -->
+  <link rel="stylesheet" href="index.css">
+
+  <!-- Mode sombre -->
   <style>
-    #infofoot-badge {
-  animation: pulse 1.2s infinite ease-in-out;
-  box-shadow: 0 0 6px rgba(255,0,0,0.7);
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.8; }
-}
-
-    .reseaux-sociaux {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.titre-reseaux {
-  font-size: 14px;
-  color: #ccc;
-  margin-bottom: 10px;
-}
-
-.icones-reseaux {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.icones-reseaux img {
-  width: 35px;
-  height: 35px;
-  transition: transform 0.3s;
-}
-
-.icones-reseaux img:hover {
-  transform: scale(1.2);
-}
-
-.avertissement {
-  color: rgba(255, 34, 0, 0.866);
-  font-weight: bold ;
-}
-
-h2 {
-  color: rgba(255, 0, 0, 0.86);
-  font-weight: bold;
-}
-
     :root { color-scheme: dark; }
-    body { background: radial-gradient(1200px 600px at -10% -20%, rgba(99,102,241,.15), transparent 60%), radial-gradient(900px 500px at 110% 110%, rgba(139,92,246,.15), transparent 60%), #0b0b12; }
-    .glass { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(8px); }
-    .btn-primary { background: linear-gradient(135deg,#6366F1,#8B5CF6); }
-    .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.show { opacity: 1; transform: translateY(0); }
-    .stat { transition: transform .25s ease; }
-    .stat:hover { transform: translateY(-2px); }
-    .table-wrap { border-radius: 1rem; overflow: hidden; }
-    .coupon-blurred { filter: blur(8px); pointer-events: none; user-select: none; transition: filter .3s ease; }
-    .coupon-overlay {
-      background: linear-gradient(135deg, rgba(12, 16, 42, 0.88), rgba(79, 70, 229, 0.86));
-      backdrop-filter: blur(6px);
-    }
-    .pill { display:inline-block; padding:.25rem .75rem; border-radius:9999px; font-size:.75rem; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:#E5E7EB; }
-    tbody tr {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* ligne fine et élégante */
-}
-
-tbody tr:last-child {
-  border-bottom: none; /* pas de ligne sous le dernier */
-}
-tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  transition: 0.3s;
-}
-
-    /* Publicité */
-    #promoOverlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      z-index: 9999;
-      overflow-y: auto;
-    }
-
-    #promoOverlay.active {
-      display: flex;
-    }
-
-    #promoOverlay .promo-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(8, 10, 25, 0.78);
-      backdrop-filter: blur(16px);
-      opacity: 0;
-      transition: opacity .3s ease;
-    }
-
-    #promoOverlay.active .promo-backdrop {
-      animation: promoFadeIn .4s ease forwards;
-    }
-
-    #promoOverlay .promo-card {
-      position: relative;
-      width: min(100%, 640px);
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: linear-gradient(135deg, rgba(20, 22, 45, 0.95), rgba(67, 56, 202, 0.92), rgba(236, 72, 153, 0.88));
-      box-shadow: 0 28px 80px rgba(11, 13, 30, 0.75);
-      opacity: 0;
-      transform: translateY(40px) scale(0.95);
-    }
-
-    #promoOverlay.active .promo-card {
-      animation: promoSlideUp .7s cubic-bezier(0.22, 1, 0.36, 1) forwards, promoGlow 6s ease-in-out 1s infinite alternate;
-    }
-
-    @keyframes promoFadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes promoSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes promoGlow {
-      from {
-        box-shadow: 0 20px 45px rgba(99, 102, 241, 0.25), 0 0 0 rgba(139, 92, 246, 0.4);
-      }
-      to {
-        box-shadow: 0 28px 55px rgba(99, 102, 241, 0.35), 0 0 30px rgba(139, 92, 246, 0.55);
-      }
-    }
-
-    .promo-badge {
-      background: linear-gradient(135deg, rgba(236, 72, 153, 0.9), rgba(139, 92, 246, 0.85));
-      border-radius: 9999px;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .promo-button {
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 45%, #ec4899 100%);
-      color: #fff;
-      font-weight: 700;
-      padding: 0.85rem 1.25rem;
-      border-radius: 0.9rem;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      box-shadow: 0 15px 35px rgba(99, 102, 241, 0.35);
-    }
-
-    body.promo-open {
-      overflow: hidden;
-    }
-
-    @media (max-width: 640px) {
-      #promoOverlay {
-        padding: 1rem;
-      }
-
-      #promoOverlay .promo-card {
-        border-radius: 22px;
-      }
-
-      .important {
-        color: #ec0c0c;
-        font-weight: bold
-      }
-      
-    .promo-button:hover {
-      transform: translateY(-3px) scale(1.01);
-      box-shadow: 0 18px 45px rgba(236, 72, 153, 0.4);
-    }
-
-    .promo-media {
-      position: relative;
-    }
-
-    .promo-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem 0.75rem;
-    }
-
-    .promo-close-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.45rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 900;
-      background: rgba(239, 68, 68, 0.92);
-      color: #fff;
-      border: 2px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 18px 28px rgba(239, 68, 68, 0.45);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    }
-
-    .promo-close-button:hover {
-      transform: translateY(-1px) scale(1.04);
-      filter: brightness(1.08);
-      box-shadow: 0 22px 40px rgba(239, 68, 68, 0.55);
-    }
-
-    .promo-countdown {
-      padding: 0.4rem 0.8rem;
-      border-radius: 9999px;
-      background: rgba(15, 23, 42, 0.85);
-      color: #f8fafc;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.45);
-    }
-
-    @media (max-width: 640px) {
-      .promo-actions {
-        padding: 0 1rem 0.75rem;
-      }
-    }
+    body { background: #0b0b12; }
   </style>
 </head>
+
 <body class="text-white">
+
   <!-- Publicité retardée -->
   <div id="promoOverlay" class="fixed inset-0 z-[100] items-center justify-center px-4">
     <div class="promo-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
     <div class="promo-card relative max-w-xl w-full rounded-3xl overflow-hidden glass border border-white/20 bg-gradient-to-br from-slate-900/90 via-indigo-900/90 to-purple-900/90">
+
       <div class="grid md:grid-cols-[1.1fr_1fr] md:grid-rows-[auto_auto]">
+
         <div class="promo-media md:row-span-2">
-          <img src="imagepronos.gif" alt="imagepronos.gif (ajoutez votre visuel)" class="h-full w-full object-cover">
+          <img src="imagepronos.gif" alt="imagepronos.gif" class="h-full w-full object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-transparent to-transparent"></div>
         </div>
+
         <span>-----------------------</span>
+
         <div class="promo-actions md:col-start-2 md:row-start-1">
           <div id="promoCountdown" class="promo-countdown" aria-live="polite">
             Fermeture auto dans <span data-countdown-value>15</span>s
           </div>
+
           <button type="button" id="promoCloseButton" class="promo-close-button" data-action="promo-close">
             FERMER LA PUB
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -285,65 +47,62 @@ tbody tr:hover {
             </svg>
           </button>
         </div>
+
         <div class="p-6 md:p-8 flex flex-col gap-4 md:col-start-2 md:row-start-2">
           <span class="promo-badge">
             <span class="text-xs">🔥</span>
             Offre limitée
           </span>
-          <h3 class="text-2xl md:text-3xl font-black leading-snug">OFFRE POUT TOI !</h3>
+
+          <h3 class="text-2xl md:text-3xl font-black leading-snug">OFFRE POUR TOI !</h3>
+
           <p class="text-sm md:text-base text-white/80 leading-relaxed">
-            Inscris-toi maintenant en utilisant le code promo <strong>AXEX</strong> et profite de <strong>200% de bonus</strong> jusqu'à <strong>169.000F</strong> sur ton premier dépôt.
+            Inscris-toi avec le code <strong>AXEX</strong> et profite de <strong>200% de bonus</strong> jusqu'à <strong>169.000F</strong>.
           </p>
+
           <ul class="space-y-2 text-sm md:text-base text-white/75">
-            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>100% de bonus sur tes rechargement chaque lundi et vendredi,</span></li>
-            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>Un remboursement sur toutes tes pertes chaque fin du mois.</span></li>
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span> Bonus lundi & vendredi</li>
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span> Remboursement mensuel</li>
           </ul>
+
           <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" rel="noopener" class="promo-button">
-            <span>S'INSCRIRE MAINTENANT</span>
+            S'INSCRIRE MAINTENANT
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
         </div>
+
       </div>
     </div>
   </div>
-
-  <!-- Header -->
+<!-- Header -->
 <header class="sticky top-0 z-50 glass">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3">
-    <!-- Logo + marque -->
+
     <a href="index.html" class="flex items-center space-x-3">
       <img src="logo.JPG" alt="Logo MHD Pronos" class="w-10 h-10 rounded-md object-cover">
       <span class="text-lg font-extrabold lowercase">mhd pronos</span>
     </a>
 
-    <!-- Actions visibles sur mobile -->
     <div class="ml-auto flex items-center space-x-2 md:hidden">
-      <a href="profil.html" class="btn-primary px-3 py-2 rounded-lg font-semibold shadow">
-        Mon profil
-      </a>
+      <a href="profil.html" class="btn-primary px-3 py-2 rounded-lg font-semibold shadow">Mon profil</a>
       <button id="menuBtn" class="px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5" aria-label="Ouvrir le menu">
-        <!-- icône burger -->
         <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor">
           <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
     </div>
 
-    <!-- Menu desktop -->
     <nav class="ml-auto hidden md:flex items-center space-x-6 text-sm">
       <a class="text-white/80 hover:text-white" href="#tips">Pronostics</a>
       <a class="text-white/80 hover:text-white" href="#method">Méthode</a>
       <a class="text-white/80 hover:text-white" href="#pricing">Abonnements</a>
       <a class="text-white/80 hover:text-white" href="#faq">FAQ</a>
-      <a href="profil.html" class="inline-flex items-center px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">
-        Mon profil
-      </a>
+      <a href="profil.html" class="inline-flex items-center px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">Mon profil</a>
     </nav>
   </div>
 
-  <!-- Menu mobile déroulant -->
   <nav id="mobileMenu" class="md:hidden hidden glass border-t border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col space-y-3 text-sm">
       <a class="text-white/90" href="#tips">Pronostics</a>
@@ -355,742 +114,286 @@ tbody tr:hover {
   </nav>
 </header>
 
-  <!-- Hero -->
-  <section class="relative overflow-hidden py-16 md:py-24">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
-      <div class="reveal">
-        <h1 class="text-4xl md:text-5xl font-black tracking-tight lowercase">mhd pronos</h1>
-        <p class="mt-4 text-white/80 text-base md:text-lg">
-          Des pronostics clairs, un suivi transparent, et une gestion de bankroll disciplinée. Optimisé pour les parieurs en Côte d’Ivoire et partout dans le monde.
-          Utilise le code promo <span class="important">AXEX</span> pour t'inscrire et gagne jusqu'à <span class="important">169.000 F</span> sur ton premier dépôt.
+<!-- Hero -->
+<section class="relative overflow-hidden py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+
+    <div class="reveal">
+      <h1 class="text-4xl md:text-5xl font-black tracking-tight lowercase">mhd pronos</h1>
+      <p class="mt-4 text-white/80 text-base md:text-lg">
+        Des pronostics clairs, un suivi transparent, et une gestion disciplinée.
+        Utilise le code <span class="important">AXEX</span> pour gagner jusqu'à
+        <span class="important">169.000 F</span> sur ton premier dépôt.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+
+        <a href="conseil.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
+          <strong>PRONOS CONSEIL</strong>
+          <span id="badge-conseil" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
+        </a>
+
+        <a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
+          <strong>FOOT NEWS</strong>
+          <span id="infofoot-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
+        </a>
+
+        <button id="aboutBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
+          <strong>À PROPOS</strong>
+        </button>
+
+        <button id="notificationsBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
+          🔔 <strong>NOTIFICATION</strong>
+          <span id="notifBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 hidden">0</span>
+        </button>
+
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
+          <strong>ACTIVER VIP</strong>
+        </a>
+        <a href="https://t.me/+3qums05XWOw2ZWJk" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+          <strong>CANAL TELEGRAM</strong>
+        </a>
+        <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center requires-auth">
+          <strong>DEVENIR PRO</strong>
+        </a>
+        <a href="victoires.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+          <strong>NOS VICTOIRES</strong>
+        </a>
+      </div>
+
+      <div class="mt-6 glass rounded-xl p-5 text-sm leading-relaxed">
+        <h3 class="text-white font-bold text-base mb-2">⚠️ Avertissement</h3>
+        <p class="text-white/80">
+          Les paris comportent des risques. Aucun gain n’est garanti.
+          <span class="important">jouez responsable.</span>
         </p>
-      
-        <div class="mt-6 flex flex-wrap gap-3">
-          <!-- BOUTON CONSEIL DU JOUR (même style que FOOT NEWS, avec badge rouge) -->
-<a href="conseil.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
-  <strong>PRONOS CONSEIL</strong>
-  <!-- Badge rouge dynamique -->
-  <span id="badge-conseil" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
-</a>
+      </div>
+    </div>
 
-          <!-- Bouton FOOT NEWS avec badge -->
-<a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
-  <strong>FOOT NEWS</strong>
-  <!-- 🔴 Badge rouge dynamique -->
-  <span id="infofoot-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
-</a>
-
-
-          <button id="aboutBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
-  <strong>À PROPOS</strong>
-</button>
-          <button id="notificationsBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
-            🔔 <strong>NOTIFICATION</strong>
-            <span id="notifBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 hidden">0</span>
-          </button>
+    <!-- Statistiques -->
+    <div class="reveal">
+      <div class="glass rounded-2xl overflow-hidden">
+        <div class="p-5 border-b border-white/10">
+          <h3 class="font-semibold">Bilan rapide (30 derniers jours)</h3>
+          <p class="text-sm text-white/70">Mis à jour chaque mois</p>
         </div>
 
-        <div class="mt-8 flex flex-wrap gap-3">
-  <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
-    <strong>ACTIVER VIP</strong>
-  </a>
-  <a href="https://t.me/+3qums05XWOw2ZWJk" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
-    <strong>CANAL TELEGRAM</strong>
-  </a>
-  <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center requires-auth">
-    <strong>DEVENIR PRO</strong>
-  </a>
-  <a href="victoires.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
-    <strong>NOS VICTOIRES</strong>
-  </a>
-</div>
+        <div class="p-5 grid grid-cols-3 gap-4">
+          <div class="stat">
+            <div class="text-sm text-white/70">ROI</div>
+            <div class="text-2xl font-extrabold">+18%</div>
+            <div class="text-xs text-white/60">sur bankroll</div>
+          </div>
 
-        <!-- Avertissement jeu -->
-        <div class="mt-6 glass rounded-xl p-5 text-sm leading-relaxed">
-          <h3 class="text-white font-bold text-base mb-2">⚠️ Avertissement sur les paris sportifs</h3>
-          <p class="text-white/80">
-            Les paris comportent des risques. Aucun gain n’est garanti. Pariez uniquement ce que vous pouvez vous permettre de perdre.
-            Si le jeu devient un problème, faites une pause ou demandez de l’aide. <span class="important">mhd pronos n’est pas responsable des pertes.</span>
+          <div class="stat">
+            <div class="text-sm text-white/70">Taux</div>
+            <div class="text-2xl font-extrabold">90,5%</div>
+            <div class="text-xs text-white/60">(181/200)</div>
+          </div>
+
+          <div class="stat">
+            <div class="text-sm text-white/70">Cote moy</div>
+            <div class="text-2xl font-extrabold">5,0</div>
+            <div class="text-xs text-white/60">sur 200 paris</div>
+          </div>
+        </div>
+
+        <div class="p-5 border-t border-white/10">
+          <div class="text-xs text-white/60 mb-2">Objectif</div>
+          <div class="h-2 w-full rounded-full bg-white/10">
+            <div class="h-2 rounded-full bg-green-500" style="width:95%"></div>
+          </div>
+          <div class="text-xs text-white/60 mt-1">95% atteint</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- Connexion / Inscription -->
+<section class="py-10">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="glass rounded-2xl p-8 flex flex-col items-center gap-4 w-full max-w-sm mx-auto">
+      <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se connecter</a>
+      <a href="inscription.html" class="w-full text-center px-6 py-3 rounded-lg border border-white/10 hover:bg-white/5">S’inscrire</a>
+    </div>
+  </div>
+</section>
+
+<!-- COUPONS DU JOUR -->
+<section id="tips" class="max-w-6xl mx-auto px-4 py-14 reveal">
+
+  <div class="flex items-end justify-between gap-4 mb-5">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-black mb-6">COUPONS DU JOUR</h2>
+      <p class="text-white/70 text-sm">Basés sur forme, H2H, absences, value…</p>
+    </div>
+    <div class="hidden md:flex gap-2">
+      <button class="pill">TOUS</button>
+      <button class="pill">GRATUIT</button>
+      <button class="pill">VIP</button>
+    </div>
+  </div>
+
+  <!-- Table Coupons -->
+  <section class="max-w-6xl mx-auto px-4 py-8 text-white">
+    <div class="glass rounded-2xl overflow-hidden border border-white/10">
+      <div class="relative" id="dailyCouponsCard">
+
+        <div class="overflow-x-auto coupon-blurred" data-coupons-table>
+          <table class="w-full border-collapse">
+            <thead class="bg-white/5 text-white/70 text-sm uppercase tracking-wide">
+              <tr>
+                <th class="py-4 px-4 text-left">Date</th>
+                <th class="py-4 px-4 text-left">Compétition</th>
+                <th class="py-4 px-4 text-left">Match</th>
+                <th class="py-4 px-4 text-left">Sélection</th>
+                <th class="py-4 px-4 text-center">Cote</th>
+                <th class="py-4 px-4 text-center">Confiance</th>
+                <th class="py-4 px-4 text-center">Type</th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-white/10 text-sm md:text-base">
+
+              <!-- EXEMPLES -->
+              <tr class="hover:bg-white/5 transition">
+                <td class="py-5 px-4">2025-11-04</td>
+                <td class="py-5 px-4 font-semibold text-violet-300">LDC</td>
+                <td class="py-5 px-4">Liverpool vs Real Madrid</td>
+                <td class="py-5 px-4 text-green-400 font-semibold">But non accordé: Non</td>
+                <td class="py-5 px-4 text-center font-bold">1.6</td>
+                <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
+                <td class="py-5 px-4 text-center">
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">
+                    GRATUIT
+                  </span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <div class="coupon-overlay absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-center px-6" data-coupons-overlay>
+          <div class="text-xl md:text-2xl font-extrabold">Contenu réservé aux membres</div>
+          <p class="text-sm md:text-base text-white/80 max-w-md">
+            Connectez-vous ou créez un compte pour voir les coupons du jour.
           </p>
-          <p class="mt-2 text-xs text-white/50">Interdit aux mineurs — Risques : endettement, isolement, dépendance. Aide : 05 64 16 69 46 (WhatsApp).</p>
-        </div>
-      </div>
 
-      <!-- Stat Card -->
-      <div class="reveal">
-        <div class="glass rounded-2xl overflow-hidden">
-          <div class="p-5 border-b border-white/10">
-            <h3 class="font-semibold">Bilan rapide (30 derniers jours)</h3>
-            <p class="text-sm text-white/70">Ces chiffres sont mis à jour chaque mois.</p>
-          </div>
-          <div class="p-5 grid grid-cols-3 gap-4">
-            <div class="stat">
-              <div class="text-sm text-white/70">ROI</div>
-              <div class="text-2xl font-extrabold">+18%</div>
-              <div class="text-xs text-white/60">sur bankroll</div>
-            </div>
-            <div class="stat">
-              <div class="text-sm text-white/70">Taux de réussite</div>
-              <div class="text-2xl font-extrabold">90,5%</div>
-              <div class="text-xs text-white/60">(181/200)</div>
-            </div>
-            <div class="stat">
-              <div class="text-sm text-white/70">Cote moyenne</div>
-              <div class="text-2xl font-extrabold">5,0</div>
-              <div class="text-xs text-white/60">sur 200 paris</div>
-            </div>
-          </div>
-          <div class="p-5 border-t border-white/10">
-            <div class="text-xs text-white/60 mb-2">Objectif mensuel</div>
-            <div class="h-2 w-full rounded-full bg-white/10">
-              <div class="h-2 rounded-full bg-green-500" style="width:95%"></div>
-            </div>
-            <div class="text-xs text-white/60 mt-1">95% atteint</div>
+          <div class="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+            <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se connecter</a>
+            <a href="inscription.html" class="w-full text-center px-6 py-3 rounded-lg border border-white/20 hover:bg-white/10 transition">S’inscrire</a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="py-10">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="glass rounded-2xl p-8 flex flex-col items-center gap-4 w-full max-w-sm mx-auto">
-        <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se connecter</a>
-        <a href="inscription.html" class="w-full text-center px-6 py-3 rounded-lg border border-white/10 hover:bg-white/5">S’inscrire</a>
-      </div>
-    </div>
-  </section>
-  <!-- Pronostics -->
-  <section id="tips" class="max-w-6xl mx-auto px-4 py-14 reveal">
-    <div class="flex items-end justify-between gap-4 mb-5">
-      <div>
-        <h2 class="text-2xl md:text-3xl font-black mb-6">COUPONS DU JOUR</h2>
-        <p class="text-white/70 text-sm">Basé sur forme, H2H, absences, et value sur les cotes.</p>
-      </div>
-      <div class="hidden md:flex gap-2">
-        <button class="pill">TOUS</button>
-        <button class="pill">GRATUIT</button>
-        <button class="pill">VIP</button>
       </div>
     </div>
 
-   <!-- COUPONS DU JOUR -->
-<section class="max-w-6xl mx-auto px-4 py-8 text-white">
-  <div class="glass rounded-2xl overflow-hidden border border-white/10">
-    <div class="relative" id="dailyCouponsCard">
-      <div class="overflow-x-auto coupon-blurred" data-coupons-table>
-      <table class="w-full border-collapse">
-        <thead class="bg-white/5 text-white/70 text-sm uppercase tracking-wide">
-          <tr>
-            <th class="py-4 px-4 text-left">Date</th>
-            <th class="py-4 px-4 text-left">Compétition</th>
-            <th class="py-4 px-4 text-left">Match</th>
-            <th class="py-4 px-4 text-left">Sélection</th>
-            <th class="py-4 px-4 text-center">Cote</th>
-            <th class="py-4 px-4 text-center">Confiance</th>
-            <th class="py-4 px-4 text-center">Type</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-white/10 text-sm md:text-base">
-          <tr class="hover:bg-white/5 transition">
-            <td class="py-5 px-4">2025-11-04</td>
-            <td class="py-5 px-4 font-semibold text-violet-300">LDC</td>
-            <td class="py-5 px-4">Liverpool vs Real Madrid</td>
-            <td class="py-5 px-4 text-green-400 font-semibold">But non accordé: Non</td>
-            <td class="py-5 px-4 text-center font-bold">1.6</td>
-            <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
-            <td class="py-5 px-4 text-center">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
-            </td>
-          </tr>
-
-          <tr class="hover:bg-white/5 transition">
-            <td class="py-5 px-4">2025-11-04</td>
-            <td class="py-5 px-4 font-semibold text-violet-300">LDC</td>
-            <td class="py-5 px-4">PSG vs Bayern Munich</td>
-            <td class="py-5 px-4 text-green-400 font-semibold">Penalty ou Exp: Non</td>
-            <td class="py-5 px-4 text-center font-bold">1.69</td>
-            <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
-            <td class="py-5 px-4 text-center">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-700">GRATUIT</span>
-            </td>
-          </tr>
-
-          <tr class="hover:bg-white/5 transition">
-            <td class="py-5 px-4">2025-11-04</td>
-            <td class="py-5 px-4 font-semibold text-violet-300">LDC</td>
-            <td class="py-5 px-4">Slavia vs Arsenal</td>
-            <td class="py-5 px-4 text-green-400 font-semibold">1X2: V2</td>
-            <td class="py-5 px-4 text-center font-bold">1.3</td>
-            <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
-            <td class="py-5 px-4 text-center">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
-            </td>
-          </tr>
-
-          <tr class="hover:bg-white/5 transition">
-            <td class="py-5 px-4">2025-11-04</td>
-            <td class="py-5 px-4 font-semibold text-violet-300">LDC</td>
-            <td class="py-5 px-4">SSC Naple vs Frankfurt</td>
-            <td class="py-5 px-4 text-green-400 font-semibold">Double Chance: 12</td>
-            <td class="py-5 px-4 text-center font-bold">1.25</td>
-            <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
-            <td class="py-5 px-4 text-center">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
-            </td>
-          </tr>
-
-          <tr class="hover:bg-white/5 transition">
-            <td class="py-5 px-4">2025-11-04</td>
-            <td class="py-5 px-4 font-semibold text-violet-300">LDC</td>
-            <td class="py-5 px-4">Athl de Madrid vs Royale Union</td>
-            <td class="py-5 px-4 text-green-400 font-semibold">1X2: V1</td>
-            <td class="py-5 px-4 text-center font-bold">1.31</td>
-            <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
-            <td class="py-5 px-4 text-center">
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-700">GRATUIT</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-      <div class="coupon-overlay absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-center px-6" data-coupons-overlay>
-        <div class="text-xl md:text-2xl font-extrabold">Contenu réservé à nos membres</div>
-        <p class="text-sm md:text-base text-white/80 max-w-md">Connectez-vous ou créez votre compte pour consulter en clair les coupons du jour et profiter de nos analyses expertes.</p>
-        <div class="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
-          <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se connecter</a>
-          <a href="inscription.html" class="w-full text-center px-6 py-3 rounded-lg border border-white/20 hover:bg-white/10 transition">S’inscrire</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Zone bouton VIP -->
     <div class="flex flex-col sm:flex-row justify-between items-center bg-white/5 p-6 gap-4">
       <div>
-        <p class="text-sm text-white/70"><h2>ACCÈS VIP REQUIS</h2></p>
-        <p class="text-sm text-white/50">Débloquez les pronostics premium et les analyses complètes.</p>
+        <h2>ACCÈS VIP REQUIS</h2>
+        <p class="text-sm text-white/50">Débloquez les analyses premium.</p>
       </div>
-      <div><a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a></div>
+
+      <div>
+        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
+          S’abonner
+        </a>
+      </div>
+    </div>
+
+</section>
+
+<!-- PARTENAIRES -->
+<section class="max-w-6xl mx-auto px-4 py-14 reveal">
+  <h2 class="text-2xl md:text-3xl font-black mb-6">NOS PARTENAIRES</h2>
+
+  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1XBET</a>
+    <a href="#" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">BETWINNER</a>
+    <a href="#" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1WIN</a>
+    <a href="#" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">MELBET</a>
   </div>
 </section>
 
-<style>
-  .glass {
-    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    backdrop-filter: blur(8px);
-  }
-  @media(max-width:640px){
-    table th, table td { padding: 0.8rem 0.5rem; }
-  }
-</style>
+<!-- MÉTHODE -->
+<section id="method" class="max-w-6xl mx-auto px-4 py-14 reveal">
+  <h2 class="text-2xl md:text-3xl font-black mb-6">NOTRE METHODE</h2>
 
-<script>
-  (function () {
-    const card = document.getElementById('dailyCouponsCard');
-    if (!card) return;
-
-    const tableWrapper = card.querySelector('[data-coupons-table]');
-    const overlay = card.querySelector('[data-coupons-overlay]');
-
-    const toggleAccess = (authenticated) => {
-      if (!tableWrapper || !overlay) return;
-      if (authenticated) {
-        tableWrapper.classList.remove('coupon-blurred');
-        overlay.classList.add('hidden');
-        localStorage.setItem('loggedIn', 'true');
-      } else {
-        tableWrapper.classList.add('coupon-blurred');
-        overlay.classList.remove('hidden');
-        localStorage.removeItem('loggedIn');
-      }
-    };
-
-    toggleAccess(window.__mhdIsAuthenticated === true);
-
-    window.addEventListener('mhd:auth-state', (event) => {
-      toggleAccess(Boolean(event.detail && event.detail.authenticated));
-    });
-  })();
-</script>
-
-  </section>
-
-  <!-- Partenaires -->
-  <section class="max-w-6xl mx-auto px-4 py-14 reveal">
-    <h2 class="text-2xl md:text-3xl font-black mb-6">NOS PARTENAIRES</h2>
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1XBET</a>
-      <a href="https://bwredir.com/1Xxd?p=%2Fregistration%2F" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">BETWINNER</a>
-      <a href="https://1wyvrz.life/?p=vteh" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1WIN</a>
-      <a href="https://refpa3665.com/L?tag=d_2526373m_45415c_&site=2526373&ad=45415" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">MELBET</a>
-      <a href="https://top100bonus.com/L?tag=d_2625843m_37513c_&site=2625843&ad=37513" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">888STARZ</a>
-      <a href="https://combodef.com/L?tag=d_3703799m_60651c_&site=3703799&ad=60651" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">PARIPESA</a>
-      <a href="https://gpaff.top/L?tag=d_3453290m_69627c_&site=3453290&ad=69627" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">GOLDPARI</a>
-      <a href="https://refpazitag.top/L?tag=d_2561833m_25437c_&site=2561833&ad=25437" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">MEGAPARI</a>
-      <a href="https://lb-aff.com/L?tag=d_2378251m_22611c_&site=2378251&ad=22611" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">LINEBET</a>
-    </div>
-  </section>
-
-  <!-- Méthode -->
-  <section id="method" class="max-w-6xl mx-auto px-4 py-14 reveal">
-    <h2 class="text-2xl md:text-3xl font-black mb-6">NOTRE METHODE</h2>
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="glass rounded-2xl p-5">
-        <div class="text-sm text-white/60">Étape 1</div>
-        <div class="text-lg font-semibold mt-1">Analyse statistique</div>
-        <p class="text-sm text-white/70 mt-2">Forme, xG, home/away, valeur des cotes, calendrier.</p>
-      </div>
-      <div class="glass rounded-2xl p-5">
-        <div class="text-sm text-white/60">Étape 2</div>
-        <div class="text-lg font-semibold mt-1">Gestion de bankroll</div>
-        <p class="text-sm text-white/70 mt-2">Mises fixes 1u–3u. Jamais all-in. Objectif long terme.</p>
-      </div>
-      <div class="glass rounded-2xl p-5">
-        <div class="text-sm text-white/60">Étape 3</div>
-        <div class="text-lg font-semibold mt-1">Discipline & suivi</div>
-        <p class="text-sm text-white/70 mt-2">Bilan public, limites de pertes, ajustements mensuels.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Abonnements VIP -->
-  <section id="pricing" class="max-w-6xl mx-auto px-4 py-14 reveal">
-    <div class="flex items-end justify-between gap-4 mb-6">
-      <div>
-        <h2 class="text-2xl md:text-3xl font-black">ABONNEMENTS VIP</h2>
-        <p class="text-white/70 text-sm">Utilisez le code <strong>AXEX</strong> pour une remise immédiate.</p>
-      </div>
-      <span class="pill">Code promo disponible</span>
+  <div class="grid md:grid-cols-3 gap-5">
+    <div class="glass rounded-2xl p-5">
+      <div class="text-sm text-white/60">Étape 1</div>
+      <div class="text-lg font-semibold mt-1">Analyse statistique</div>
+      <p class="text-sm text-white/70 mt-2">xG, forme, calendrier, value…</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="glass rounded-2xl p-5 flex flex-col">
-        <div class="flex-1">
-          <div class="text-xl font-extrabold">1 Semaine</div>
-          <div class="mt-2 text-3xl font-black">3 000 XOF</div>
-          <ul class="mt-4 space-y-2 text-sm text-white/80 list-disc list-inside">
-            <li>Accès aux VIP du jour</li>
-            <li>Support Telegram</li>
-            <li>Code promo disponible</li>
-          </ul>
-        </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
-      </div>
-
-      <div class="glass rounded-2xl p-5 flex flex-col border border-indigo-400/50">
-        <div class="flex-1">
-          <div class="flex items-center justify-between">
-            <div class="text-xl font-extrabold">1 Mois</div>
-            <span class="pill">Populaire</span>
-          </div>
-          <div class="mt-2 text-3xl font-black">10 000 XOF</div>
-          <ul class="mt-4 space-y-2 text-sm text-white/80 list-disc list-inside">
-            <li>VIP illimités 30j</li>
-            <li>Alertes rapides</li>
-            <li>Bankroll guide</li>
-          </ul>
-        </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
-      </div>
-
-      <div class="glass rounded-2xl p-5 flex flex-col">
-        <div class="flex-1">
-          <div class="text-xl font-extrabold">3 Mois</div>
-          <div class="mt-2 text-3xl font-black">25 000 XOF</div>
-          <ul class="mt-4 space-y-2 text-sm text-white/80 list-disc list-inside">
-            <li>VIP illimités 3 mois</li>
-            <li>Statistiques détaillées</li>
-            <li>Priorité support</li>
-          </ul>
-        </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
-      </div>
+    <div class="glass rounded-2xl p-5">
+      <div class="text-sm text-white/60">Étape 2</div>
+      <div class="text-lg font-semibold mt-1">Bankroll</div>
+      <p class="text-sm text-white/70 mt-2">Mises 1u–3u, jamais all-in.</p>
     </div>
-  </section>
 
-  <!-- Témoignages -->
-  <section class="max-w-6xl mx-auto px-4 py-14 reveal">
-    <h2 class="text-2xl md:text-3xl font-black mb-6">ILS NOUS FONT CONFIANCE</h2>
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="glass p-5 rounded-2xl">
-        <p class="text-white/80">“Gestion sérieuse, résultats réguliers. Mon meilleur abonnement de l’année.”</p>
-        <div class="mt-3 text-sm text-white/60">— Serge K.</div>
-      </div>
-      <div class="glass p-5 rounded-2xl">
-        <p class="text-white/80">“Support réactif, analyses claires. Je recommande.”</p>
-        <div class="mt-3 text-sm text-white/60">— Aïcha D.</div>
-      </div>
-      <div class="glass p-5 rounded-2xl">
-        <p class="text-white/80">“On sent la discipline. J’ai enfin une méthode.”</p>
-        <div class="mt-3 text-sm text-white/60">— Marc T.</div>
-      </div>
+    <div class="glass rounded-2xl p-5">
+      <div class="text-sm text-white/60">Étape 3</div>
+      <div class="text-lg font-semibold mt-1">Discipline</div>
+      <p class="text-sm text-white/70 mt-2">Bilan public, limites, révisions.</p>
     </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="max-w-6xl mx-auto px-4 py-14 reveal">
-    <h2 class="text-2xl md:text-3xl font-black mb-6">FAQ</h2>
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="glass p-5 rounded-2xl">
-        <div class="font-semibold">Les paris sont garantis ?</div>
-        <p class="text-sm text-white/70 mt-2">Non. Nous visons la rentabilité long terme avec discipline et value betting.</p>
-      </div>
-      <div class="glass p-5 rounded-2xl">
-        <div class="font-semibold">Combien de pronos par jour ?</div>
-        <p class="text-sm text-white/70 mt-2">Variable (1 à 5). La qualité prime sur la quantité.</p>
-      </div>
-      <div class="glass p-5 rounded-2xl">
-        <div class="font-semibold">Puis-je annuler ?</div>
-        <p class="text-sm text-white/70 mt-2">Oui, vous pouvez résilier votre abonnement à tout moment.</p>
-      </div>
-    </div>
-  </section>
-  <section class="reseaux-sociaux">
-  <p class="titre-reseaux">📱 Suivez-moi sur mes différentes pages :</p>
-  <div class="icones-reseaux">
-    <a href="https://www.instagram.com/mhd_pronos?igsh=aTM5ZmZkNWpjb3hj&utm_source=qr" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
-    </a>
-    <a href="https://www.facebook.com/share/19qP6L4f51/?mibextid=wwXIfr" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-    </a>
-    <a href="https://www.tiktok.com/@mhdpronos.ci?_t=ZN-90jzIChx178&_r=1" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" width="40" height="40">
-    </a>
-    <a href="https://t.me/mhdpronosci" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
-    </a>
-    <a href="http://www.youtube.com/@mhd_pronos" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
-    </a>
   </div>
-    <br>         
-  </br>
 </section>
 
-  <!-- Footer -->
-  <footer class="border-t border-white/10 py-10">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-6 justify-between">
-      <div>
-        <div class="text-lg font-extrabold lowercase">mhd pronos</div>
-        <div class="text-sm text-white/60">Meilleur pronostiqueur ivoirien.</div>
-      </div>
-      <div class="text-xs text-white/50 max-w-xl">
-        ⚠ Avertissement : <span class="avertissement">Les jeux d’argent comportent des risques</span>. Ne pariez que ce que vous pouvez vous permettre de perdre. <span class="avertissement">Ce site ne garantit aucun gain</span>. Réservé aux personnes majeures selon la législation locale.
-      </div>
+<!-- VIP -->
+<section id="pricing" class="max-w-6xl mx-auto px-4 py-14 reveal">
+  <h2 class="text-2xl md:text-3xl font-black mb-6">ABONNEMENTS VIP</h2>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="max-w-6xl mx-auto px-4 py-14 reveal">
+  <h2 class="text-2xl md:text-3xl font-black mb-6">FAQ</h2>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/10 py-10">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-6 justify-between">
+    <div>
+      <div class="text-lg font-extrabold lowercase">mhd pronos</div>
+      <div class="text-sm text-white/60">Meilleur pronostiqueur ivoirien.</div>
     </div>
-  </footer>
 
-  <script>
-    (function () {
-      const overlay = document.getElementById('promoOverlay');
-      if (!overlay) return;
-      const closeButtons = overlay.querySelectorAll('[data-action="promo-close"]');
-      const backdrop = overlay.querySelector('.promo-backdrop');
-      const body = document.body;
-      const countdownContainer = overlay.querySelector('#promoCountdown');
-      const countdownValue = countdownContainer?.querySelector('[data-countdown-value]');
-      const countdownDuration = 15;
-      let countdownInterval;
+    <div class="text-xs text-white/50 max-w-xl">
+      ⚠ Les jeux d’argent comportent des risques — Jouez responsable.
+    </div>
+  </div>
+</footer>
 
-      const resetCountdown = () => {
-        if (countdownInterval) {
-          clearInterval(countdownInterval);
-          countdownInterval = undefined;
-        }
-        if (countdownValue) {
-          countdownValue.textContent = String(countdownDuration);
-        }
-      };
-
-      const startCountdown = () => {
-        if (!countdownValue) return;
-        let remaining = countdownDuration;
-        countdownValue.textContent = String(remaining);
-        countdownInterval = setInterval(() => {
-          remaining -= 1;
-          countdownValue.textContent = String(Math.max(remaining, 0));
-          if (remaining <= 0) {
-            hidePromo();
-          }
-        }, 1000);
-      };
-
-      const showPromo = () => {
-        overlay.classList.add('active');
-        body.classList.add('promo-open');
-        startCountdown();
-      };
-      const hidePromo = () => {
-        overlay.classList.remove('active');
-        body.classList.remove('promo-open');
-        resetCountdown();
-      };
-
-      setTimeout(showPromo, 5000);
-
-      closeButtons.forEach((button) => {
-        button.addEventListener('click', (event) => {
-          event.preventDefault();
-          hidePromo();
-        });
-      });
-
-      overlay.addEventListener('click', (event) => {
-        if (event.target === overlay || event.target === backdrop) {
-          hidePromo();
-        }
-      });
-    })();
-  </script>
-
-  <!-- Animations on scroll -->
-  <script>
-    const io = new IntersectionObserver((entries)=> {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  </script>
-  
-  <script>
-    // Toggle menu mobile
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('mobileMenu');
-    if (btn && menu) {
-      btn.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-      });
-    }
-  </script>
-  
-  <script type="module">
-    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-      authDomain: "mhd-pronos.firebaseapp.com",
-      projectId: "mhd-pronos",
-      storageBucket: "mhd-pronos.firebasestorage.app",
-      messagingSenderId: "366441954219",
-      appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-    };
-
-    const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    onAuthStateChanged(auth, (user) => {
-      const authenticated = !!user;
-      window.__mhdIsAuthenticated = authenticated;
-      window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
-      if (user) {
-        console.log("Utilisateur connecté :", user.email);
-      } else {
-        console.log("Utilisateur non connecté");
-      }
-    });
-
-    const aboutBtn = document.getElementById('aboutBtn');
-    aboutBtn?.addEventListener('click', () => {
-      window.location.href = 'about.html';
-    });
-
-    const notifBtn = document.getElementById('notificationsBtn');
-    const notifBadge = document.getElementById('notifBadge');
-
-    notifBtn?.addEventListener('click', () => {
-      window.location.href = 'notifications.html';
-    });
-
-    async function refreshNotificationBadge() {
-      if (!notifBadge) return;
-      try {
-        const q = query(collection(db, 'notifications'), where('lu', '==', false));
-        const snapshot = await getDocs(q);
-        const unread = snapshot.size;
-        if (unread > 0) {
-          notifBadge.textContent = unread > 99 ? '99+' : String(unread);
-          notifBadge.classList.remove('hidden');
-        } else {
-          notifBadge.classList.add('hidden');
-        }
-      } catch (err) {
-        console.error('Erreur de chargement des notifications :', err);
-        notifBadge.classList.add('hidden');
-      }
-    }
-
-    const infofootBadge = document.getElementById('infofoot-badge');
-
-    async function refreshInfofootBadge() {
-      if (!infofootBadge) return;
-      try {
-        const snapshot = await getDocs(collection(db, 'infofoot'));
-        const totalNews = snapshot.size;
-        let lastRead = Number(localStorage.getItem('infofoot_read_count') || 0);
-
-        if (window.location.pathname.includes('infofoot.html')) {
-          localStorage.setItem('infofoot_read_count', String(totalNews));
-          lastRead = totalNews;
-        }
-
-        if (totalNews > lastRead) {
-          const diff = totalNews - lastRead;
-          infofootBadge.textContent = diff > 9 ? '9+' : String(diff);
-          infofootBadge.classList.remove('hidden');
-        } else {
-          infofootBadge.classList.add('hidden');
-        }
-      } catch (err) {
-        console.error('Erreur de chargement des actualités :', err);
-        infofootBadge.classList.add('hidden');
-      }
-    }
-
-    refreshNotificationBadge();
-    refreshInfofootBadge();
-
-    setInterval(() => {
-      refreshNotificationBadge();
-      refreshInfofootBadge();
-    }, 60000);
-  </script>
-  
-  <script>
-  // Met à jour le badge "CONSEIL DU JOUR" à partir du localStorage
-  (function(){
-    const badge = document.getElementById('badge-conseil');
-    if(!badge) return;
-
-    function refreshBadge(){
-      const count = Number(localStorage.getItem('conseil_unread_count') || '0');
-      if(count > 0){
-        badge.textContent = count > 99 ? '99+' : String(count);
-        badge.classList.remove('hidden');
-      } else {
-        badge.classList.add('hidden');
-      }
-    }
-
-    // 1) initial
-    refreshBadge();
-
-    // 2) si info mise à jour depuis une autre page/onglet
-    window.addEventListener('storage', (e)=>{
-      if(e.key === 'conseil_unread_count') refreshBadge();
-    });
-
-    // 3) petit rafraîchissement périodique au cas où
-    setInterval(refreshBadge, 5000);
-  })();
-</script>
-
-<!-- MODALE D’ACCÈS PROTÉGÉ -->
-<style>
-  .modal-auth{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;place-items:center;z-index:100;}
-  .modal-auth.open{display:grid}
-  .modal-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    border:1px solid rgba(255,255,255,.12);border-radius:1rem;max-width:520px;width:92%;box-shadow:0 10px 40px rgba(0,0,0,.35)}
-</style>
-
+<!-- MODALE AUTH -->
 <div id="authModal" class="modal-auth">
   <div class="modal-card p-5">
     <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
       <div>
         <h3 class="text-xl font-bold">Connexion requise</h3>
-        <p class="text-sm text-white/70">Pour accéder à cette section (VIP, Astuces, Conseils, Foot News, Profil), veuillez vous connecter ou créer un compte.</p>
+        <p class="text-sm text-white/70">Connectez-vous ou créez un compte.</p>
       </div>
       <button id="authClose" class="pill px-3 py-1.5 rounded-lg">Fermer</button>
     </div>
 
-    <div class="mt-4 text-sm text-white/80">
-      <ul class="list-disc ml-5 space-y-1">
-        <li>Accès sécurisé avec Firebase Auth</li>
-        <li>Redirection automatique vers la page choisie après connexion</li>
-      </ul>
-    </div>
-
     <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
       <a id="goLogin" href="connexion.html" class="btn-primary px-4 py-2 rounded-xl text-center font-semibold">Se connecter</a>
-      <a id="goSignup" href="inscription.html" class="px-4 py-2 rounded-xl text-center font-semibold"
-         style="background:linear-gradient(135deg,#10B981,#34D399);border:1px solid rgba(255,255,255,.12);">Créer un compte</a>
+      <a id="goSignup" href="inscription.html" class="px-4 py-2 rounded-xl text-center font-semibold" style="background:linear-gradient(135deg,#10B981,#34D399)">Créer un compte</a>
     </div>
 
-    <div class="mt-4 text-xs text-white/60">
-      En vous connectant, vous acceptez nos conditions d’utilisation.
-    </div>
   </div>
 </div>
-  
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  // ⚙️ CONFIG FIREBASE (identique aux autres pages)
-  const firebaseConfig = {
-    apiKey: "AIzaSyCoR8lWMJbB0Pgr-F86v3hwWlX4XT3TQ1k",
-    authDomain: "mhd-pronos.firebaseapp.com",
-    projectId: "mhd-pronos",
-    storageBucket: "mhd-pronos.firebasestorage.app",
-    messagingSenderId: "366441954219",
-    appId: "1:366441954219:web:a8be6641c5c922c59cf0ee"
-  };
+<!-- 🔥 SCRIPTS FIREBASE (à garder dans le HTML !) -->
+<script type="module" src="firebase-auth.js"></script>
+<script type="module" src="firebase-badges.js"></script>
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+<!-- 🔥 TON FICHIER JS -->
+<script src="index.js"></script>
 
-  // Références modale
-  const modal = document.getElementById('authModal');
-  const btnClose = document.getElementById('authClose');
-  const btnLogin = document.getElementById('goLogin');
-  const btnSignup = document.getElementById('goSignup');
-
-  // Retient vers où on voulait aller
-  let pendingTarget = null;
-
-  // Ouvre/ferme modale
-  function openModal(){ modal.classList.add('open'); }
-  function closeModal(){ modal.classList.remove('open'); pendingTarget = null; }
-
-  btnClose.addEventListener('click', closeModal);
-
-  // Ajoute ?redirect=<url> aux liens login/inscription
-  function updateAuthLinks(targetHref){
-    const enc = encodeURIComponent(targetHref);
-    btnLogin.href  = `connexion.html?redirect=${enc}`;
-    btnSignup.href = `inscription.html?redirect=${enc}`;
-  }
-
-  // Intercepteur sur tous les liens protégés
-  function wireAuthGuards(user){
-    document.querySelectorAll('a.requires-auth').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const href = a.getAttribute('href') || '#';
-        if(user){ return; } // utilisateur connecté : laisser passer
-        e.preventDefault();
-        pendingTarget = href;
-        updateAuthLinks(href);
-        // En plus, on garde dans sessionStorage au cas où
-        sessionStorage.setItem('postLoginRedirect', href);
-        openModal();
-      }, { capture:true });
-    });
-  }
-
-  // Dès que l’état change, recâble les gardes
-  onAuthStateChanged(auth, (user)=>{
-    const authenticated = !!user;
-    window.__mhdIsAuthenticated = authenticated;
-    window.dispatchEvent(new CustomEvent('mhd:auth-state', { detail: { authenticated } }));
-    wireAuthGuards(user);
-  });
-</script>
-
-  <script src="transition.js"></script>
 </body>
 </html>
