@@ -148,7 +148,7 @@
   overlay.id = 'page-transition-overlay';
   overlay.innerHTML = `
     <div class="transition-wrapper">
-      <img src="anime.gif" alt="Chargement MHD Pronos">
+      <img src="Image/anime.gif" alt="Chargement MHD Pronos">
       <div class="transition-text">Chargement...</div>
     </div>
   `;

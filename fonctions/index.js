@@ -9,7 +9,7 @@ const db = admin.firestore();
 const messaging = admin.messaging();
 
 const APP_BASE_URL = functions.config().app?.base_url || "https://mhd-pronos.web.app";
-const ICON_URL = `${APP_BASE_URL}/logo.JPG`;
+const ICON_URL = `${APP_BASE_URL}/Image/logo.JPG`;
 const MAX_TOKENS_PER_BATCH = 500;
 const INVALID_TOKEN_ERRORS = new Set([
   "messaging/invalid-registration-token",
