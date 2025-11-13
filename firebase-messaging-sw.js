@@ -20,8 +20,8 @@ onBackgroundMessage(messaging, (payload) => {
   const notificationTitle = notification.title || "MHD Pronos";
   const notificationOptions = {
     body: notification.body || "",
-    icon: notification.icon || "/logo.JPG",
-    badge: notification.badge || "/logo.JPG",
+    icon: notification.icon || "/Image/logo.JPG",
+    badge: notification.badge || "/Image/logo.JPG",
     data: {
       ...data,
       click_action: data.link || data.click_action || "/",
