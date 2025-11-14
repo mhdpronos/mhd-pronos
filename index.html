@@ -189,8 +189,57 @@
         </div>
       </div>
 
-      <!-- Stat Card -->
-      <div class="reveal">
+      <!-- MHD Bot assistant -->
+      <div class="reveal space-y-6">
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="p-6 flex flex-col gap-4">
+            <div class="flex items-center gap-4">
+              <div class="mhd-bot-logo" aria-hidden="true">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="14" width="56" height="36" rx="18" fill="url(#gradBot)" />
+                  <path d="M20 24h24" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".65" />
+                  <circle cx="26" cy="34" r="6" fill="#0B0B12" stroke="white" stroke-width="3" />
+                  <circle cx="38" cy="34" r="6" fill="#0B0B12" stroke="white" stroke-width="3" />
+                  <path d="M26 10v6" stroke="white" stroke-width="4" stroke-linecap="round" opacity=".8" />
+                  <path d="M38 10v6" stroke="white" stroke-width="4" stroke-linecap="round" opacity=".8" />
+                  <defs>
+                    <linearGradient id="gradBot" x1="4" y1="14" x2="60" y2="50" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#7C3AED" />
+                      <stop offset="1" stop-color="#DB2777" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-wider text-purple-200/70">assistant IA</p>
+                <h3 class="text-2xl font-black lowercase">mhd bot</h3>
+                <p class="text-sm text-white/70">Ton coach virtuel spécialisé dans les paris sportifs.</p>
+              </div>
+            </div>
+            <div class="space-y-3 text-sm text-white/80 leading-relaxed">
+              <p>Discute avec un assistant conçu pour t'aider à garder un jeu responsable, analyser les matchs et
+                optimiser ta bankroll.</p>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2"><span class="text-purple-300">•</span><span>Répond uniquement aux
+                    questions sur les paris sportifs.</span></li>
+                <li class="flex items-start gap-2"><span class="text-purple-300">•</span><span>Capable de se présenter
+                    et de proposer des techniques prouvées.</span></li>
+                <li class="flex items-start gap-2"><span class="text-purple-300">•</span><span>Analyse ton message pour
+                    t'offrir des réponses personnalisées.</span></li>
+              </ul>
+            </div>
+            <button id="mhdBotToggle"
+              class="mhd-bot-button inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold">
+              <span>Discuter avec mhd bot</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h6m0 0v6m0-6L10 20l-6-6 9-9z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Stat Card -->
         <div class="glass rounded-2xl overflow-hidden">
           <div class="p-5 border-b border-white/10">
             <h3 class="font-semibold">Bilan rapide (30 derniers jours)</h3>
@@ -222,6 +271,47 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- MHD Bot chat panel -->
+  <section id="mhdChatPanel" class="mhd-chat-panel" aria-live="polite" aria-label="Discussion avec mhd bot"
+    aria-hidden="true" tabindex="-1">
+    <div class="mhd-chat-card glass">
+      <header class="mhd-chat-header">
+        <div class="flex items-center gap-3">
+          <div class="mhd-bot-logo mhd-bot-logo--mini" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="14" width="56" height="36" rx="18" fill="url(#gradBotMini)" />
+              <circle cx="26" cy="34" r="6" fill="#0B0B12" stroke="white" stroke-width="3" />
+              <circle cx="38" cy="34" r="6" fill="#0B0B12" stroke="white" stroke-width="3" />
+              <defs>
+                <linearGradient id="gradBotMini" x1="4" y1="14" x2="60" y2="50" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7C3AED" />
+                  <stop offset="1" stop-color="#DB2777" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-purple-200/70">mhd bot</p>
+            <h3 class="text-lg font-semibold">Assistant paris sportifs</h3>
+          </div>
+        </div>
+        <button type="button" id="mhdChatClose" class="mhd-chat-close" aria-label="Fermer la discussion">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+          </svg>
+        </button>
+      </header>
+      <div id="mhdChatMessages" class="mhd-chat-messages" role="log"></div>
+      <form id="mhdChatForm" class="mhd-chat-form" autocomplete="off">
+        <label for="mhdChatInput" class="sr-only">Pose ta question sur les paris sportifs</label>
+        <input id="mhdChatInput" name="message" type="text" required minlength="2" maxlength="280"
+          placeholder="Pose ta question sur les paris sportifs..." />
+        <button type="submit" class="mhd-chat-send" aria-label="Envoyer">Envoyer</button>
+      </form>
     </div>
   </section>
 
