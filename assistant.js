@@ -490,18 +490,154 @@ function detectModuleResponse(message, context) {
   return null;
 }
 
-function generateFallback(message, conversation) {
-  const base = `Je n’ai pas d’information précise sur cette question, mais voici comment procéder :`;
-  const steps = [
-    '1. Analyse les dynamiques : forme des cinq derniers matchs, buts marqués/encaissés, contexte (blessés, calendrier, météo).',
-    '2. Calcule ta probabilité maison et compare-la à la cote (probabilité implicite = 1/cote). Value bet si ton estimation dépasse la cote de 5 points.',
-    '3. Fixe ton plan de mise avant de parier : 1% à 2% de bankroll en pari simple, jamais plus de 5% même sur un “cadeau”.'
+function analyseMessageIntent(message) {
+  const normalized = normalize(message);
+  const teams = findTeamMatches(message);
+  const flags = {
+    bankroll: /(bankroll|gestion|mise|stake|money management|capital|budget)/.test(normalized),
+    value: /(cote|odds|value|valeur|probabilit)/.test(normalized),
+    market: /(over|under|buteur|handicap|score exact|1x2|double chance|clean sheet|parlay|combo|combin)/.test(normalized),
+    psychology: /(perte|tilt|mental|confiance|motivation|pause|addiction)/.test(normalized),
+    strategy: /(strategie|strat\s|plan|conseil|astuce|analyse|pronostic)/.test(normalized)
+  };
+
+  let focus = 'general';
+  if (flags.bankroll) {
+    focus = 'bankroll';
+  } else if (teams.length >= 2) {
+    focus = 'match';
+  } else if (flags.value) {
+    focus = 'value';
+  } else if (flags.market) {
+    focus = 'market';
+  } else if (flags.psychology) {
+    focus = 'psychology';
+  } else if (teams.length === 1) {
+    focus = 'team';
+  } else if (flags.strategy) {
+    focus = 'strategy';
+  }
+
+  return { normalized, teams, flags, focus };
+}
+
+function buildIntentGuidelines(intent) {
+  const { teams, focus } = intent;
+  const formatTeamList = () => teams.map((team) => team.shortName).join(' vs ');
+
+  switch (focus) {
+    case 'bankroll':
+      return {
+        summary: 'Ta demande concerne la gestion de capital et la taille de mise.',
+        steps: [
+          'Calcule ton capital disponible, fixe un objectif réaliste et définis un stop-loss quotidien.',
+          'Choisis une méthode de mise (flat, Kelly fractionné, mise proportionnelle) et teste-la sur papier avant application.',
+          'Mets à jour un journal de bets : date, mise, cote, résultat et ressenti pour suivre ton ROI et ton état émotionnel.'
+        ]
+      };
+    case 'value':
+      return {
+        summary: 'Tu veux déterminer si une cote offre de la valeur.',
+        steps: [
+          'Compile les données clés : forme récente, statistiques de buts/xG, absences, motivation des équipes.',
+          'Convertis la cote en probabilité implicite (1/cote) et compare-la à ton estimation maison.',
+          'Ne valide le pari que si ton edge est supérieur à 5 points et que la cote reste disponible au moment de miser.'
+        ]
+      };
+    case 'market':
+      return {
+        summary: 'Ta question vise un marché précis (buteur, over/under, handicap…).',
+        steps: [
+          'Analyse les profils offensifs/défensifs : volumes de tirs, zones attaquées, rythme moyen des matchs.',
+          'Vérifie les tendances statistiques du marché ciblé (buts marqués/encaissés, xG, séries récentes).',
+          'Adapte le stake : 1% à 1,5% sur un pari plus risqué, monte à 2% seulement si les indicateurs convergent.'
+        ]
+      };
+    case 'psychology':
+      return {
+        summary: 'Tu évoques la gestion mentale ou une série compliquée.',
+        steps: [
+          'Fais un état des lieux objectif : derniers résultats, émotions ressenties, moments de perte de contrôle.',
+          'Planifie des pauses et impose-toi des limites de pertes avant de reprendre la prise de pari.',
+          'Reviens avec une check-list fixe (analyse, cote cible, justification écrite) pour éviter les paris impulsifs.'
+        ]
+      };
+    case 'team':
+      return {
+        summary: `Tu souhaites approfondir le profil de ${teams[0].shortName}.`,
+        steps: [
+          `Étudie ses cinq derniers matchs : dynamique ${teams[0].form.join('-')} et contexte (domicile/extérieur).`,
+          'Identifie les forces/faiblesses récurrentes : circuits préférés, joueurs clés, zones fragiles.',
+          'Déduis les marchés compatibles (1X2, buteur, over/under) et note la cote minimale acceptable.'
+        ]
+      };
+    case 'match':
+      return {
+        summary: `Tu compares ${formatTeamList()} et tu veux trancher.`,
+        steps: [
+          `Compare la forme des deux équipes et les styles de jeu pour repérer les déséquilibres.`,
+          'Confronte les statistiques (buts, xG, coups de pied arrêtés) et la disponibilité des cadres.',
+          'Projette un scénario de match et prépare deux plans : pari principal et option de couverture si la cote bouge.'
+        ]
+      };
+    case 'strategy':
+      return {
+        summary: 'Tu demandes une méthode générale pour améliorer tes pronostics.',
+        steps: [
+          'Segment tes paris par compétition/marché pour identifier les zones où tu as de l’avance.',
+          'Crée une routine d’étude (veille statistique, revue des cotes, validation) avant chaque prise de pari.',
+          'Évalue tes résultats chaque semaine et ajuste ta stratégie en te basant sur les données, pas sur l’intuition.'
+        ]
+      };
+    default:
+      return {
+        summary: 'Le message est assez large : je te propose une méthode universelle pour clarifier ta prochaine décision.',
+        steps: [
+          'Pose le contexte exact : compétition, enjeu, marché visé et informations déjà collectées.',
+          'Rassemble les métriques utiles (forme, statistiques avancées, absences, calendrier).',
+          'Définis à l’avance la cote cible, la taille de mise et le plan de sortie en cas de pari perdant.'
+        ]
+      };
+  }
+}
+
+function generateFallback(message, context) {
+  const intent = analyseMessageIntent(message);
+  const guidelines = buildIntentGuidelines(intent);
+  const sanitizedQuestion = message.replace(/\s+/g, ' ').trim();
+  const questionPreview = sanitizedQuestion.length > 140
+    ? `${sanitizedQuestion.slice(0, 137)}…`
+    : sanitizedQuestion;
+  const riskAdvice = context.streak <= -2
+    ? 'Série négative détectée : limite tes mises à 0,5%-0,75% et fais une pause dès que l’analyse devient floue.'
+    : context.streak >= 2
+      ? 'Bonne dynamique : reste discipliné et évite d’augmenter tes mises par excès de confiance.'
+      : 'Garde un stake fixe entre 1% et 2% de bankroll et consigne chaque pari pour suivre ton edge.';
+  const bankrollRoutine = context.bankrollTip
+    ? `${context.bankrollTip.charAt(0).toUpperCase()}${context.bankrollTip.slice(1)}`
+    : '';
+
+  const steps = guidelines.steps
+    .map((step, index) => `${index + 1}. ${step}`)
+    .join('\n');
+
+  const parts = [
+    `Question détectée : « ${questionPreview || 'demande non précisée'} ».`,
+    guidelines.summary,
+    '',
+    'Plan d’action recommandé :',
+    steps,
+    '',
+    `Gestion du risque : ${riskAdvice}`
   ];
-  const streakTip = conversation.streak <= -2
-    ? 'Comme la dynamique est délicate, impose-toi un stop-loss quotidien et fais une pause dès que le plan n’est plus clair.'
-    : 'Note chaque pari dans un journal pour identifier ce qui fonctionne et corriger rapidement ce qui dévie.';
-  const reminder = 'Le but est de jouer long terme : discipline, analyse froide et aucune poursuite de pertes.';
-  return `${base}\n\n${steps.join('\n')}\n\n${streakTip}\n\n${reminder}`;
+
+  if (bankrollRoutine) {
+    parts.push('', `Routine bankroll à garder en tête : ${bankrollRoutine}.`);
+  }
+
+  parts.push('', 'Besoin d’un angle plus précis (cote, marché, joueur) ? Ajoute-le et je pourrai affiner encore.');
+
+  return parts.join('\n');
 }
 
 function summariseConversation(conversation) {

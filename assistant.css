@@ -78,11 +78,8 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 16px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-transform: uppercase;
+  border: 2px dashed rgba(139, 92, 246, 0.45);
+  background: rgba(139, 92, 246, 0.08);
 }
 
 .assistant-brand__subtitle {
