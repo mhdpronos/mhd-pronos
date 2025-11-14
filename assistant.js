@@ -1,13 +1,30 @@
 const storageKey = 'mhdAssistantConversations';
+const activeConversationKey = 'mhdAssistantActiveConversationId';
 
-const defaultSuggestions = [
-  { icon: '⚽️', text: 'Analyse PSG vs Marseille pour ce week-end' },
-  { icon: '📊', text: 'Quelle stratégie de mise pour une bankroll de 200€ ?' },
-  { icon: '🔥', text: 'Trouve un value bet en Ligue des Champions cette semaine' },
-  { icon: '🧠', text: 'Comment garder la discipline après plusieurs pertes ?' },
-  { icon: '🎯', text: 'Analyse précise pour un pari buteur en Premier League' },
-  { icon: '🛡️', text: 'Quel pari prudent pour sécuriser mes gains ?' }
+const suggestionPool = [
+  { icon: '⚽️', text: 'Analyse complète du prochain PSG vs OM' },
+  { icon: '📊', text: 'Quel staking plan adopter pour 250€ de bankroll ?' },
+  { icon: '🎯', text: 'Trouve un value bet en Ligue des Champions' },
+  { icon: '🔥', text: 'Quels buteurs fiables ce week-end en Premier League ?' },
+  { icon: '🧠', text: 'Comment reprendre confiance après une série de pertes ?' },
+  { icon: '🛡️', text: 'Propose un pari prudent pour sécuriser mes gains' },
+  { icon: '📈', text: 'Analyse des tendances statistiques en Serie A' },
+  { icon: '🔮', text: 'Pronostic avancé pour Real Madrid vs Barça' },
+  { icon: '🪙', text: 'Quelle cote minimum viser pour rester rentable ?' },
+  { icon: '⏱️', text: 'Que penser des paris live sur les fins de match ?' },
+  { icon: '📚', text: 'Construis une routine d’analyse quotidienne' },
+  { icon: '🤝', text: 'Propose un combiné raisonnable sur deux matchs' }
 ];
+
+function selectSuggestions(count = 6) {
+  const pool = [...suggestionPool];
+  const selected = [];
+  while (pool.length > 0 && selected.length < count) {
+    const index = Math.floor(Math.random() * pool.length);
+    selected.push(pool.splice(index, 1)[0]);
+  }
+  return selected;
+}
 
 const teamDatabase = [
   {
@@ -601,6 +618,25 @@ function buildIntentGuidelines(intent) {
   }
 }
 
+function getPreviousUserTopic(messages) {
+  if (!Array.isArray(messages)) {
+    return null;
+  }
+  const userMessages = messages.filter((msg) => msg.role === 'user');
+  if (userMessages.length < 2) {
+    return null;
+  }
+  const previous = userMessages[userMessages.length - 2];
+  if (!previous || !previous.content) {
+    return null;
+  }
+  const preview = previous.content.replace(/\s+/g, ' ').trim();
+  if (!preview) {
+    return null;
+  }
+  return preview.length > 140 ? `${preview.slice(0, 137)}…` : preview;
+}
+
 function generateFallback(message, context) {
   const intent = analyseMessageIntent(message);
   const guidelines = buildIntentGuidelines(intent);
@@ -616,6 +652,7 @@ function generateFallback(message, context) {
   const bankrollRoutine = context.bankrollTip
     ? `${context.bankrollTip.charAt(0).toUpperCase()}${context.bankrollTip.slice(1)}`
     : '';
+  const previousTopic = getPreviousUserTopic(context.messages);
 
   const steps = guidelines.steps
     .map((step, index) => `${index + 1}. ${step}`)
@@ -633,6 +670,10 @@ function generateFallback(message, context) {
 
   if (bankrollRoutine) {
     parts.push('', `Routine bankroll à garder en tête : ${bankrollRoutine}.`);
+  }
+
+  if (previousTopic) {
+    parts.push('', `Mémoire récente : tu évoquais « ${previousTopic} ». Je peux relier ces éléments pour garantir la cohérence de ta stratégie.`);
   }
 
   parts.push('', 'Besoin d’un angle plus précis (cote, marché, joueur) ? Ajoute-le et je pourrai affiner encore.');
@@ -684,7 +725,7 @@ function createMessageElement(message) {
   return wrapper;
 }
 
-function renderSuggestions(container, onSelect) {
+function renderSuggestions(container, suggestions, onSelect) {
   container.innerHTML = '';
   const template = document.getElementById('suggestion-template');
   if (!template) {
@@ -692,7 +733,7 @@ function renderSuggestions(container, onSelect) {
   }
   const clone = template.content.cloneNode(true);
   const chipsContainer = clone.querySelector('.assistant-suggestions__chips');
-  defaultSuggestions.forEach((suggestion) => {
+  suggestions.forEach((suggestion) => {
     const chip = document.createElement('button');
     chip.type = 'button';
     chip.className = 'assistant-suggestions__chip';
@@ -716,6 +757,8 @@ function renderSuggestions(container, onSelect) {
     return;
   }
 
+  const suggestionCache = new Map();
+
   let conversations = loadConversations();
   if (!Array.isArray(conversations) || conversations.length === 0) {
     const conversation = createConversation();
@@ -723,7 +766,11 @@ function renderSuggestions(container, onSelect) {
     saveConversations(conversations);
   }
 
-  let activeConversationId = conversations[0].id;
+  let activeConversationId = localStorage.getItem(activeConversationKey);
+  if (!activeConversationId || !conversations.some((conversation) => conversation.id === activeConversationId)) {
+    activeConversationId = conversations[0].id;
+  }
+  localStorage.setItem(activeConversationKey, activeConversationId);
 
   function getActiveConversation() {
     return conversations.find((conversation) => conversation.id === activeConversationId);
@@ -751,6 +798,7 @@ function renderSuggestions(container, onSelect) {
         item.appendChild(meta);
         item.addEventListener('click', () => {
           activeConversationId = conversation.id;
+          localStorage.setItem(activeConversationKey, activeConversationId);
           updateSidebar();
           renderActiveConversation();
         });
@@ -771,12 +819,17 @@ function renderSuggestions(container, onSelect) {
 
     const hasUserMessage = conversation.messages.some((msg) => msg.role === 'user');
     if (!hasUserMessage) {
-      renderSuggestions(suggestionsContainer, (text) => {
+      if (!suggestionCache.has(conversation.id)) {
+        suggestionCache.set(conversation.id, selectSuggestions());
+      }
+      const suggestions = suggestionCache.get(conversation.id);
+      renderSuggestions(suggestionsContainer, suggestions, (text) => {
         textarea.value = text;
         autoResizeTextarea(textarea);
         textarea.focus();
       });
     } else {
+      suggestionCache.delete(conversation.id);
       suggestionsContainer.innerHTML = '';
       suggestionsContainer.removeAttribute('data-visible');
     }
@@ -784,6 +837,7 @@ function renderSuggestions(container, onSelect) {
 
   function persist() {
     saveConversations(conversations);
+    localStorage.setItem(activeConversationKey, activeConversationId);
     updateSidebar();
   }
 
