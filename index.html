@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,14 +10,17 @@
   <!-- Ton CSS -->
   <link rel="stylesheet" href="index.css">
 </head>
+
 <body class="text-white">
   <!-- Publicité retardée -->
   <div id="promoOverlay" class="fixed inset-0 z-[100] items-center justify-center px-4">
     <div class="promo-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-    <div class="promo-card relative max-w-xl w-full rounded-3xl overflow-hidden glass border border-white/20 bg-gradient-to-br from-slate-900/90 via-indigo-900/90 to-purple-900/90">
+    <div
+      class="promo-card relative max-w-xl w-full rounded-3xl overflow-hidden glass border border-white/20 bg-gradient-to-br from-slate-900/90 via-indigo-900/90 to-purple-900/90">
       <div class="grid md:grid-cols-[1.1fr_1fr] md:grid-rows-[auto_auto]">
         <div class="promo-media md:row-span-2">
-          <img src="Image/imagepronos.gif" alt="Image/imagepronos.gif (ajoutez votre visuel)" class="h-full w-full object-cover">
+          <img src="Image/imagepronos.gif" alt="Image/imagepronos.gif (ajoutez votre visuel)"
+            class="h-full w-full object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-transparent to-transparent"></div>
         </div>
         <span>-----------------------</span>
@@ -26,7 +30,8 @@
           </div>
           <button type="button" id="promoCloseButton" class="promo-close-button" data-action="promo-close">
             FERMER LA PUB
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
             </svg>
           </button>
@@ -38,15 +43,19 @@
           </span>
           <h3 class="text-2xl md:text-3xl font-black leading-snug">OFFRE POUT TOI !</h3>
           <p class="text-sm md:text-base text-white/80 leading-relaxed">
-            Inscris-toi maintenant en utilisant le code promo <strong>AXEX</strong> et profite de <strong>200% de bonus</strong> jusqu'à <strong>169.000F</strong> sur ton premier dépôt.
+            Inscris-toi maintenant en utilisant le code promo <strong>AXEX</strong> et profite de <strong>200% de
+              bonus</strong> jusqu'à <strong>169.000F</strong> sur ton premier dépôt.
           </p>
           <ul class="space-y-2 text-sm md:text-base text-white/75">
-            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>100% de bonus sur tes rechargement chaque lundi et vendredi,</span></li>
-            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>Un remboursement sur toutes tes pertes chaque fin du mois.</span></li>
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>100% de bonus sur tes
+                rechargement chaque lundi et vendredi,</span></li>
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>Un remboursement sur
+                toutes tes pertes chaque fin du mois.</span></li>
           </ul>
           <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" rel="noopener" class="promo-button">
             <span>S'INSCRIRE MAINTENANT</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
@@ -69,10 +78,11 @@
         <a href="profil.html" class="btn-primary px-3 py-2 rounded-lg font-semibold shadow">
           Mon profil
         </a>
-        <button id="menuBtn" class="px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5" aria-label="Ouvrir le menu">
+        <button id="menuBtn" class="px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5"
+          aria-label="Ouvrir le menu">
           <!-- icône burger -->
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor">
-            <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
@@ -83,7 +93,8 @@
         <a class="text-white/80 hover:text-white" href="#method">Méthode</a>
         <a class="text-white/80 hover:text-white" href="#pricing">Abonnements</a>
         <a class="text-white/80 hover:text-white" href="#faq">FAQ</a>
-        <a href="profil.html" class="inline-flex items-center px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">
+        <a href="profil.html"
+          class="inline-flex items-center px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5">
           Mon profil
         </a>
       </nav>
@@ -107,46 +118,59 @@
       <div class="reveal">
         <h1 class="text-4xl md:text-5xl font-black tracking-tight lowercase">mhd pronos</h1>
         <p class="mt-4 text-white/80 text-base md:text-lg">
-          Des pronostics clairs, un suivi transparent, et une gestion de bankroll disciplinée. Optimisé pour les parieurs en Côte d’Ivoire et partout dans le monde.
-          Utilise le code promo <span class="important">AXEX</span> pour t'inscrire et gagne jusqu'à <span class="important">169.000 F</span> sur ton premier dépôt.
+          Des pronostics clairs, un suivi transparent, et une gestion de bankroll disciplinée. Optimisé pour les
+          parieurs en Côte d’Ivoire et partout dans le monde.
+          Utilise le code promo <span class="important">AXEX</span> pour t'inscrire et gagne jusqu'à <span
+            class="important">169.000 F</span> sur ton premier dépôt.
         </p>
-      
+
         <div class="mt-6 flex flex-wrap gap-3">
           <!-- BOUTON CONSEIL DU JOUR (même style que FOOT NEWS, avec badge rouge) -->
-          <a href="conseil.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
+          <a href="conseil.html"
+            class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
             <strong>PRONOS CONSEIL</strong>
             <!-- Badge rouge dynamique -->
-            <span id="badge-conseil" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
+            <span id="badge-conseil"
+              class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
           </a>
 
           <!-- Bouton FOOT NEWS avec badge -->
-          <a href="infofoot.html" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
+          <a href="infofoot.html"
+            class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-violet-500 text-white text-sm font-semibold transition hover:opacity-90 requires-auth">
             <strong>FOOT NEWS</strong>
             <!-- 🔴 Badge rouge dynamique -->
-            <span id="infofoot-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
+            <span id="infofoot-badge"
+              class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full hidden"></span>
           </a>
 
-          <button id="aboutBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
+          <button id="aboutBtn"
+            class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
             <strong>À PROPOS</strong>
           </button>
 
-          <button id="notificationsBtn" class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
+          <button id="notificationsBtn"
+            class="relative border-2 border-purple-600 text-purple-400 px-4 py-2 rounded-full hover:bg-purple-600 hover:text-white transition">
             🔔 <strong>NOTIFICATION</strong>
-            <span id="notifBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 hidden">0</span>
+            <span id="notifBadge"
+              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 hidden">0</span>
           </button>
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="plan abonnement.html" class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
+          <a href="plan abonnement.html"
+            class="btn-primary px-6 py-3 rounded-xl font-semibold shadow-lg transition inline-flex items-center">
             <strong>ACTIVER VIP</strong>
           </a>
-          <a href="https://t.me/+3qums05XWOw2ZWJk" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+          <a href="https://t.me/+3qums05XWOw2ZWJk"
+            class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
             <strong>CANAL TELEGRAM</strong>
           </a>
-          <a href="astuce.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center requires-auth">
+          <a href="astuce.html"
+            class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center requires-auth">
             <strong>DEVENIR PRO</strong>
           </a>
-          <a href="victoires.html" class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
+          <a href="victoires.html"
+            class="px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 inline-flex items-center">
             <strong>NOS VICTOIRES</strong>
           </a>
         </div>
@@ -155,10 +179,13 @@
         <div class="mt-6 glass rounded-xl p-5 text-sm leading-relaxed">
           <h3 class="text-white font-bold text-base mb-2">⚠️ Avertissement sur les paris sportifs</h3>
           <p class="text-white/80">
-            Les paris comportent des risques. Aucun gain n’est garanti. Pariez uniquement ce que vous pouvez vous permettre de perdre.
-            Si le jeu devient un problème, faites une pause ou demandez de l’aide. <span class="important">mhd pronos n’est pas responsable des pertes.</span>
+            Les paris comportent des risques. Aucun gain n’est garanti. Pariez uniquement ce que vous pouvez vous
+            permettre de perdre.
+            Si le jeu devient un problème, faites une pause ou demandez de l’aide. <span class="important">mhd pronos
+              n’est pas responsable des pertes.</span>
           </p>
-          <p class="mt-2 text-xs text-white/50">Interdit aux mineurs — Risques : endettement, isolement, dépendance. Aide : 05 64 16 69 46 (WhatsApp).</p>
+          <p class="mt-2 text-xs text-white/50">Interdit aux mineurs — Risques : endettement, isolement, dépendance.
+            Aide : 05 64 16 69 46 (WhatsApp).</p>
         </div>
       </div>
 
@@ -201,8 +228,10 @@
   <section class="py-10">
     <div class="max-w-6xl mx-auto px-4">
       <div class="glass rounded-2xl p-8 flex flex-col items-center gap-4 w-full max-w-sm mx-auto">
-        <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se connecter</a>
-        <a href="inscription.html" class="w-full text-center px-6 py-3 rounded-lg border border-white/10 hover:bg-white/5">S’inscrire</a>
+        <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se
+          connecter</a>
+        <a href="inscription.html"
+          class="w-full text-center px-6 py-3 rounded-lg border border-white/10 hover:bg-white/5">S’inscrire</a>
       </div>
     </div>
   </section>
@@ -247,7 +276,8 @@
                   <td class="py-5 px-4 text-center font-bold">1.6</td>
                   <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
                   <td class="py-5 px-4 text-center">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
                   </td>
                 </tr>
 
@@ -259,7 +289,8 @@
                   <td class="py-5 px-4 text-center font-bold">1.69</td>
                   <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
                   <td class="py-5 px-4 text-center">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-700">GRATUIT</span>
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-700">GRATUIT</span>
                   </td>
                 </tr>
 
@@ -271,7 +302,8 @@
                   <td class="py-5 px-4 text-center font-bold">1.3</td>
                   <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
                   <td class="py-5 px-4 text-center">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
                   </td>
                 </tr>
 
@@ -283,7 +315,8 @@
                   <td class="py-5 px-4 text-center font-bold">1.25</td>
                   <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
                   <td class="py-5 px-4 text-center">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-violet-500 to-violet-700">GRATUIT</span>
                   </td>
                 </tr>
 
@@ -295,19 +328,25 @@
                   <td class="py-5 px-4 text-center font-bold">1.31</td>
                   <td class="py-5 px-4 text-center text-yellow-400 font-semibold">5/5</td>
                   <td class="py-5 px-4 text-center">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-700">GRATUIT</span>
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-700">GRATUIT</span>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="coupon-overlay absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-center px-6" data-coupons-overlay>
+          <div
+            class="coupon-overlay absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-center px-6"
+            data-coupons-overlay>
             <div class="text-xl md:text-2xl font-extrabold">Contenu réservé à nos membres</div>
-            <p class="text-sm md:text-base text-white/80 max-w-md">Connectez-vous ou créez votre compte pour consulter en clair les coupons du jour et profiter de nos analyses expertes.</p>
+            <p class="text-sm md:text-base text-white/80 max-w-md">Connectez-vous ou créez votre compte pour consulter
+              en clair les coupons du jour et profiter de nos analyses expertes.</p>
             <div class="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
-              <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se connecter</a>
-              <a href="inscription.html" class="w-full text-center px-6 py-3 rounded-lg border border-white/20 hover:bg-white/10 transition">S’inscrire</a>
+              <a href="connexion.html" class="btn-primary w-full text-center px-6 py-3 rounded-lg font-semibold">Se
+                connecter</a>
+              <a href="inscription.html"
+                class="w-full text-center px-6 py-3 rounded-lg border border-white/20 hover:bg-white/10 transition">S’inscrire</a>
             </div>
           </div>
         </div>
@@ -315,11 +354,14 @@
         <!-- Zone bouton VIP -->
         <div class="flex flex-col sm:flex-row justify-between items-center bg-white/5 p-6 gap-4">
           <div>
-            <p class="text-sm text-white/70"><h2>ACCÈS VIP REQUIS</h2></p>
+            <p class="text-sm text-white/70">
+            <h2>ACCÈS VIP REQUIS</h2>
+            </p>
             <p class="text-sm text-white/50">Débloquez les pronostics premium et les analyses complètes.</p>
           </div>
           <div>
-            <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
+            <a href="plan abonnement.html"
+              class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
           </div>
         </div>
       </div>
@@ -330,15 +372,24 @@
   <section class="max-w-6xl mx-auto px-4 py-14 reveal">
     <h2 class="text-2xl md:text-3xl font-black mb-6">NOS PARTENAIRES</h2>
     <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1XBET</a>
-      <a href="https://bwredir.com/1Xxd?p=%2Fregistration%2F" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">BETWINNER</a>
-      <a href="https://1wyvrz.life/?p=vteh" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1WIN</a>
-      <a href="https://refpa3665.com/L?tag=d_2526373m_45415c_&site=2526373&ad=45415" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">MELBET</a>
-      <a href="https://top100bonus.com/L?tag=d_2625843m_37513c_&site=2625843&ad=37513" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">888STARZ</a>
-      <a href="https://combodef.com/L?tag=d_3703799m_60651c_&site=3703799&ad=60651" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">PARIPESA</a>
-      <a href="https://gpaff.top/L?tag=d_3453290m_69627c_&site=3453290&ad=69627" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">GOLDPARI</a>
-      <a href="https://refpazitag.top/L?tag=d_2561833m_25437c_&site=2561833&ad=25437" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">MEGAPARI</a>
-      <a href="https://lb-aff.com/L?tag=d_2378251m_22611c_&site=2378251&ad=22611" target="_blank" class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">LINEBET</a>
+      <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1XBET</a>
+      <a href="https://bwredir.com/1Xxd?p=%2Fregistration%2F" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">BETWINNER</a>
+      <a href="https://1wyvrz.life/?p=vteh" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">1WIN</a>
+      <a href="https://refpa3665.com/L?tag=d_2526373m_45415c_&site=2526373&ad=45415" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">MELBET</a>
+      <a href="https://top100bonus.com/L?tag=d_2625843m_37513c_&site=2625843&ad=37513" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">888STARZ</a>
+      <a href="https://combodef.com/L?tag=d_3703799m_60651c_&site=3703799&ad=60651" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">PARIPESA</a>
+      <a href="https://gpaff.top/L?tag=d_3453290m_69627c_&site=3453290&ad=69627" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">GOLDPARI</a>
+      <a href="https://refpazitag.top/L?tag=d_2561833m_25437c_&site=2561833&ad=25437" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">MEGAPARI</a>
+      <a href="https://lb-aff.com/L?tag=d_2378251m_22611c_&site=2378251&ad=22611" target="_blank"
+        class="glass p-4 rounded-xl text-center hover:bg-white/10 transition">LINEBET</a>
     </div>
   </section>
 
@@ -385,7 +436,8 @@
             <li>Code promo disponible</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
+        <a href="plan abonnement.html"
+          class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
       </div>
 
       <div class="glass rounded-2xl p-5 flex flex-col border border-indigo-400/50">
@@ -401,7 +453,8 @@
             <li>Bankroll guide</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
+        <a href="plan abonnement.html"
+          class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
       </div>
 
       <div class="glass rounded-2xl p-5 flex flex-col">
@@ -414,7 +467,8 @@
             <li>Priorité support</li>
           </ul>
         </div>
-        <a href="plan abonnement.html" class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
+        <a href="plan abonnement.html"
+          class="btn-primary px-6 py-3 mt-6 rounded-xl font-semibold shadow-lg transition inline-flex items-center">S’abonner</a>
       </div>
     </div>
   </section>
@@ -444,7 +498,8 @@
     <div class="grid md:grid-cols-3 gap-5">
       <div class="glass p-5 rounded-2xl">
         <div class="font-semibold">Les paris sont garantis ?</div>
-        <p class="text-sm text-white/70 mt-2">Non. Nous visons la rentabilité long terme avec discipline et value betting.</p>
+        <p class="text-sm text-white/70 mt-2">Non. Nous visons la rentabilité long terme avec discipline et value
+          betting.</p>
       </div>
       <div class="glass p-5 rounded-2xl">
         <div class="font-semibold">Combien de pronos par jour ?</div>
@@ -488,7 +543,9 @@
         <div class="text-sm text-white/60">Meilleur pronostiqueur ivoirien.</div>
       </div>
       <div class="text-xs text-white/50 max-w-xl">
-        ⚠ Avertissement : <span class="avertissement">Les jeux d’argent comportent des risques</span>. Ne pariez que ce que vous pouvez vous permettre de perdre. <span class="avertissement">Ce site ne garantit aucun gain</span>. Réservé aux personnes majeures selon la législation locale.
+        ⚠ Avertissement : <span class="avertissement">Les jeux d’argent comportent des risques</span>. Ne pariez que ce
+        que vous pouvez vous permettre de perdre. <span class="avertissement">Ce site ne garantit aucun gain</span>.
+        Réservé aux personnes majeures selon la législation locale.
       </div>
     </div>
   </footer>
@@ -499,7 +556,8 @@
       <div class="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
         <div>
           <h3 class="text-xl font-bold">Connexion requise</h3>
-          <p class="text-sm text-white/70">Pour accéder à cette section (VIP, Astuces, Conseils, Foot News, Profil), veuillez vous connecter ou créer un compte.</p>
+          <p class="text-sm text-white/70">Pour accéder à cette section (VIP, Astuces, Conseils, Foot News, Profil),
+            veuillez vous connecter ou créer un compte.</p>
         </div>
         <button id="authClose" class="pill px-3 py-1.5 rounded-lg">Fermer</button>
       </div>
@@ -512,9 +570,11 @@
       </div>
 
       <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <a id="goLogin" href="connexion.html" class="btn-primary px-4 py-2 rounded-xl text-center font-semibold">Se connecter</a>
+        <a id="goLogin" href="connexion.html" class="btn-primary px-4 py-2 rounded-xl text-center font-semibold">Se
+          connecter</a>
         <a id="goSignup" href="inscription.html" class="px-4 py-2 rounded-xl text-center font-semibold"
-           style="background:linear-gradient(135deg,#10B981,#34D399);border:1px solid rgba(255,255,255,.12);">Créer un compte</a>
+          style="background:linear-gradient(135deg,#10B981,#34D399);border:1px solid rgba(255,255,255,.12);">Créer un
+          compte</a>
       </div>
 
       <div class="mt-4 text-xs text-white/60">
@@ -528,4 +588,5 @@
   <!-- Ton fichier transition existant -->
   <script src="transition.js"></script>
 </body>
+
 </html>
