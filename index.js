@@ -280,3 +280,197 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   // petit rafraîchissement périodique
   setInterval(refreshBadge, 5000);
 })();
+
+// ==== MHD BOT (assistant paris sportifs) ====
+(function () {
+  const panel = document.getElementById('mhdChatPanel');
+  const toggle = document.getElementById('mhdBotToggle');
+  const closeBtn = document.getElementById('mhdChatClose');
+  const messagesContainer = document.getElementById('mhdChatMessages');
+  const form = document.getElementById('mhdChatForm');
+  const input = document.getElementById('mhdChatInput');
+
+  if (!panel || !toggle || !closeBtn || !messagesContainer || !form || !input) {
+    return;
+  }
+
+  const normalize = (text) => text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const bettingVocabulary = [
+    'pari', 'parier', 'paris', 'sportif', 'sportifs', 'pronostic', 'pronostique', 'pronostics', 'cote', 'cotes',
+    'bankroll', 'mise', 'mises', 'match', 'matchs', 'football', 'foot', 'ligue', 'stake', 'value', 'bet', 'bets',
+    'handicap', 'over', 'under', 'vip', 'ticket', 'bookmaker', 'bookmakers'
+  ];
+
+  const knowledgeBase = [
+    {
+      keywords: ['bonjour', 'bonsoir', 'salut', 'hello', 'coucou'],
+      responses: [
+        "Salut ! Je suis mhd bot, ton assistant dédié aux paris sportifs. Comment puis-je t'aider aujourd'hui ?",
+        "Hey ! Ici mhd bot. Pose-moi ta question sur les paris sportifs et je te répondrai avec précision."
+      ]
+    },
+    {
+      keywords: ['qui es tu', 'qui es-tu', 'present', 'présente', 'presentation'],
+      responses: [
+        "Je suis mhd bot, une IA spécialisée dans les paris sportifs pour t'aider à analyser, rester discipliné et parier intelligemment.",
+        "Moi c'est mhd bot ! Je t'accompagne avec des conseils responsables, des astuces bankroll et des analyses pour tes paris."
+      ]
+    },
+    {
+      keywords: ['bankroll', 'gestion', 'budget', 'money management'],
+      responses: [
+        "Gère ta bankroll en misant 1 à 3% de ton capital par pari. Ainsi tu limites les pertes et maximises ton endurance sur la saison.",
+        "Fixe un capital de départ et respecte un plan de mise fixe. L'objectif est d'éviter les all-in et de garder du recul sur les séries de matchs."
+      ]
+    },
+    {
+      keywords: ['cote', 'cotes', 'value', 'value bet'],
+      responses: [
+        "Cherche les value bets : lorsque ta probabilité estimée est supérieure à celle des bookmakers. C'est là que se trouve le vrai profit à long terme.",
+        "Compare toujours plusieurs bookmakers. Une différence de 0,10 sur une cote peut changer ton ROI sur l'année."
+      ]
+    },
+    {
+      keywords: ['combi', 'combiné', 'combine', 'multi'],
+      responses: [
+        "Limite les combinés à 2 ou 3 sélections de qualité. Plus tu ajoutes de matchs, plus ton risque global augmente fortement.",
+        "Utilise le combiné pour booster une mise modeste mais reste sélectif : privilégie des matchs que tu as vraiment étudiés."
+      ]
+    },
+    {
+      keywords: ['analyse', 'stat', 'statistique', 'forme', 'analyse match'],
+      responses: [
+        "Analyse la forme récente, les confrontations directes et les absences clés avant de te décider. Les statistiques sont tes alliées.",
+        "Combine données statistiques et contexte : météo, enjeu du match, fatigue. Un bon pari repose sur plusieurs indicateurs convergents."
+      ]
+    },
+    {
+      keywords: ['responsable', 'addiction', 'risque', 'perte'],
+      responses: [
+        "Parie toujours de manière responsable. Si tu sens que le jeu te dépasse, fais une pause et demande de l'aide à un proche ou à un professionnel.",
+        "Planifie tes mises à l'avance et n'essaie pas de te refaire après une perte. Discipline et contrôle émotionnel sont indispensables."
+      ]
+    },
+    {
+      keywords: ['vip', 'abonnement', 'premium'],
+      responses: [
+        "Les formules VIP de mhd pronos incluent des analyses poussées et un suivi personnalisé. Assure-toi que ça correspond à ta stratégie avant de t'abonner.",
+        "Un abonnement est utile si tu suis les conseils sérieusement. N'investis que si ta bankroll le permet et reste rigoureux."
+      ]
+    },
+    {
+      keywords: ['merci', 'thanks'],
+      responses: [
+        "Avec plaisir ! Pose-moi d'autres questions sur les paris sportifs quand tu veux.",
+        "Merci à toi ! Je suis là dès que tu as besoin d'un conseil sur les paris."
+      ]
+    }
+  ];
+
+  const fallbackBettingResponses = [
+    "Je n'ai pas encore la réponse exacte, mais focalise-toi sur la gestion de ta bankroll, l'analyse des statistiques et les cotes de value.",
+    "Je te conseille de vérifier les compositions probables, la dynamique des deux équipes et de miser seulement si la cote offre un avantage réel.",
+    "Reste discipliné : note tes paris, analyse ce qui fonctionne et ajuste ta stratégie progressivement."
+  ];
+
+  const outOfScopeResponses = [
+    "Je suis là uniquement pour parler de paris sportifs. Reformule ta question dans ce domaine et je t'aiderai avec plaisir !",
+    "Je ne peux répondre qu'aux questions liées aux paris sportifs. Pose-moi une question sur les cotes, la bankroll ou l'analyse de match."
+  ];
+
+  const appendMessage = (type, text) => {
+    const bubble = document.createElement('div');
+    bubble.className = `mhd-chat-bubble ${type}`;
+    bubble.textContent = text;
+    messagesContainer.appendChild(bubble);
+    messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+  };
+
+  const isBettingQuestion = (text) => bettingVocabulary.some((keyword) => text.includes(keyword));
+
+  const pickResponse = (message) => {
+    const normalizedMessage = normalize(message);
+    if (!isBettingQuestion(normalizedMessage)) {
+      return outOfScopeResponses[Math.floor(Math.random() * outOfScopeResponses.length)];
+    }
+
+    for (const entry of knowledgeBase) {
+      if (entry.keywords.some((keyword) => normalizedMessage.includes(keyword))) {
+        return entry.responses[Math.floor(Math.random() * entry.responses.length)];
+      }
+    }
+
+    return fallbackBettingResponses[Math.floor(Math.random() * fallbackBettingResponses.length)];
+  };
+
+  let introShown = false;
+
+  const showIntro = () => {
+    if (introShown) return;
+    introShown = true;
+    appendMessage('bot', "Bonjour, je suis mhd bot. Pose-moi tes questions sur les paris sportifs et je te répondrai avec des conseils responsables.");
+  };
+
+  const openChat = () => {
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+    showIntro();
+    panel.focus();
+    setTimeout(() => input.focus(), 100);
+  };
+
+  const closeChat = () => {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    toggle.focus();
+  };
+
+  toggle.addEventListener('click', () => {
+    if (panel.classList.contains('open')) {
+      closeChat();
+    } else {
+      openChat();
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    closeChat();
+  });
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const value = input.value.trim();
+    if (!value) {
+      return;
+    }
+
+    appendMessage('user', value);
+    input.value = '';
+
+    const typing = document.createElement('div');
+    typing.className = 'mhd-chat-typing';
+    typing.textContent = 'mhd bot réfléchit...';
+    messagesContainer.appendChild(typing);
+    messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+
+    setTimeout(() => {
+      typing.remove();
+      const response = pickResponse(value);
+      appendMessage('bot', response);
+    }, 600 + Math.random() * 700);
+  });
+
+  // Accessibilité: fermer avec Echap
+  panel.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeChat();
+    }
+  });
+})();
