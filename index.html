@@ -16,59 +16,50 @@
   <!-- Publicité retardée -->
   <div id="promoOverlay" class="fixed inset-0 z-[100] items-center justify-center px-4">
     <div class="promo-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-    <div class="promo-card relative max-w-xl w-full overflow-hidden">
-      <div class="promo-actions">
-        <div id="promoCountdown" class="promo-countdown" aria-live="polite">
-          Fermeture auto dans <span data-countdown-value>15</span>s
+    <div
+      class="promo-card relative max-w-xl w-full rounded-3xl overflow-hidden glass border border-white/20 bg-gradient-to-br from-slate-900/90 via-indigo-900/90 to-purple-900/90">
+      <div class="grid md:grid-cols-[1.1fr_1fr] md:grid-rows-[auto_auto]">
+        <div class="promo-media md:row-span-2">
+          <img src="Image/imagepronos.gif" alt="Image/imagepronos.gif (ajoutez votre visuel)"
+            class="h-full w-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-purple-900/70 via-transparent to-transparent"></div>
         </div>
-        <button type="button" id="promoCloseButton" class="promo-close-button" data-action="promo-close"
-          aria-label="Fermer la publicité">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="promo-layout">
-        <div class="promo-header">
-          <div class="promo-logo-slot" aria-hidden="true"></div>
-          <div class="promo-header-text">
-            <span class="promo-stage">CAF African Cup</span>
-            <h2 class="promo-title">Barrage</h2>
-            <p class="promo-date">Jeu. 13 Novembre 2025</p>
+        <span>---------------------------------------------------------------</span>
+        <div class="promo-actions md:col-start-2 md:row-start-1">
+          <div id="promoCountdown" class="promo-countdown" aria-live="polite">
+            Fermeture auto dans <span data-countdown-value>15</span>s
           </div>
-          <div class="promo-logo-slot" aria-hidden="true"></div>
+          <button type="button" id="promoCloseButton" class="promo-close-button" data-action="promo-close">
+            FERMER LA PUB
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+            </svg>
+          </button>
         </div>
-
-        <div class="promo-visual">
-          <div class="promo-player-slot" aria-hidden="true"></div>
-          <div class="promo-trophy-slot" aria-hidden="true"></div>
-          <div class="promo-player-slot" aria-hidden="true"></div>
-        </div>
-
-        <div class="promo-vs">
-          <div class="promo-team">
-            <div class="promo-flag" aria-hidden="true"></div>
-            <span class="promo-team-name">Cameroun</span>
-          </div>
-          <div class="promo-timer">
-            <span class="promo-kickoff">19H00 GMT</span>
-            <span class="promo-channel">NW SPORT 1</span>
-          </div>
-          <div class="promo-team">
-            <div class="promo-flag" aria-hidden="true"></div>
-            <span class="promo-team-name">R.D. Congo</span>
-          </div>
-        </div>
-
-        <div class="promo-bottom">
-          <div class="promo-bottom-logo" aria-hidden="true"></div>
-          <div class="promo-bottom-text">
-            <span class="promo-bottom-label">RDV dans</span>
-            <span class="promo-bottom-brand">Max it tv</span>
-          </div>
-          <a href="#" class="promo-watch">Regarder</a>
+        <div class="p-6 md:p-8 flex flex-col gap-4 md:col-start-2 md:row-start-2">
+          <span class="promo-badge">
+            <span class="text-xs">🔥</span>
+            Offre limitée
+          </span>
+          <h3 class="text-2xl md:text-3xl font-black leading-snug">OFFRE POUT TOI !</h3>
+          <p class="text-sm md:text-base text-white/80 leading-relaxed">
+            Inscris-toi maintenant en utilisant le code promo <strong>AXEX</strong> et profite de <strong>200% de
+              bonus</strong> jusqu'à <strong>169.000F</strong> sur ton premier dépôt.
+          </p>
+          <ul class="space-y-2 text-sm md:text-base text-white/75">
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>100% de bonus sur tes
+                rechargement chaque lundi et vendredi,</span></li>
+            <li class="flex items-start gap-2"><span class="text-pink-400 mt-1">•</span><span>Un remboursement sur
+                toutes tes pertes chaque fin du mois.</span></li>
+          </ul>
+          <a href="https://bit.ly/1xbetins_mhd_axex" target="_blank" rel="noopener" class="promo-button">
+            <span>S'INSCRIRE MAINTENANT</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
