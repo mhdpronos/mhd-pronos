@@ -9,6 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <!-- Ton CSS -->
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="assistant.css">
 </head>
 
 <body class="text-white">
@@ -582,10 +583,44 @@
     </div>
   </div>
 
+  <!-- Assistant virtuel -->
+  <button class="assistant-toggle" aria-label="Ouvrir l'assistant" aria-expanded="false">
+    <span class="assistant-toggle-icon" aria-hidden="true">💬</span>
+    <span class="assistant-toggle-text">Besoin d'aide ?</span>
+  </button>
+
+  <section class="assistant-panel" aria-live="polite" aria-hidden="true">
+    <header class="assistant-header">
+      <div class="assistant-avatar" aria-hidden="true">AI</div>
+      <div>
+        <h1 class="assistant-title">Assistant virtuel</h1>
+        <p class="assistant-subtitle">Posez vos questions, je vous réponds.</p>
+      </div>
+      <button class="assistant-close" aria-label="Fermer l'assistant">&times;</button>
+    </header>
+
+    <main class="assistant-body">
+      <div class="assistant-messages" role="log"></div>
+      <div class="assistant-typing" aria-hidden="true">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-text">L'assistant rédige…</span>
+      </div>
+    </main>
+
+    <form class="assistant-form" autocomplete="off">
+      <label class="sr-only" for="assistant-input">Message</label>
+      <input id="assistant-input" type="text" name="message" placeholder="Écrivez votre question ici…" required>
+      <button type="submit" class="assistant-send" aria-label="Envoyer le message">Envoyer</button>
+    </form>
+  </section>
+
   <!-- JS principal (module) -->
   <script type="module" src="index.js"></script>
   <!-- Ton fichier transition existant -->
   <script src="transition.js"></script>
+  <script src="assistant.js" defer></script>
 </body>
 
 </html>
