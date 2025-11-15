@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assistant Virtuel</title>
+  <!-- Feuilles de style principales -->
+  <link rel="stylesheet" href="assistant.css" />
+</head>
+<body>
+  <!-- Bouton flottant qui ouvre/ferme l'assistant -->
+  <button class="assistant-toggle" aria-label="Ouvrir l'assistant" aria-expanded="false">
+    <span class="toggle-icon" aria-hidden="true">💬</span>
+  </button>
+
+  <!-- Fenêtre de chat principale -->
+  <section class="assistant-panel" aria-live="polite" aria-hidden="true">
+    <header class="assistant-header">
+      <div class="assistant-avatar" aria-hidden="true">AI</div>
+      <div>
+        <h1 class="assistant-title">Assistant virtuel</h1>
+        <p class="assistant-subtitle">Je réponds à vos questions.</p>
+      </div>
+      <button class="assistant-close" aria-label="Fermer l'assistant">&times;</button>
+    </header>
+
+    <main class="assistant-body">
+      <div class="assistant-messages" role="log"></div>
+      <div class="assistant-typing" aria-hidden="true">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-text">L'assistant rédige…</span>
+      </div>
+    </main>
+
+    <form class="assistant-form" autocomplete="off">
+      <label class="sr-only" for="assistant-input">Message</label>
+      <input
+        id="assistant-input"
+        type="text"
+        name="message"
+        placeholder="Écrivez votre question…"
+        required
+        minlength="1"
+      />
+      <button type="submit" class="assistant-send" aria-label="Envoyer le message">Envoyer</button>
+    </form>
+  </section>
+
+  <!-- Script principal -->
+  <script src="assistant.js" defer></script>
+</body>
+</html>
