@@ -583,72 +583,10 @@
     </div>
   </div>
 
-  <!-- Assistant virtuel -->
-  <div class="assistant-launcher">
-    <div id="assistantIntro" class="assistant-intro-bubble" role="dialog" aria-live="polite">
-      <button type="button" class="assistant-intro-close" data-action="close-intro" aria-label="Fermer le message">&times;</button>
-      <p class="assistant-intro-message">Besoin d'aide ? Votre assistante virtuelle est là pour vous aider.</p>
-    </div>
-    <a href="assistant.html" class="assistant-toggle assistant-toggle-link" aria-label="Ouvrir l'assistante virtuelle">
-      <img src="Image/logo.JPG" alt="" class="assistant-toggle-logo" aria-hidden="true">
-      <span class="sr-only">Ouvrir l'assistante virtuelle</span>
-    </a>
-  </div>
-
-  <section class="assistant-panel" aria-live="polite" aria-hidden="true">
-    <header class="assistant-header">
-      <div class="assistant-avatar" aria-hidden="true">AI</div>
-      <div>
-        <h1 class="assistant-title">Assistant virtuel</h1>
-        <p class="assistant-subtitle">Posez vos questions, je vous réponds.</p>
-      </div>
-      <button class="assistant-close" aria-label="Fermer l'assistant">&times;</button>
-    </header>
-
-    <main class="assistant-body">
-      <div class="assistant-messages" role="log"></div>
-      <div class="assistant-typing" aria-hidden="true">
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-        <span class="typing-text">L'assistant rédige…</span>
-      </div>
-    </main>
-
-    <form class="assistant-form" autocomplete="off">
-      <label class="sr-only" for="assistant-input">Message</label>
-      <input id="assistant-input" type="text" name="message" placeholder="Écrivez votre question ici…" required>
-      <button type="submit" class="assistant-send" aria-label="Envoyer le message">Envoyer</button>
-    </form>
-  </section>
-
-  <!-- JS principal (module) -->
-  <script>
-    (function () {
-      const bubble = document.getElementById('assistantIntro');
-      if (!bubble) {
-        return;
-      }
-
-      const closeButton = bubble.querySelector('[data-action="close-intro"]');
-      const STORAGE_KEY = 'assistant-intro-dismissed';
-
-      if (sessionStorage.getItem(STORAGE_KEY)) {
-        bubble.classList.add('is-hidden');
-      } else {
-        requestAnimationFrame(() => bubble.classList.add('is-visible'));
-      }
-
-      closeButton?.addEventListener('click', () => {
-        bubble.classList.add('is-hidden');
-        sessionStorage.setItem(STORAGE_KEY, '1');
-      });
-    })();
-  </script>
   <script type="module" src="index.js"></script>
-  <!-- Ton fichier transition existant -->
+  <!-- fichier transition existant -->
   <script src="transition.js"></script>
-  <script src="assistant.js" defer></script>
+  
 </body>
 
 </html>
