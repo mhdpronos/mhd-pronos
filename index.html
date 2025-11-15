@@ -584,12 +584,16 @@
   </div>
 
   <!-- Assistant virtuel -->
-  <a href="assistant.html">
-  <button class="assistant-toggle" aria-label="Ouvrir l'assistant" aria-expanded="false">
-    <span class="assistant-toggle-icon" aria-hidden="true">💬</span>
-    <span class="assistant-toggle-text">Besoin d'aide ?</span>
-  </button>
-  </a>
+  <div class="assistant-launcher">
+    <div id="assistantIntro" class="assistant-intro-bubble" role="dialog" aria-live="polite">
+      <button type="button" class="assistant-intro-close" data-action="close-intro" aria-label="Fermer le message">&times;</button>
+      <p class="assistant-intro-message">Besoin d'aide ? Votre assistante virtuelle est là pour vous aider.</p>
+    </div>
+    <a href="assistant.html" class="assistant-toggle assistant-toggle-link" aria-label="Ouvrir l'assistante virtuelle">
+      <img src="Image/logo.JPG" alt="" class="assistant-toggle-logo" aria-hidden="true">
+      <span class="sr-only">Ouvrir l'assistante virtuelle</span>
+    </a>
+  </div>
 
   <section class="assistant-panel" aria-live="polite" aria-hidden="true">
     <header class="assistant-header">
@@ -619,6 +623,28 @@
   </section>
 
   <!-- JS principal (module) -->
+  <script>
+    (function () {
+      const bubble = document.getElementById('assistantIntro');
+      if (!bubble) {
+        return;
+      }
+
+      const closeButton = bubble.querySelector('[data-action="close-intro"]');
+      const STORAGE_KEY = 'assistant-intro-dismissed';
+
+      if (sessionStorage.getItem(STORAGE_KEY)) {
+        bubble.classList.add('is-hidden');
+      } else {
+        requestAnimationFrame(() => bubble.classList.add('is-visible'));
+      }
+
+      closeButton?.addEventListener('click', () => {
+        bubble.classList.add('is-hidden');
+        sessionStorage.setItem(STORAGE_KEY, '1');
+      });
+    })();
+  </script>
   <script type="module" src="index.js"></script>
   <!-- Ton fichier transition existant -->
   <script src="transition.js"></script>

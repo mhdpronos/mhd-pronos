@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="assistant.css" />
   </head>
   <body>
-    <button class="assistant-toggle" aria-label="Ouvrir mhd bot" aria-expanded="false">
-      <span class="toggle-icon" aria-hidden="true">💬</span>
-      <span class="toggle-label">mhd bot</span>
-    </button>
+    <div class="assistant-launcher">
+      <button class="assistant-toggle" aria-label="Ouvrir mhd bot" aria-expanded="false">
+        <img src="Image/logo.JPG" alt="" class="assistant-toggle-logo" aria-hidden="true" />
+        <span class="sr-only">Ouvrir mhd bot</span>
+      </button>
+    </div>
 
     <div class="assistant-overlay" aria-hidden="true">
       <section
@@ -21,10 +23,16 @@
       >
         <aside class="assistant-sidebar">
           <div class="sidebar-header">
-            <div class="bot-logo" aria-hidden="true">image du bot</div>
+            <div class="bot-logo" aria-hidden="true">
+              <img src="Image/logo.JPG" alt="" />
+            </div>
             <div class="sidebar-identity">
               <p class="sidebar-title">mhd bot</p>
               <p class="sidebar-subtitle">Historique des échanges</p>
+              <span class="assistant-status-badge" aria-hidden="true">
+                <span class="status-indicator"></span>
+                Disponible
+              </span>
             </div>
             <button class="assistant-close" aria-label="Fermer l'assistant">&times;</button>
           </div>
@@ -42,6 +50,9 @@
               <h1 class="assistant-title">mhd bot</h1>
               <p class="assistant-subtitle">
                 Assistant de pronostics sportifs et d'analyse personnalisée.
+              </p>
+              <p class="assistant-highlight">
+                Réponses instantanées, conseils clairs et suivi personnalisé pour vos paris.
               </p>
             </div>
             <div class="header-actions">
