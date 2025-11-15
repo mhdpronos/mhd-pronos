@@ -1,54 +1,87 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assistant Virtuel</title>
-  <!-- Feuilles de style principales -->
-  <link rel="stylesheet" href="assistant.css" />
-</head>
-<body>
-  <!-- Bouton flottant qui ouvre/ferme l'assistant -->
-  <button class="assistant-toggle" aria-label="Ouvrir l'assistant" aria-expanded="false">
-    <span class="toggle-icon" aria-hidden="true">💬</span>
-  </button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mhd bot – Assistant Intelligent</title>
+    <link rel="stylesheet" href="assistant.css" />
+  </head>
+  <body>
+    <button class="assistant-toggle" aria-label="Ouvrir mhd bot" aria-expanded="false">
+      <span class="toggle-icon" aria-hidden="true">💬</span>
+      <span class="toggle-label">mhd bot</span>
+    </button>
 
-  <!-- Fenêtre de chat principale -->
-  <section class="assistant-panel" aria-live="polite" aria-hidden="true">
-    <header class="assistant-header">
-      <div class="assistant-avatar" aria-hidden="true">AI</div>
-      <div>
-        <h1 class="assistant-title">Assistant virtuel</h1>
-        <p class="assistant-subtitle">Je réponds à vos questions.</p>
-      </div>
-      <button class="assistant-close" aria-label="Fermer l'assistant">&times;</button>
-    </header>
+    <div class="assistant-overlay" aria-hidden="true">
+      <section
+        class="assistant-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Fenêtre de discussion mhd bot"
+      >
+        <aside class="assistant-sidebar">
+          <div class="sidebar-header">
+            <div class="bot-logo" aria-hidden="true">image du bot</div>
+            <div class="sidebar-identity">
+              <p class="sidebar-title">mhd bot</p>
+              <p class="sidebar-subtitle">Historique des échanges</p>
+            </div>
+            <button class="assistant-close" aria-label="Fermer l'assistant">&times;</button>
+          </div>
+          <div class="conversation-actions">
+            <button class="start-conversation" type="button" data-action="start-conversation">
+              Nouvelle discussion
+            </button>
+          </div>
+          <nav class="conversation-list" aria-label="Conversations enregistrées"></nav>
+        </aside>
 
-    <main class="assistant-body">
-      <div class="assistant-messages" role="log"></div>
-      <div class="assistant-typing" aria-hidden="true">
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-        <span class="typing-text">L'assistant rédige…</span>
-      </div>
-    </main>
+        <div class="assistant-content">
+          <header class="assistant-header">
+            <div>
+              <h1 class="assistant-title">mhd bot</h1>
+              <p class="assistant-subtitle">
+                Assistant de pronostics sportifs et d'analyse personnalisée.
+              </p>
+            </div>
+            <div class="header-actions">
+              <button
+                class="start-conversation header-start"
+                type="button"
+                data-action="start-conversation"
+              >
+                Nouvelle discussion
+              </button>
+            </div>
+          </header>
 
-    <form class="assistant-form" autocomplete="off">
-      <label class="sr-only" for="assistant-input">Message</label>
-      <input
-        id="assistant-input"
-        type="text"
-        name="message"
-        placeholder="Écrivez votre question…"
-        required
-        minlength="1"
-      />
-      <button type="submit" class="assistant-send" aria-label="Envoyer le message">Envoyer</button>
-    </form>
-  </section>
+          <main class="assistant-body" aria-live="polite">
+            <div class="assistant-messages" role="log"></div>
+            <div class="assistant-typing" aria-hidden="true">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-text">mhd bot rédige une réponse…</span>
+            </div>
+            <section class="assistant-suggestions" aria-label="Suggestions de questions"></section>
+          </main>
 
-  <!-- Script principal -->
-  <script src="assistant.js" defer></script>
-</body>
+          <form class="assistant-form" autocomplete="off">
+            <label class="sr-only" for="assistant-input">Votre message</label>
+            <input
+              id="assistant-input"
+              type="text"
+              name="message"
+              placeholder="Posez votre question ici…"
+              required
+              minlength="1"
+            />
+            <button type="submit" class="assistant-send" aria-label="Envoyer le message">Envoyer</button>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <script src="assistant.js" defer></script>
+  </body>
 </html>
