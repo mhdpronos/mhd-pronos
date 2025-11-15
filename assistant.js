@@ -11,6 +11,10 @@
   const typingIndicator = document.querySelector('.assistant-typing');
   const suggestionsContainer = document.querySelector('.assistant-suggestions');
 
+  if (!toggleButton || !overlay || !closeButton || !form || !input || !messagesContainer || !typingIndicator || !suggestionsContainer) {
+    return;
+  }
+
   const SUGGESTIONS = [
     {
       label: 'Analyse Ligue 1',
